@@ -351,6 +351,10 @@ class MergedFinding:
     reasoning: Optional[str]
     risk_score: int
     risk_level: str
+    score_version: str = ""
+    score_components: dict[str, Any] = field(default_factory=dict, compare=False)
+    score_evidence: dict[str, Any] = field(default_factory=dict, compare=False)
+    score_explanation: str = ""
     snippet: Optional[dict] = field(default=None, compare=False)
 
     def finalize(self) -> None:
@@ -1507,6 +1511,12 @@ class FindingMerger:
 # Risk scoring
 # ---------------------------------------------------------------------------
 
+if __package__:
+    from .scoring_v1 import score_finding as score_finding_v1
+else:
+    from scoring_v1 import score_finding as score_finding_v1
+
+
 class RiskScorer:
     def __init__(self, cwe_weights: Optional[dict[str, int]] = None) -> None:
         self._cwe_weights = cwe_weights if cwe_weights is not None else CWE_IMPORTANCE_WEIGHTS
@@ -1708,7 +1718,7 @@ class JsonExporter:
         path.write_text(json.dumps(payload, indent=2, ensure_ascii=False, default=str), encoding="utf-8")
 
 class CsvExporter:
-    COLUMNS = ["risk_score", "risk_level", "status", "confidence_label", "confidence_score", "severity", "source", "cwe", "rule_id", "opengrep_rule_id", "iris_rule_id", "file", "line", "end_line", "duplicate_count", "path_count", "message"]
+    COLUMNS = ["risk_score", "risk_level", "score_version", "score_components", "score_evidence", "score_explanation", "status", "confidence_label", "confidence_score", "severity", "source", "cwe", "rule_id", "opengrep_rule_id", "iris_rule_id", "file", "line", "end_line", "duplicate_count", "path_count", "message"]
 
     @staticmethod
     def write(path: Path, merged: list[MergedFinding]) -> None:
@@ -1716,7 +1726,16 @@ class CsvExporter:
             writer = csv.DictWriter(fh, fieldnames=CsvExporter.COLUMNS, extrasaction="ignore")
             writer.writeheader()
             for m in merged:
-                writer.writerow({col: asdict(m).get(col, "") for col in CsvExporter.COLUMNS})
+                values = asdict(m)
+                for key in ("score_components", "score_evidence"):
+                    values[key] = json.dumps(
+                        values.get(key, {}),
+                        ensure_ascii=False, sort_keys=True
+                    )
+                writer.writerow({
+                    col: values.get(col, "")
+                    for col in CsvExporter.COLUMNS
+                })
 
 class SarifExporter:
     LEVEL_BY_SEVERITY = {"Critical": "error", "High": "error", "Medium": "warning", "Low": "note"}
@@ -1736,7 +1755,7 @@ class SarifExporter:
                 "message": {"text": m.message or rid},
                 "locations": [{"physicalLocation": {"artifactLocation": {"uri": m.file}, "region": {"startLine": max(1, m.line), "endLine": max(1, m.end_line or m.line)}}}],
                 "partialFingerprints": {"mergedFingerprint/v1": m.fingerprint},
-                "properties": {"riskScore": m.risk_score, "riskLevel": m.risk_level, "status": m.status, "confidence": m.confidence_label, "source": m.source, "cwe": m.cwe, "duplicateCount": m.duplicate_count, "pathCount": m.path_count, "security-severity": str(round(SEVERITY_SCORES.get(m.severity, DEFAULT_SEVERITY_SCORE) / 10, 1))},
+                "properties": {"riskScore": m.risk_score, "riskLevel": m.risk_level, "status": m.status, "confidence": m.confidence_label, "source": m.source, "cwe": m.cwe, "duplicateCount": m.duplicate_count, "pathCount": m.path_count, "scoreVersion": m.score_version, "scoreComponents": m.score_components, "scoreEvidence": m.score_evidence, "scoreExplanation": m.score_explanation, "security-severity": str(round(SEVERITY_SCORES.get(m.severity, DEFAULT_SEVERITY_SCORE) / 10, 1))},
             })
 
         sarif_doc = {
@@ -2029,7 +2048,7 @@ class HtmlExporter:
             f'<td class="col-cwe" data-label="CWE">{cwe}</td>'
             f'<td class="col-severity" data-label="Severity"><span class="badge" style="background:{severity_color}1a;color:{severity_color}">{esc(severity)}</span></td>'
             f'<td class="col-status" data-label="Status"><span class="badge" style="{status_style}">{esc(status)}</span></td>'
-            f'<td class="col-risk" data-label="Risk Level"><span class="badge" style="background:{risk_color}1a;color:{risk_color}">{esc(risk_level)}</span></td>'
+            f'<td class="col-risk" data-label="Risk Level"><span class="badge" style="background:{risk_color}1a;color:{risk_color}">{esc(risk_level)}</span><details class="ntk-score-evidence"><summary>Evidence</summary><span>{esc(str(f.get("score_explanation") or "No scoring details available"))}</span></details></td>'
             f'<td class="col-reasoning" data-label="Reasoning">{reasoning}</td>'
             "</tr>"
         )
@@ -2358,9 +2377,20 @@ def _generate_report_impl(cfg: Any) -> dict:
     merger = FindingMerger()
     merged = merger.merge(opengrep_findings, iris_sarif_findings, iris_verdicts)
 
-    scorer = RiskScorer()
+    # NTK Scoring V1 Candidate; legacy scorer retained above.
     for m in merged:
-        scorer.score(m)
+        scored = score_finding_v1(m)
+        m.risk_score = scored["risk_score"]
+        m.risk_level = scored["risk_level"]
+        m.score_version = scored["score_version"]
+        m.score_components = scored["score_components"]
+        m.score_evidence = scored["score_evidence"]
+        m.score_explanation = scored["score_explanation"]
+
+    # Rank findings only after risk scores are computed.
+    merged.sort(
+        key=lambda m: (-m.risk_score, m.file, m.line)
+    )
 
     try:
         resolver.report_output_dir.mkdir(parents=True, exist_ok=True)
