@@ -10,3 +10,45 @@ data/build-info/
 data/project-sources
 log/
 config.json
+
+# ===== NTK FINAL PRODUCTION IGNORE =====
+
+# Generated reports / runtime output
+logs/
+reports/
+backups/
+wsl_baseline/
+final_report.csv
+
+integration/generated/
+integration/generated-manual-configs/
+integration/temp/
+integration/logs/
+integration/reports/
+
+integration/final_report.json
+integration/iris_jobs.json
+integration/normalized_findings.json
+integration/opengrep.sarif
+integration/output
+
+# Machine-specific local configs
+integration/config*.yaml
+!integration/config.example.yaml
+
+# Non-production quarantine
+data/codeql-db-quarantine/
+
+# Scratch / recovery
+*.bak
+*.PRE_*
+*.before_*
+
+apply_prompt_patch.py
+test_gemini.py
+src/models/gemini_old.py
+
+# Legacy one-off helpers
+evaluate_result.py
+merge_result.py
+parse_iris_result.py

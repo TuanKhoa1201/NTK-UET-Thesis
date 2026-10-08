@@ -33,11 +33,21 @@ Package,Class,Method,Signature
 
 FUNC_PARAM_LABELLING_SYSTEM_PROMPT = """\
 You are a security expert. \
-You are given a list of APIs implemented in established Java libraries, \
-and you need to identify whether some of these APIs could be potentially invoked by downstream libraries with malicious end-user (not programmer) inputs. \
-For instance, functions that deserialize or parse inputs might be used by downstream libraries and would need to add sanitization for malicious user inputs. \
-On the other hand, functions like HTTP request handlers are typically final and won't be called by a downstream package. \
-Utility functions that are not related to the primary purpose of the package should also be ignored. \
+You are given a list of APIs implemented in a Java project, and you need to identify which function \
+parameters could carry malicious, attacker-controlled end-user input.
+
+There are TWO cases where a parameter should be treated as tainted:
+
+1. Library case: functions that could be invoked by a downstream library/package with untrusted input \
+(e.g. deserializers, parsers). Utility functions unrelated to the library's primary purpose should be ignored.
+
+2. Web-application entry-point case: if a method signature contains web-framework annotations such as \
+@RequestParam, @PathVariable, @RequestBody, @RequestHeader, @CookieValue, @ModelAttribute (Spring), \
+@QueryParam, @PathParam, @FormParam, @HeaderParam (JAX-RS), or similar, the annotated parameter(s) \
+ALWAYS come directly from the HTTP request and MUST be treated as tainted, regardless of whether \
+the project looks like a reusable library. Do NOT exclude these just because the method looks like \
+a "final" HTTP handler - for web applications, request handlers are exactly where the untrusted input enters the program.
+
 Return the result as a json list with each object in the format:
 
 { "package": <package name>,
@@ -46,23 +56,29 @@ Return the result as a json list with each object in the format:
   "signature": <signature>,
   "tainted_input": <a list of argument names that are potentially tainted> }
 
-In the result list, only keep the functions that might be used by downstream libraries and is potentially invoked with malicious end-user inputs. \
+In the result list, only keep the functions that have at least one potentially tainted parameter \
+(either via downstream library usage, or via web-framework annotations as described above). \
 Do not output anything other than JSON.\
 """
 
 FUNC_PARAM_LABELLING_USER_PROMPT = """\
-You are analyzing the Java package {project_username}/{project_name}. \
-Here is the package summary:
+You are analyzing the Java project {project_username}/{project_name}. \
+Here is the project summary:
 
 {project_readme_summary}
 
-Please look at the following public methods in the library and their documentations (if present). \
-What are the most important functions that look like can be invoked by a downstream Java package that is dependent on {project_name}, \
-and that the function can be called with potentially malicious end-user inputs? \
-If the package does not seem to be a library, just return empty list as the result. \
-Utility functions that are not related to the primary purpose of the package should also be ignored
+Please look at the following public methods in the project and their documentations (if present). \
+Identify which methods have parameters that are tainted, either because:
+a) the method could be invoked by a downstream package with malicious end-user input, or
+b) the method signature contains a web-framework annotation (@RequestParam, @PathVariable, @RequestBody, \
+@RequestHeader, @CookieValue, @QueryParam, @PathParam, @FormParam, @HeaderParam, etc.) marking a parameter \
+as coming directly from an HTTP request.
 
-Package,Class,Method,Doc
+Utility functions unrelated to handling external input should be ignored. \
+Do not return an empty list just because the project is an application rather than a library - \
+case (b) above applies to applications too.
+
+Package,Class,Method,Signature,Doc
 {methods}
 """
 
@@ -75,12 +91,16 @@ If the given source or sink do not satisfy the above criteria, mark the result a
 Please provide a very short explanation associated with the verdict. \
 Assume that the intermediate path has no sanitizer.
 
+Return all four fields exactly once.
+The explanation must be one short sentence of at most 40 words.
+Do not repeat any sentence or phrase.
+
 Answer in JSON object with the following format:
 
-{ "explanation": <YOUR EXPLANATION>,
-  "source_is_false_positive": <true or false>,
+{ "source_is_false_positive": <true or false>,
   "sink_is_false_positive": <true or false>,
-  "is_vulnerable": <true or false> }
+  "is_vulnerable": <true or false>,
+  "explanation": <ONE SHORT SENTENCE> }
 
 Do not include anything else in the response.\
 """

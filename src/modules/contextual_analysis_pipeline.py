@@ -15,6 +15,24 @@ from tqdm import tqdm
 from tqdm.contrib.concurrent import thread_map
 
 from src.prompts import POSTHOC_FILTER_SYSTEM_PROMPT, POSTHOC_FILTER_USER_PROMPT, POSTHOC_FILTER_USER_PROMPT_W_CONTEXT, POSTHOC_FILTER_HINTS, SNIPPET_CONTEXT_SIZE
+
+POSTHOC_FILTER_JSON_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "source_is_false_positive": {"type": "boolean"},
+        "sink_is_false_positive": {"type": "boolean"},
+        "is_vulnerable": {"type": "boolean"},
+        "explanation": {"type": "string"},
+    },
+    "required": [
+        "source_is_false_positive",
+        "sink_is_false_positive",
+        "is_vulnerable",
+        "explanation",
+    ],
+    "additionalProperties": False,
+}
+
 from src.queries import QUERIES
 
 from src.models.gpt import GPTModel
@@ -43,7 +61,8 @@ class ContextualAnalysisPipeline:
             posthoc_filtering_skip_fp: bool = False,
             rerun_skipped_fp: bool = False,
             skip_check_fixed_method: bool = False,
-            batch_size: int = 3,
+            batch_size: int = 1,
+            overwrite_llm_cache: bool = False,
     ):
         self.query = query
         self.cwe_id = cwe_id
@@ -67,7 +86,326 @@ class ContextualAnalysisPipeline:
         self.rerun_skipped_fp = rerun_skipped_fp
         self.batch_size = batch_size
         self.skip_check_fixed_method = skip_check_fixed_method
+        self.overwrite_llm_cache = overwrite_llm_cache
         self.alarm_results = {}
+        self._stage8_exact_cache_hits = 0
+        self._stage8_exact_cache_misses = 0
+
+    # STAGE8_EXACT_LLM_CACHE_V1
+    def _stage8_exact_cache_model_identity(self, model):
+        if getattr(
+            self,
+            "_stage8_exact_cache_identity_checked",
+            False,
+        ):
+            return getattr(
+                self,
+                "_stage8_exact_cache_identity_value",
+                None,
+            )
+
+        self._stage8_exact_cache_identity_checked = True
+        identity = None
+
+        if not self.llm.lower().startswith("ollama"):
+            self._stage8_exact_cache_identity_value = None
+            return None
+
+        model_id = str(
+            getattr(model, "model_id", "")
+        ).strip()
+
+        try:
+            listing = model.client.list()
+
+            if isinstance(listing, dict):
+                models = listing.get("models", []) or []
+            else:
+                models = getattr(
+                    listing,
+                    "models",
+                    [],
+                ) or []
+
+            for entry in models:
+                if isinstance(entry, dict):
+                    entry_name = (
+                        entry.get("model")
+                        or entry.get("name")
+                        or ""
+                    )
+                    digest = entry.get("digest")
+                else:
+                    entry_name = (
+                        getattr(entry, "model", None)
+                        or getattr(entry, "name", None)
+                        or ""
+                    )
+                    digest = getattr(
+                        entry,
+                        "digest",
+                        None,
+                    )
+
+                if (
+                    str(entry_name).strip() == model_id
+                    and digest
+                ):
+                    identity = {
+                        "model_id": model_id,
+                        "model_digest": str(digest),
+                    }
+                    break
+
+        except Exception as e:
+            if self.project_logger is not None:
+                self.project_logger.info(
+                    "  ==> Stage 8 exact cache disabled: "
+                    "could not resolve Ollama model digest: "
+                    f"{e}"
+                )
+
+        if (
+            identity is None
+            and self.project_logger is not None
+        ):
+            self.project_logger.info(
+                "  ==> Stage 8 exact cache disabled: "
+                f"no digest found for model {model_id!r}"
+            )
+
+        self._stage8_exact_cache_identity_value = identity
+        return identity
+
+    def _stage8_predict_with_exact_cache(
+        self,
+        prompt,
+        request_kind,
+    ):
+        import hashlib
+
+        request_kind = str(request_kind)
+
+        if request_kind not in {
+            "initial",
+            "retry",
+        }:
+            raise ValueError(
+                "Invalid Stage 8 exact-cache request kind: "
+                f"{request_kind!r}"
+            )
+
+        model = self.get_model()
+
+        if not self.llm.lower().startswith("ollama"):
+            return (
+                model.predict(prompt),
+                False,
+                None,
+            )
+
+        identity = (
+            self._stage8_exact_cache_model_identity(
+                model
+            )
+        )
+
+        # Fail closed: when exact model identity cannot be
+        # proven, execute inference normally and do not reuse
+        # a persistent response.
+        if identity is None:
+            self._stage8_exact_cache_misses = (
+                getattr(
+                    self,
+                    "_stage8_exact_cache_misses",
+                    0,
+                )
+                + 1
+            )
+
+            return (
+                model.predict(
+                    prompt,
+                    expect_json=True,
+                    json_schema=POSTHOC_FILTER_JSON_SCHEMA,
+                ),
+                False,
+                None,
+            )
+
+        options = dict(
+            getattr(
+                model,
+                "options",
+                {},
+            )
+        )
+
+        request_identity = {
+            "cache_version": 1,
+            "stage": "stage8_posthoc_filter",
+            "request_kind": request_kind,
+            "query": self.query,
+            "cwe_id": str(self.cwe_id),
+            "model_alias": self.llm,
+            "model_id": identity["model_id"],
+            "model_digest": identity[
+                "model_digest"
+            ],
+            "seed": self.seed,
+            "messages": prompt,
+            "options": options,
+            "expect_json": True,
+            "json_schema":
+                POSTHOC_FILTER_JSON_SCHEMA,
+            "format":
+                POSTHOC_FILTER_JSON_SCHEMA,
+        }
+
+        canonical_request = json.dumps(
+            request_identity,
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+        )
+
+        cache_key = hashlib.sha256(
+            canonical_request.encode("utf-8")
+        ).hexdigest()
+
+        cache_root = os.environ.get(
+            "IRIS_EXACT_LLM_CACHE_DIR"
+        )
+
+        if not cache_root:
+            from src.config import OUTPUT_DIR
+
+            cache_root = os.path.join(
+                OUTPUT_DIR,
+                "common",
+                "exact_llm_cache_v1",
+            )
+
+        cache_dir = os.path.join(
+            cache_root,
+            "stage8",
+            cache_key[:2],
+        )
+
+        cache_path = os.path.join(
+            cache_dir,
+            f"{cache_key}.json",
+        )
+
+        if (
+            not self.overwrite_llm_cache
+            and os.path.isfile(cache_path)
+        ):
+            try:
+                with open(
+                    cache_path,
+                    "r",
+                    encoding="utf-8",
+                ) as f:
+                    cached = json.load(f)
+
+                if (
+                    cached.get("request")
+                    == request_identity
+                    and isinstance(
+                        cached.get("response"),
+                        str,
+                    )
+                ):
+                    self._stage8_exact_cache_hits = (
+                        getattr(
+                            self,
+                            "_stage8_exact_cache_hits",
+                            0,
+                        )
+                        + 1
+                    )
+
+                    return (
+                        cached["response"],
+                        True,
+                        cache_key,
+                    )
+
+            except (
+                OSError,
+                json.JSONDecodeError,
+                TypeError,
+            ) as e:
+                if self.project_logger is not None:
+                    self.project_logger.info(
+                        "  ==> Ignoring invalid Stage 8 "
+                        f"exact-cache entry {cache_key}: "
+                        f"{e}"
+                    )
+
+        self._stage8_exact_cache_misses = (
+            getattr(
+                self,
+                "_stage8_exact_cache_misses",
+                0,
+            )
+            + 1
+        )
+
+        response = model.predict(
+            prompt,
+            expect_json=True,
+            json_schema=POSTHOC_FILTER_JSON_SCHEMA,
+        )
+
+        if not self.test_run:
+            os.makedirs(
+                cache_dir,
+                exist_ok=True,
+            )
+
+            cache_obj = {
+                "request": request_identity,
+                "response": response,
+            }
+
+            temp_path = (
+                f"{cache_path}.tmp."
+                f"{os.getpid()}"
+            )
+
+            try:
+                with open(
+                    temp_path,
+                    "w",
+                    encoding="utf-8",
+                ) as f:
+                    json.dump(
+                        cache_obj,
+                        f,
+                        ensure_ascii=False,
+                        sort_keys=True,
+                        indent=2,
+                    )
+
+                os.replace(
+                    temp_path,
+                    cache_path,
+                )
+
+            except OSError:
+                try:
+                    if os.path.isfile(temp_path):
+                        os.unlink(temp_path)
+                except OSError:
+                    pass
+
+        return (
+            response,
+            False,
+            cache_key,
+        )
 
     def get_model(self):
         if self.model is None:
@@ -331,16 +669,29 @@ class ContextualAnalysisPipeline:
                 f.write(path_user_prompt)
 
             # Generate full prompt and send to LLM
-            if isinstance(self.get_model(), GPTModel):
-                result_str = self.get_model().predict([
-                    {"role": "system", "content": POSTHOC_FILTER_SYSTEM_PROMPT},
-                    {"role": "user", "content": path_user_prompt},
-                ], expect_json=True)
+            model = self.get_model()
+            prompt = [
+                {"role": "system", "content": POSTHOC_FILTER_SYSTEM_PROMPT},
+                {"role": "user", "content": path_user_prompt},
+            ]
+
+            if self.llm.lower().startswith("ollama"):
+                (
+                    result_str,
+                    _stage8_exact_cache_hit,
+                    _stage8_exact_cache_key,
+                ) = self._stage8_predict_with_exact_cache(
+                    prompt,
+                    "initial",
+                )
+            elif isinstance(model, GPTModel):
+                result_str = model.predict(
+                    prompt,
+                    expect_json=True,
+                    json_schema=POSTHOC_FILTER_JSON_SCHEMA,
+                )
             else:
-                result_str = self.get_model().predict([
-                    {"role": "system", "content": POSTHOC_FILTER_SYSTEM_PROMPT},
-                    {"role": "user", "content": path_user_prompt},
-                ])
+                result_str = model.predict(prompt)
 
             # Dump the raw LLM outputs
             with open(f"{self.posthoc_filtering_output_log_path}/raw_llm_response_{result_id}_{code_flow_id}.txt", "w") as f:
@@ -380,10 +731,6 @@ class ContextualAnalysisPipeline:
             using_cache = True
             result = grouped_path_cache[group_id]
 
-        elif result_id in self.alarm_results and self.alarm_results[result_id] is not None:
-            using_cache = True
-            result = self.alarm_results[result_id]
-
         # The second caching strategy where Source is cached to be false positive
         elif source in false_positive_source_cache and false_positive_source_cache[source]:
             using_cache = True
@@ -395,7 +742,6 @@ class ContextualAnalysisPipeline:
                 "explanation": "[Caching] Source is marked false positive in a previous call to GPT"
             }
             grouped_path_cache[group_id] = result
-            self.alarm_results[result_id] = result
 
         # The second caching strategy where Sink is cached to be false positive
         elif sink in false_positive_sink_cache and false_positive_sink_cache[sink]:
@@ -408,7 +754,6 @@ class ContextualAnalysisPipeline:
                 "explanation": "[Caching] Sink is marked false positive in a previous call to GPT"
             }
             grouped_path_cache[group_id] = result
-            self.alarm_results[result_id] = result
 
         # No caching available, make the query
         else:
@@ -527,7 +872,28 @@ class ContextualAnalysisPipeline:
 
         # Predict
         try:
-            results = self.get_model().predict(prompts, batch_size=self.batch_size, no_progress_bar=True)
+            model = self.get_model()
+
+            if self.llm.lower().startswith("ollama"):
+                results = []
+
+                for prompt in prompts:
+                    (
+                        response,
+                        _stage8_exact_cache_hit,
+                        _stage8_exact_cache_key,
+                    ) = self._stage8_predict_with_exact_cache(
+                        prompt,
+                        "initial",
+                    )
+
+                    results.append(response)
+            else:
+                results = model.predict(
+                    prompts,
+                    batch_size=self.batch_size,
+                    no_progress_bar=True,
+                )
         except:
             self.project_logger.error("Error during querying; skipping")
             results = ["" for p in prompts]
@@ -538,10 +904,150 @@ class ContextualAnalysisPipeline:
             with open(f"{self.posthoc_filtering_output_log_path}/raw_llm_response_{result_id}_{code_flow_id}.txt", "w") as f:
                 f.write(result_str)
 
-            try:
-                result_json = self.parse_posthoc_filter_json_result(result_str)
-            except:
-                result_json = {}
+            result_json = self.parse_posthoc_filter_json_result(result_str)
+            retry_calls = 0
+
+            required_keys = {
+                "source_is_false_positive",
+                "sink_is_false_positive",
+                "is_vulnerable",
+                "explanation",
+            }
+
+            valid_result = (
+                isinstance(result_json, dict)
+                and required_keys.issubset(result_json)
+                and isinstance(
+                    result_json.get("source_is_false_positive"),
+                    bool,
+                )
+                and isinstance(
+                    result_json.get("sink_is_false_positive"),
+                    bool,
+                )
+                and isinstance(
+                    result_json.get("is_vulnerable"),
+                    bool,
+                )
+                and isinstance(
+                    result_json.get("explanation"),
+                    str,
+                )
+            )
+
+            if not valid_result:
+                # STAGE8_BOUNDED_FORMAT_RETRY
+                # Retry exactly once for malformed structured output.
+                # No vulnerability verdict is fabricated. If the retry
+                # is also invalid, Stage 8 keeps its existing fail-hard
+                # behavior.
+                retry_calls = 1
+
+                self.project_logger.info(
+                    "    ==> Stage 8 malformed structured output for "
+                    f"result={result_id}, flow={code_flow_id}; "
+                    "retrying once."
+                )
+
+                retry_user_prompt = (
+                    prompt[1]["content"]
+                    + "\n\nFORMAT RECOVERY ONLY:\n"
+                    + "Return exactly one valid JSON object with exactly "
+                    + "these four fields: source_is_false_positive, "
+                    + "sink_is_false_positive, is_vulnerable, explanation. "
+                    + "The three verdict fields must be JSON booleans. "
+                    + "Explanation must be one short sentence of at most "
+                    + "40 words. Do not repeat phrases. Do not use Markdown "
+                    + "fences and do not write text outside the JSON object."
+                )
+
+                retry_prompt = [
+                    {
+                        "role": "system",
+                        "content": POSTHOC_FILTER_SYSTEM_PROMPT,
+                    },
+                    {
+                        "role": "user",
+                        "content": retry_user_prompt,
+                    },
+                ]
+
+                with open(
+                    f"{self.posthoc_filtering_output_log_path}/"
+                    f"raw_user_prompt_{result_id}_{code_flow_id}_retry1.txt",
+                    "w",
+                ) as f:
+                    f.write(retry_user_prompt)
+
+                try:
+                    model = self.get_model()
+
+                    if self.llm.lower().startswith("ollama"):
+                        (
+                            retry_str,
+                            _stage8_retry_exact_cache_hit,
+                            _stage8_retry_exact_cache_key,
+                        ) = self._stage8_predict_with_exact_cache(
+                            retry_prompt,
+                            "retry",
+                        )
+                    else:
+                        retry_str = model.predict(retry_prompt)
+
+                except Exception as retry_error:
+                    self.project_logger.error(
+                        "    ==> Stage 8 retry query failed for "
+                        f"result={result_id}, flow={code_flow_id}: "
+                        f"{retry_error}"
+                    )
+                    retry_str = ""
+
+                with open(
+                    f"{self.posthoc_filtering_output_log_path}/"
+                    f"raw_llm_response_{result_id}_{code_flow_id}_retry1.txt",
+                    "w",
+                ) as f:
+                    f.write(retry_str)
+
+                retry_json = self.parse_posthoc_filter_json_result(
+                    retry_str
+                )
+
+                retry_valid = (
+                    isinstance(retry_json, dict)
+                    and required_keys.issubset(retry_json)
+                    and isinstance(
+                        retry_json.get("source_is_false_positive"),
+                        bool,
+                    )
+                    and isinstance(
+                        retry_json.get("sink_is_false_positive"),
+                        bool,
+                    )
+                    and isinstance(
+                        retry_json.get("is_vulnerable"),
+                        bool,
+                    )
+                    and isinstance(
+                        retry_json.get("explanation"),
+                        str,
+                    )
+                )
+
+                if retry_valid:
+                    result_json = retry_json
+                    self.project_logger.info(
+                        "    ==> Stage 8 structured-output retry "
+                        f"succeeded for result={result_id}, "
+                        f"flow={code_flow_id}."
+                    )
+                else:
+                    result_json = {}
+                    self.project_logger.error(
+                        "    ==> Stage 8 structured-output retry "
+                        f"failed for result={result_id}, "
+                        f"flow={code_flow_id}."
+                    )
 
             source = self.path_location_to_enclose_func_and_msg(path[0], enclosing_func_locs)
             sink = self.path_location_to_enclose_func_and_msg(path[-1], enclosing_func_locs)
@@ -562,6 +1068,7 @@ class ContextualAnalysisPipeline:
                 {
                     "path": path,
                     "using_cache": False,
+                    "retry_calls": retry_calls,
                     "prompt": prompt[1]["content"],
                     "result": result_json,
                 }
@@ -644,21 +1151,131 @@ class ContextualAnalysisPipeline:
         passing_methods = set(self.extract_code_flow_passing_methods(project_classes, project_methods, code_flow))
         return len(fixed_methods.intersection(passing_methods)) > 0
 
+    # RESUME_VALIDATION_V1
+    def _resume_valid_posthoc_bundle(self):
+        try:
+            with open(
+                self.posthoc_filtering_output_result_json_path,
+                "r",
+                encoding="utf-8",
+            ) as f:
+                result_json = json.load(f)
+
+            with open(
+                self.posthoc_filtering_output_result_sarif_path,
+                "r",
+                encoding="utf-8",
+            ) as f:
+                result_sarif = json.load(f)
+
+            with open(
+                self.posthoc_filtering_output_stats_json_path,
+                "r",
+                encoding="utf-8",
+            ) as f:
+                stats = json.load(f)
+
+        except (
+            OSError,
+            json.JSONDecodeError,
+            UnicodeDecodeError,
+        ):
+            return False
+
+        if not isinstance(result_json, list):
+            return False
+
+        if not isinstance(result_sarif, dict):
+            return False
+
+        runs = result_sarif.get("runs")
+
+        if (
+            not isinstance(runs, list)
+            or len(runs) == 0
+            or not isinstance(runs[0], dict)
+            or not isinstance(
+                runs[0].get("results", []),
+                list,
+            )
+        ):
+            return False
+
+        if not isinstance(stats, dict):
+            return False
+
+        required_stats = {
+            "num_gpt_calls",
+            "num_llm_requests",
+            "num_cached",
+            "num_exact_cache_hits",
+            "num_exact_cache_misses",
+            "num_ignored",
+            "num_failure",
+            "num_vulnerable_paths",
+        }
+
+        if not required_stats.issubset(stats):
+            return False
+
+        if stats.get("num_failure") != 0:
+            return False
+
+        return True
+
     def run(self):
-        # 0. Checking if this is already computed
-        if os.path.exists(self.posthoc_filtering_output_result_sarif_path) and not self.overwrite and not self.overwrite_posthoc_filter:
+        # 0. Resume only from the complete JSON+SARIF+stats bundle.
+        resume_bundle_valid = (
+            self._resume_valid_posthoc_bundle()
+        )
+
+        if (
+            resume_bundle_valid
+            and not self.overwrite
+            and not self.overwrite_posthoc_filter
+        ):
             if self.rerun_skipped_fp:
-                ran_sarif = json.load(open(self.posthoc_filtering_output_result_sarif_path))
-                ran_codeflows = list(self.iter_code_flows_for_query(ran_sarif))
-                if len(ran_codeflows) == 0:
-                    # still need to run
-                    pass
-                else:
-                    self.project_logger.info("  ==> Found existing posthoc filter results; skipping...")
+                ran_sarif = json.load(
+                    open(
+                        self.posthoc_filtering_output_result_sarif_path
+                    )
+                )
+
+                ran_codeflows = list(
+                    self.iter_code_flows_for_query(
+                        ran_sarif
+                    )
+                )
+
+                if len(ran_codeflows) != 0:
+                    self.project_logger.info(
+                        "  ==> Found valid existing posthoc "
+                        "filter bundle; skipping..."
+                    )
                     return
             else:
-                self.project_logger.info("  ==> Found existing posthoc filter results; skipping...")
+                self.project_logger.info(
+                    "  ==> Found valid existing posthoc "
+                    "filter bundle; skipping..."
+                )
                 return
+
+        elif (
+            not self.overwrite
+            and not self.overwrite_posthoc_filter
+            and any(
+                os.path.exists(path)
+                for path in (
+                    self.posthoc_filtering_output_result_json_path,
+                    self.posthoc_filtering_output_result_sarif_path,
+                    self.posthoc_filtering_output_stats_json_path,
+                )
+            )
+        ):
+            self.project_logger.info(
+                "  ==> Existing posthoc result bundle is "
+                "incomplete or invalid; recomputing..."
+            )
         if not os.path.exists(self.query_output_result_sarif_path) and self.test_run:
             self.project_logger.info("  ==> No result SARIF during test run; skipping...")
             return
@@ -679,6 +1296,9 @@ class ContextualAnalysisPipeline:
         grouped_path_cache, false_positive_source_cache, false_positive_sink_cache = {}, {}, {}
         num_processed, num_alerts, num_calls, num_cached, num_ignored, num_failure = 0, 0, 0, 0, 0, 0
         code_flow_results, predicted_is_vulnerable_path_ids = [], []
+
+        self._stage8_exact_cache_hits = 0
+        self._stage8_exact_cache_misses = 0
 
         # 4. Iterate through each code flow and query LLM for posthoc filtering
         all_code_flows = list(self.iter_code_flows_for_query(original_sarif))
@@ -733,7 +1353,10 @@ class ContextualAnalysisPipeline:
                             if "using_cache" in entry and entry["using_cache"]:
                                 num_cached += 1
                             else:
-                                num_calls += 1
+                                num_calls += (
+                                    1
+                                    + int(entry.get("retry_calls", 0))
+                                )
                             if "is_vulnerable" in entry["result"]:
                                 if entry["result"]["is_vulnerable"]:
                                     num_alerts += 1
@@ -771,6 +1394,16 @@ class ContextualAnalysisPipeline:
                 else:
                     num_failure += 1
 
+        # Do not publish posthoc artifacts when any LLM query/parsing failed.
+        # A failed inference is not equivalent to a false-positive verdict.
+        if num_failure > 0:
+            msg = (
+                f"  ==> Stage 8 failed: {num_failure} code flow(s) "
+                "did not produce a valid vulnerability verdict"
+            )
+            self.project_logger.error(msg)
+            raise RuntimeError(msg)
+
         # 5. Dump the code flow query results
         if not self.test_run:
             json.dump(code_flow_results, open(self.posthoc_filtering_output_result_json_path, "w"))
@@ -782,9 +1415,22 @@ class ContextualAnalysisPipeline:
 
         # 7. Dump the statistics
         if not self.test_run:
+            if self.llm.lower().startswith("ollama"):
+                actual_model_calls = (
+                    self._stage8_exact_cache_misses
+                )
+            else:
+                actual_model_calls = num_calls
+
             stats = {
-                "num_gpt_calls": num_calls,
+                "num_gpt_calls": actual_model_calls,
+                "num_llm_requests": num_calls,
                 "num_cached": num_cached,
+                "num_exact_cache_hits":
+                    self._stage8_exact_cache_hits,
+                "num_exact_cache_misses":
+                    self._stage8_exact_cache_misses,
+                "num_ignored": num_ignored,
                 "num_failure": num_failure,
                 "num_vulnerable_paths": num_alerts,
             }

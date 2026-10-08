@@ -51,13 +51,20 @@ class CodeQLQueryRunner:
                 f.write(content)
                 
         pack_root = f"{self.project_output_path}/myqueries"
-        try:
-            sp.run([CODEQL, "pack", "install"], cwd=pack_root, check=False)
-        except Exception as e:
-            self.project_logger.error(f"  ==> Failed during 'codeql pack install': {e}; aborting"); exit(1)
+
+        # CODEQL_SKIP_PACK_INSTALL_V1
+        # Dependencies are frozen by codeql-pack.lock.yml and
+        # must already exist in the local CodeQL package cache.
+        # Do not invoke `codeql pack install` here because that
+        # command performs registry-aware dependency resolution.
         lock_file_path = f"{pack_root}/codeql-pack.lock.yml"
-        if not os.path.exists(lock_file_path):
-            self.project_logger.error("  ==> Failed to install CodeQL packs (missing codeql-pack.lock.yml); aborting"); exit(1)
+
+        if not os.path.isfile(lock_file_path):
+            self.project_logger.error(
+                "  ==> Missing frozen CodeQL lock file; "
+                "aborting"
+            )
+            exit(1)
             
         # 4. Setup the paths
         main_query = QUERIES[query]["queries"][0]
@@ -70,9 +77,30 @@ class CodeQLQueryRunner:
         os.makedirs(query_result_path, exist_ok=True)
 
         # 5. Run the query and generate result bqrs
-        sp.run([CODEQL, "query", "run", f"--database={self.project_codeql_db_path}", f"--output={query_result_bqrs_path}", "--", codeql_query_path])
-        if not os.path.exists(query_result_bqrs_path):
-            self.project_logger.error(f"  ==> Failed to run query `{query}`; aborting"); exit(1)
+        query_run_result = sp.run(
+            [
+                CODEQL,
+                "query",
+                "run",
+                f"--database={self.project_codeql_db_path}",
+                f"--output={query_result_bqrs_path}",
+                "--",
+                codeql_query_path,
+            ],
+            check=False,
+        )
+
+        if (
+            query_run_result.returncode != 0
+            or not os.path.exists(query_result_bqrs_path)
+        ):
+            self.project_logger.error(
+                "  ==> Failed to run query "
+                f"`{query}` "
+                f"(RC={query_run_result.returncode}); "
+                "aborting"
+            )
+            exit(1)
 
         # 6. Decode the query
         sp.run([CODEQL, "bqrs", "decode", query_result_bqrs_path, "--format=csv", f"--output={query_result_csv_path}"])

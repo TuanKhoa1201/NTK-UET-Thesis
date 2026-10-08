@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+exec python3 integration/run_project.py "$@"

@@ -1,12 +1,21 @@
 import java
 
+bindingset[m, i]
+string paramWithAnnotations(Callable m, int i) {
+    exists(Parameter p | p = m.getParameter(i) |
+        if exists(Annotation a | a = p.getAnAnnotation())
+        then result = concat(Annotation a | a = p.getAnAnnotation() | "@" + a.getType().getName(), " ") + " " + p.getType().getName() + " " + p.getName()
+        else result = p.getType().getName() + " " + p.getName()
+    )
+}
+
 bindingset[m]
 string fullSignature(Callable m) {
     if m instanceof Constructor
     then
-        result = m.getName() + "(" + concat(int i | i = [0 .. m.getNumberOfParameters()] | m.getParameter(i).getType().getName() + " " + m.getParameter(i).getName(), ", "  order by i asc)  + ")"
+        result = m.getName() + "(" + concat(int i | i = [0 .. m.getNumberOfParameters()] | paramWithAnnotations(m, i), ", "  order by i asc)  + ")"
     else
-        result = m.getReturnType().getName() + " " + m.getName() + "(" + concat(int i | i = [0 .. m.getNumberOfParameters()] | m.getParameter(i).getType().getName() + " " + m.getParameter(i).getName(), ", "  order by i asc)  + ")"
+        result = m.getReturnType().getName() + " " + m.getName() + "(" + concat(int i | i = [0 .. m.getNumberOfParameters()] | paramWithAnnotations(m, i), ", "  order by i asc)  + ")"
 }
 
 predicate isTested(Callable m) {
@@ -42,9 +51,7 @@ from
 where
     method.fromSource() and
     method.isPublic() and
-    not method.hasNoParameters() and
-    isTested(method) and
-    isNotInvokedByInternalFunction(method)
+    not method.hasNoParameters()
 select
     method.getDeclaringType().getSourceDeclaration().getPackage() as package,
     method.getDeclaringType().getSourceDeclaration() as clazz,

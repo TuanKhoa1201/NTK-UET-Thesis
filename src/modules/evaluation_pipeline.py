@@ -32,6 +32,7 @@ class EvaluationPipeline:
             project_logger = None,
             overwrite = False,
             test_run = False,
+            posthoc_filtering_output_stats_json_path = None,
     ):
         self.project_fixed_methods = project_fixed_methods
         self.class_locs_path = class_locs_path
@@ -48,8 +49,9 @@ class EvaluationPipeline:
         self.posthoc_filtering_output_result_sarif_path = posthoc_filtering_output_result_sarif_path
         self.final_output_json_path = final_output_json_path
         self.project_logger = project_logger
-        self.overwrite = overwrite,
+        self.overwrite = overwrite
         self.test_run = test_run
+        self.posthoc_filtering_output_stats_json_path = posthoc_filtering_output_stats_json_path
 
     def get_source_line(self, location):
         relative_file_url = location["location"]["physicalLocation"]["artifactLocation"]["uri"]
@@ -84,6 +86,19 @@ class EvaluationPipeline:
             num_func_param_candidates = len(pd.read_csv(self.source_func_param_candidates_path))
             num_labelled_func_param_sources = len(json.load(open(self.llm_labelled_source_func_params_path)))
 
+        posthoc_stats = {}
+        if (
+            self.posthoc_filtering_output_stats_json_path
+            and os.path.exists(
+                self.posthoc_filtering_output_stats_json_path
+            )
+        ):
+            posthoc_stats = json.load(
+                open(
+                    self.posthoc_filtering_output_stats_json_path
+                )
+            )
+
         return {
             "num_external_api_calls": num_external_api_calls,
             "num_api_candidates": num_api_candidates,
@@ -92,8 +107,25 @@ class EvaluationPipeline:
             "num_labelled_sinks": num_labelled_sinks,
             "num_public_func_candidates": num_func_param_candidates,
             "num_labelled_func_param_sources": num_labelled_func_param_sources,
-            "num_gpt_calls_for_posthoc_filtering": 0,
-            "num_cached_during_posthoc_filtering": 0,
+            "num_gpt_calls_for_posthoc_filtering": posthoc_stats.get(
+                "num_gpt_calls", 0
+            ),
+            "num_cached_during_posthoc_filtering": posthoc_stats.get(
+                "num_cached", 0
+            ),
+            "num_llm_requests_for_posthoc_filtering": posthoc_stats.get(
+                "num_llm_requests",
+                posthoc_stats.get("num_gpt_calls", 0),
+            ),
+            "num_exact_cache_hits_for_posthoc_filtering": posthoc_stats.get(
+                "num_exact_cache_hits", 0
+            ),
+            "num_exact_cache_misses_for_posthoc_filtering": posthoc_stats.get(
+                "num_exact_cache_misses", 0
+            ),
+            "num_ignored_during_posthoc_filtering": posthoc_stats.get(
+                "num_ignored", 0
+            ),
         }
 
     def extract_code_flow_passing_files(self, code_flow):
@@ -209,9 +241,19 @@ class EvaluationPipeline:
             fixed_methods.add(f"{file_name}:{class_name}:{method_name}")
 
         # 4. Iterate through all the code flows, and check if the passing locations has intersection with fixed locations
-        code_flow_passes_fix_file, code_flow_passes_fix_method = False, False
+        ground_truth_file_available = len(fixed_files) > 0
+        ground_truth_method_available = len(fixed_methods) > 0
+
+        code_flow_passes_fix_file = (
+            False if ground_truth_file_available else None
+        )
+        code_flow_passes_fix_method = (
+            False if ground_truth_method_available else None
+        )
+
         num_true_pos_paths_file, num_true_pos_paths_method = 0, 0
         tp_result_file_ids, tp_result_method_ids = set(), set()
+        evaluated_result_ids = set()
         num_total = 0
         all_code_flows = self.iter_code_flows(result_sarif)
         code_flow_iterator = tqdm(list(all_code_flows))
@@ -220,16 +262,24 @@ class EvaluationPipeline:
             if self.ignore_code_flow(code_flow):
                 continue
 
+            evaluated_result_ids.add(result_id)
+
             # 4.1. Get recall@file
             passing_files = set(self.extract_code_flow_passing_files(code_flow))
-            if len(fixed_files.intersection(passing_files)) > 0:
+            if (
+                ground_truth_file_available
+                and len(fixed_files.intersection(passing_files)) > 0
+            ):
                 code_flow_passes_fix_file = True
                 num_true_pos_paths_file += 1
                 tp_result_file_ids.add(result_id)
 
             # 4.1. Get recall@method
             passing_methods = set(self.extract_code_flow_passing_methods(project_classes, project_methods, code_flow))
-            if len(fixed_methods.intersection(passing_methods)) > 0:
+            if (
+                ground_truth_method_available
+                and len(fixed_methods.intersection(passing_methods)) > 0
+            ):
                 code_flow_passes_fix_method = True
                 num_true_pos_paths_method += 1
                 tp_result_method_ids.add(result_id)
@@ -240,14 +290,32 @@ class EvaluationPipeline:
 
         # 5. Return
         return {
-            "num_results": len(result_sarif["runs"][0]["results"]),
+            "num_results": len(evaluated_result_ids),
             "num_paths": num_total,
+            "ground_truth_file_available": ground_truth_file_available,
+            "ground_truth_method_available": ground_truth_method_available,
             "recall_file": code_flow_passes_fix_file,
-            "num_tp_paths_file": num_true_pos_paths_file,
-            "num_tp_results_file": num_true_pos_results_file,
+            "num_tp_paths_file": (
+                num_true_pos_paths_file
+                if ground_truth_file_available
+                else None
+            ),
+            "num_tp_results_file": (
+                num_true_pos_results_file
+                if ground_truth_file_available
+                else None
+            ),
             "recall_method": code_flow_passes_fix_method,
-            "num_tp_paths_method": num_true_pos_paths_method,
-            "num_tp_results_method": num_true_pos_results_method,
+            "num_tp_paths_method": (
+                num_true_pos_paths_method
+                if ground_truth_method_available
+                else None
+            ),
+            "num_tp_results_method": (
+                num_true_pos_results_method
+                if ground_truth_method_available
+                else None
+            ),
         }
 
     def run_vanilla_only(self):
@@ -265,16 +333,72 @@ class EvaluationPipeline:
         else:
             self.project_logger.info("    ==> Vanilla result file not found...")
 
+    # RESUME_VALIDATION_V1
+    def _resume_load_valid_final_result(self):
+        if not os.path.isfile(
+            self.final_output_json_path
+        ):
+            return None
+
+        try:
+            with open(
+                self.final_output_json_path,
+                "r",
+                encoding="utf-8",
+            ) as f:
+                result = json.load(f)
+
+        except (
+            OSError,
+            json.JSONDecodeError,
+            UnicodeDecodeError,
+        ):
+            return None
+
+        if not isinstance(result, dict):
+            return None
+
+        if not isinstance(
+            result.get("statistics"),
+            dict,
+        ):
+            return None
+
+        if not isinstance(
+            result.get("vanilla_result"),
+            dict,
+        ):
+            return None
+
+        if not isinstance(
+            result.get("posthoc_filter_result"),
+            dict,
+        ):
+            return None
+
+        return result
+
     def run(self):
         need_eval = True
-        if os.path.exists(self.final_output_json_path) and not self.overwrite:
-            need_eval = False
-            self.project_logger.info("  ==> Found existing statistics, loading...")
-            result = json.load(open(self.final_output_json_path))
-            if "vanilla_result" not in result:
-                need_eval = True
-            if "posthoc_filter_result" not in result:
-                need_eval = True
+        result = None
+
+        if not self.overwrite:
+            result = (
+                self._resume_load_valid_final_result()
+            )
+
+            if result is not None:
+                need_eval = False
+                self.project_logger.info(
+                    "  ==> Found valid existing statistics, loading..."
+                )
+            elif os.path.exists(
+                self.final_output_json_path
+            ):
+                self.project_logger.info(
+                    "  ==> Existing final statistics are invalid "
+                    "or incomplete; recomputing..."
+                )
 
         if need_eval:
             result = {}
