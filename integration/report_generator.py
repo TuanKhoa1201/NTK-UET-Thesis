@@ -1512,8 +1512,10 @@ class FindingMerger:
 # ---------------------------------------------------------------------------
 
 if __package__:
+    from .scoring_v2 import score_finding_v2
     from .scoring_v1 import score_finding as score_finding_v1
 else:
+    from scoring_v2 import score_finding_v2
     from scoring_v1 import score_finding as score_finding_v1
 
 
@@ -2377,9 +2379,9 @@ def _generate_report_impl(cfg: Any) -> dict:
     merger = FindingMerger()
     merged = merger.merge(opengrep_findings, iris_sarif_findings, iris_verdicts)
 
-    # NTK Scoring V1 Candidate; legacy scorer retained above.
+    # NTK SAST Observable Evidence Scoring V2.2 with 6 Safety Invariants
     for m in merged:
-        scored = score_finding_v1(m)
+        scored = score_finding_v2(m)
         m.risk_score = scored["risk_score"]
         m.risk_level = scored["risk_level"]
         m.score_version = scored["score_version"]

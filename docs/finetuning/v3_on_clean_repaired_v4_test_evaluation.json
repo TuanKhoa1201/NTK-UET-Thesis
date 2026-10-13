@@ -1,0 +1,2708 @@
+{
+  "dataset_version": "NTK-IRIS-STAGE3-CANONICAL-V4.1-REPAIRED",
+  "evaluation_partition": "clean_heldout_unexposed_test",
+  "sample_count": 128,
+  "strict_json_validity_rate": 1.0,
+  "full_schema_validity_rate": 1.0,
+  "strict_structured_accuracy": 0.7578125,
+  "lenient_extraction_accuracy": 0.7578125,
+  "sink_args_accuracy": 0.0,
+  "macro_f1": 0.5047743876131333,
+  "weighted_f1": 0.8094398646216605,
+  "avg_latency_ms": 4458.356022834778,
+  "classification_report": {
+    "source": {
+      "precision": 0.9866666666666667,
+      "recall": 0.7956989247311828,
+      "f1-score": 0.8809523809523809,
+      "support": 93.0
+    },
+    "sink": {
+      "precision": 0.8333333333333334,
+      "recall": 0.8695652173913043,
+      "f1-score": 0.851063829787234,
+      "support": 23.0
+    },
+    "taint-propagator": {
+      "precision": 0.05555555555555555,
+      "recall": 1.0,
+      "f1-score": 0.10526315789473684,
+      "support": 1.0
+    },
+    "none": {
+      "precision": 0.18181818181818182,
+      "recall": 0.18181818181818182,
+      "f1-score": 0.18181818181818182,
+      "support": 11.0
+    },
+    "accuracy": 0.7578125,
+    "macro avg": {
+      "precision": 0.5143434343434343,
+      "recall": 0.7117705809851672,
+      "f1-score": 0.5047743876131333,
+      "support": 128.0
+    },
+    "weighted avg": {
+      "precision": 0.8826736111111112,
+      "recall": 0.7578125,
+      "f1-score": 0.8094398646216605,
+      "support": 128.0
+    }
+  },
+  "sample_details": [
+    {
+      "idx": 0,
+      "gt": {
+        "package": "org.springframework.validation",
+        "class": "DataBinder",
+        "method": "setDisallowedFields",
+        "signature": "void setDisallowedFields(String[] p0)",
+        "sink_args": [],
+        "type": "none"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "none",
+        "lenient_type": "none",
+        "sink_args": [],
+        "raw": "{\"package\":\"org.springframework.validation\",\"class\":\"DataBinder\",\"method\":\"setDisallowedFields\",\"signature\":\"void setDisallowedFields(String[] p0)\",\"sink_args\":[],\"type\":\"none\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 1,
+      "gt": {
+        "package": "org.springframework.validation",
+        "class": "DataBinder",
+        "method": "setDisallowedFields",
+        "signature": "void setDisallowedFields(String[] p0)",
+        "sink_args": [],
+        "type": "none"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "taint-propagator",
+        "lenient_type": "taint-propagator",
+        "sink_args": [],
+        "raw": "{\"package\":\"org.springframework.validation\",\"class\":\"DataBinder\",\"method\":\"setDisallowedFields\",\"signature\":\"void setDisallowedFields(String[] p0)\",\"sink_args\":[],\"type\":\"taint-propagator\"}"
+      },
+      "is_strict_correct": false
+    },
+    {
+      "idx": 2,
+      "gt": {
+        "package": "org.springframework.validation",
+        "class": "DataBinder",
+        "method": "setDisallowedFields",
+        "signature": "void setDisallowedFields(String[] p0)",
+        "sink_args": [],
+        "type": "none"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "taint-propagator",
+        "lenient_type": "taint-propagator",
+        "sink_args": [],
+        "raw": "{\"package\":\"org.springframework.validation\",\"class\":\"DataBinder\",\"method\":\"setDisallowedFields\",\"signature\":\"void setDisallowedFields(String[] p0)\",\"sink_args\":[],\"type\":\"taint-propagator\"}"
+      },
+      "is_strict_correct": false
+    },
+    {
+      "idx": 3,
+      "gt": {
+        "package": "org.springframework.validation",
+        "class": "DataBinder",
+        "method": "setDisallowedFields",
+        "signature": "void setDisallowedFields(String[] p0)",
+        "sink_args": [],
+        "type": "none"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "none",
+        "lenient_type": "none",
+        "sink_args": [],
+        "raw": "{\"package\":\"org.springframework.validation\",\"class\":\"DataBinder\",\"method\":\"setDisallowedFields\",\"signature\":\"void setDisallowedFields(String[] p0)\",\"sink_args\":[],\"type\":\"none\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 4,
+      "gt": {
+        "package": "org.springframework.validation",
+        "class": "DataBinder",
+        "method": "setValidator",
+        "signature": "void setValidator(Validator p0)",
+        "sink_args": [],
+        "type": "none"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "taint-propagator",
+        "lenient_type": "taint-propagator",
+        "sink_args": [],
+        "raw": "{\"package\":\"org.springframework.validation\",\"class\":\"DataBinder\",\"method\":\"setValidator\",\"signature\":\"void setValidator(Validator p0)\",\"sink_args\":[],\"type\":\"taint-propagator\"}"
+      },
+      "is_strict_correct": false
+    },
+    {
+      "idx": 5,
+      "gt": {
+        "package": "org.springframework.validation",
+        "class": "DataBinder",
+        "method": "setValidator",
+        "signature": "void setValidator(Validator p0)",
+        "sink_args": [],
+        "type": "none"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "taint-propagator",
+        "lenient_type": "taint-propagator",
+        "sink_args": [],
+        "raw": "{\"package\":\"org.springframework.validation\",\"class\":\"DataBinder\",\"method\":\"setValidator\",\"signature\":\"void setValidator(Validator p0)\",\"sink_args\":[],\"type\":\"taint-propagator\"}"
+      },
+      "is_strict_correct": false
+    },
+    {
+      "idx": 6,
+      "gt": {
+        "package": "org.springframework.validation",
+        "class": "DataBinder",
+        "method": "setValidator",
+        "signature": "void setValidator(Validator p0)",
+        "sink_args": [],
+        "type": "none"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "taint-propagator",
+        "lenient_type": "taint-propagator",
+        "sink_args": [],
+        "raw": "{\"package\":\"org.springframework.validation\",\"class\":\"DataBinder\",\"method\":\"setValidator\",\"signature\":\"void setValidator(Validator p0)\",\"sink_args\":[],\"type\":\"taint-propagator\"}"
+      },
+      "is_strict_correct": false
+    },
+    {
+      "idx": 7,
+      "gt": {
+        "package": "org.springframework.validation",
+        "class": "DataBinder",
+        "method": "setValidator",
+        "signature": "void setValidator(Validator p0)",
+        "sink_args": [],
+        "type": "none"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "taint-propagator",
+        "lenient_type": "taint-propagator",
+        "sink_args": [],
+        "raw": "{\"package\":\"org.springframework.validation\",\"class\":\"DataBinder\",\"method\":\"setValidator\",\"signature\":\"void setValidator(Validator p0)\",\"sink_args\":[],\"type\":\"taint-propagator\"}"
+      },
+      "is_strict_correct": false
+    },
+    {
+      "idx": 8,
+      "gt": {
+        "package": "org.springframework.validation",
+        "class": "Errors",
+        "method": "rejectValue",
+        "signature": "void rejectValue(String p0, String p1, String p2)",
+        "sink_args": [],
+        "type": "none"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "taint-propagator",
+        "lenient_type": "taint-propagator",
+        "sink_args": [],
+        "raw": "{\"package\":\"org.springframework.validation\",\"class\":\"Errors\",\"method\":\"rejectValue\",\"signature\":\"void rejectValue(String p0, String p1, String p2)\",\"sink_args\":[],\"type\":\"taint-propagator\"}"
+      },
+      "is_strict_correct": false
+    },
+    {
+      "idx": 9,
+      "gt": {
+        "package": "org.springframework.validation",
+        "class": "Errors",
+        "method": "rejectValue",
+        "signature": "void rejectValue(String p0, String p1, String p2)",
+        "sink_args": [],
+        "type": "none"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "taint-propagator",
+        "lenient_type": "taint-propagator",
+        "sink_args": [],
+        "raw": "{\"package\":\"org.springframework.validation\",\"class\":\"Errors\",\"method\":\"rejectValue\",\"signature\":\"void rejectValue(String p0, String p1, String p2)\",\"sink_args\":[],\"type\":\"taint-propagator\"}"
+      },
+      "is_strict_correct": false
+    },
+    {
+      "idx": 10,
+      "gt": {
+        "package": "org.springframework.validation",
+        "class": "Errors",
+        "method": "rejectValue",
+        "signature": "void rejectValue(String p0, String p1, String p2)",
+        "sink_args": [],
+        "type": "taint-propagator"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "taint-propagator",
+        "lenient_type": "taint-propagator",
+        "sink_args": [],
+        "raw": "{\"package\":\"org.springframework.validation\",\"class\":\"Errors\",\"method\":\"rejectValue\",\"signature\":\"void rejectValue(String p0, String p1, String p2)\",\"sink_args\":[],\"type\":\"taint-propagator\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 11,
+      "gt": {
+        "package": "org.springframework.validation",
+        "class": "Errors",
+        "method": "rejectValue",
+        "signature": "void rejectValue(String p0, String p1, String p2)",
+        "sink_args": [],
+        "type": "none"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "taint-propagator",
+        "lenient_type": "taint-propagator",
+        "sink_args": [],
+        "raw": "{\"package\":\"org.springframework.validation\",\"class\":\"Errors\",\"method\":\"rejectValue\",\"signature\":\"void rejectValue(String p0, String p1, String p2)\",\"sink_args\":[],\"type\":\"taint-propagator\"}"
+      },
+      "is_strict_correct": false
+    },
+    {
+      "idx": 12,
+      "gt": {
+        "package": "org.apache.hadoop.hive.ql.metadata",
+        "class": "Hive",
+        "method": "copyFiles",
+        "signature": "copyFiles((HiveConf)",
+        "sink_args": [
+          "Argument[0]"
+        ],
+        "type": "sink"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"org.apache.hadoop.hive.ql.metadata\",\"class\":\"Hive\",\"method\":\"copyFiles\",\"signature\":\"copyFiles((HiveConf)\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": false
+    },
+    {
+      "idx": 13,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentInterface",
+        "method": "call",
+        "signature": "call((String)",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentInterface\",\"method\":\"call\",\"signature\":\"call((String)\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 14,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentInterface",
+        "method": "call",
+        "signature": "call((String)",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentInterface\",\"method\":\"call\",\"signature\":\"call((String)\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 15,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentInterface",
+        "method": "call",
+        "signature": "call((String)",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentInterface\",\"method\":\"call\",\"signature\":\"call((String)\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 16,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentInterface",
+        "method": "delete",
+        "signature": "delete((Uri)",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentInterface\",\"method\":\"delete\",\"signature\":\"delete((Uri)\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 17,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentInterface",
+        "method": "delete",
+        "signature": "delete((Uri)",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentInterface\",\"method\":\"delete\",\"signature\":\"delete((Uri)\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 18,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentInterface",
+        "method": "delete",
+        "signature": "delete((Uri)",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentInterface\",\"method\":\"delete\",\"signature\":\"delete((Uri)\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 19,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentInterface",
+        "method": "getType",
+        "signature": "getType((Uri))",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentInterface\",\"method\":\"getType\",\"signature\":\"getType((Uri))\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 20,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentInterface",
+        "method": "getType",
+        "signature": "getType((Uri))",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentInterface\",\"method\":\"getType\",\"signature\":\"getType((Uri))\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 21,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentInterface",
+        "method": "getType",
+        "signature": "getType((Uri))",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "taint-propagator",
+        "lenient_type": "taint-propagator",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentInterface\",\"method\":\"getType\",\"signature\":\"getType((Uri))\",\"sink_args\":[],\"type\":\"taint-propagator\"}"
+      },
+      "is_strict_correct": false
+    },
+    {
+      "idx": 22,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentInterface",
+        "method": "insert",
+        "signature": "insert((Uri)",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentInterface\",\"method\":\"insert\",\"signature\":\"insert((Uri)\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 23,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentInterface",
+        "method": "insert",
+        "signature": "insert((Uri)",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentInterface\",\"method\":\"insert\",\"signature\":\"insert((Uri)\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 24,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentInterface",
+        "method": "insert",
+        "signature": "insert((Uri)",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentInterface\",\"method\":\"insert\",\"signature\":\"insert((Uri)\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 25,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentInterface",
+        "method": "openAssetFile",
+        "signature": "openAssetFile((Uri)",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentInterface\",\"method\":\"openAssetFile\",\"signature\":\"openAssetFile((Uri)\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 26,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentInterface",
+        "method": "openAssetFile",
+        "signature": "openAssetFile((Uri)",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentInterface\",\"method\":\"openAssetFile\",\"signature\":\"openAssetFile((Uri)\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 27,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentInterface",
+        "method": "openAssetFile",
+        "signature": "openAssetFile((Uri)",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentInterface\",\"method\":\"openAssetFile\",\"signature\":\"openAssetFile((Uri)\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 28,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentInterface",
+        "method": "openFile",
+        "signature": "openFile((Uri)",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentInterface\",\"method\":\"openFile\",\"signature\":\"openFile((Uri)\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 29,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentInterface",
+        "method": "openFile",
+        "signature": "openFile((Uri)",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentInterface\",\"method\":\"openFile\",\"signature\":\"openFile((Uri)\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 30,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentInterface",
+        "method": "openFile",
+        "signature": "openFile((Uri)",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentInterface\",\"method\":\"openFile\",\"signature\":\"openFile((Uri)\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 31,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentInterface",
+        "method": "openTypedAssetFile",
+        "signature": "openTypedAssetFile((Uri)",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentInterface\",\"method\":\"openTypedAssetFile\",\"signature\":\"openTypedAssetFile((Uri)\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 32,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentInterface",
+        "method": "openTypedAssetFile",
+        "signature": "openTypedAssetFile((Uri)",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentInterface\",\"method\":\"openTypedAssetFile\",\"signature\":\"openTypedAssetFile((Uri)\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 33,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentInterface",
+        "method": "openTypedAssetFile",
+        "signature": "openTypedAssetFile((Uri)",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentInterface\",\"method\":\"openTypedAssetFile\",\"signature\":\"openTypedAssetFile((Uri)\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 34,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentInterface",
+        "method": "query",
+        "signature": "query((Uri)",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentInterface\",\"method\":\"query\",\"signature\":\"query((Uri)\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 35,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentInterface",
+        "method": "query",
+        "signature": "query((Uri)",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentInterface\",\"method\":\"query\",\"signature\":\"query((Uri)\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 36,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentInterface",
+        "method": "query",
+        "signature": "query((Uri)",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentInterface\",\"method\":\"query\",\"signature\":\"query((Uri)\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 37,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentInterface",
+        "method": "update",
+        "signature": "update((Uri)",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentInterface\",\"method\":\"update\",\"signature\":\"update((Uri)\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 38,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentInterface",
+        "method": "update",
+        "signature": "update((Uri)",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentInterface\",\"method\":\"update\",\"signature\":\"update((Uri)\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 39,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentInterface",
+        "method": "update",
+        "signature": "update((Uri)",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentInterface\",\"method\":\"update\",\"signature\":\"update((Uri)\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 40,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentProvider",
+        "method": "getType",
+        "signature": "getType((Uri))",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentProvider\",\"method\":\"getType\",\"signature\":\"getType((Uri))\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 41,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentProvider",
+        "method": "getType",
+        "signature": "getType((Uri))",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentProvider\",\"method\":\"getType\",\"signature\":\"getType((Uri))\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 42,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentProvider",
+        "method": "getType",
+        "signature": "getType((Uri))",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentProvider\",\"method\":\"getType\",\"signature\":\"getType((Uri))\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 43,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentProvider",
+        "method": "insert",
+        "signature": "insert((Uri)",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentProvider\",\"method\":\"insert\",\"signature\":\"insert((Uri)\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 44,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentProvider",
+        "method": "insert",
+        "signature": "insert((Uri)",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentProvider\",\"method\":\"insert\",\"signature\":\"insert((Uri)\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 45,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentProvider",
+        "method": "insert",
+        "signature": "insert((Uri)",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentProvider\",\"method\":\"insert\",\"signature\":\"insert((Uri)\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 46,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentProvider",
+        "method": "openFile",
+        "signature": "openFile((Uri)",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentProvider\",\"method\":\"openFile\",\"signature\":\"openFile((Uri)\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 47,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentProvider",
+        "method": "openFile",
+        "signature": "openFile((Uri)",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentProvider\",\"method\":\"openFile\",\"signature\":\"openFile((Uri)\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 48,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentProvider",
+        "method": "openFile",
+        "signature": "openFile((Uri)",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentProvider\",\"method\":\"openFile\",\"signature\":\"openFile((Uri)\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 49,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentProvider",
+        "method": "query",
+        "signature": "query((Uri)",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentProvider\",\"method\":\"query\",\"signature\":\"query((Uri)\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 50,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentProvider",
+        "method": "query",
+        "signature": "query((Uri)",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentProvider\",\"method\":\"query\",\"signature\":\"query((Uri)\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 51,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentProvider",
+        "method": "query",
+        "signature": "query((Uri)",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentProvider\",\"method\":\"query\",\"signature\":\"query((Uri)\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 52,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentProvider",
+        "method": "update",
+        "signature": "update((Uri)",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentProvider\",\"method\":\"update\",\"signature\":\"update((Uri)\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 53,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentProvider",
+        "method": "update",
+        "signature": "update((Uri)",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentProvider\",\"method\":\"update\",\"signature\":\"update((Uri)\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 54,
+      "gt": {
+        "package": "android.content",
+        "class": "ContentProvider",
+        "method": "update",
+        "signature": "update((Uri)",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"ContentProvider\",\"method\":\"update\",\"signature\":\"update((Uri)\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 55,
+      "gt": {
+        "package": "android.content",
+        "class": "Context",
+        "method": "getExternalCacheDirs",
+        "signature": "getExternalCacheDirs(())",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"Context\",\"method\":\"getExternalCacheDirs\",\"signature\":\"getExternalCacheDirs(())\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 56,
+      "gt": {
+        "package": "android.content",
+        "class": "Context",
+        "method": "getExternalCacheDirs",
+        "signature": "getExternalCacheDirs(())",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"Context\",\"method\":\"getExternalCacheDirs\",\"signature\":\"getExternalCacheDirs(())\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 57,
+      "gt": {
+        "package": "android.content",
+        "class": "Context",
+        "method": "getExternalCacheDirs",
+        "signature": "getExternalCacheDirs(())",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"Context\",\"method\":\"getExternalCacheDirs\",\"signature\":\"getExternalCacheDirs(())\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 58,
+      "gt": {
+        "package": "android.content",
+        "class": "Context",
+        "method": "getExternalFilesDir",
+        "signature": "getExternalFilesDir((String))",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"Context\",\"method\":\"getExternalFilesDir\",\"signature\":\"getExternalFilesDir((String))\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 59,
+      "gt": {
+        "package": "android.content",
+        "class": "Context",
+        "method": "getExternalFilesDir",
+        "signature": "getExternalFilesDir((String))",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"Context\",\"method\":\"getExternalFilesDir\",\"signature\":\"getExternalFilesDir((String))\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 60,
+      "gt": {
+        "package": "android.content",
+        "class": "Context",
+        "method": "getExternalFilesDir",
+        "signature": "getExternalFilesDir((String))",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"Context\",\"method\":\"getExternalFilesDir\",\"signature\":\"getExternalFilesDir((String))\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 61,
+      "gt": {
+        "package": "android.content",
+        "class": "Context",
+        "method": "getExternalFilesDirs",
+        "signature": "getExternalFilesDirs((String))",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"Context\",\"method\":\"getExternalFilesDirs\",\"signature\":\"getExternalFilesDirs((String))\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 62,
+      "gt": {
+        "package": "android.content",
+        "class": "Context",
+        "method": "getExternalFilesDirs",
+        "signature": "getExternalFilesDirs((String))",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"Context\",\"method\":\"getExternalFilesDirs\",\"signature\":\"getExternalFilesDirs((String))\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 63,
+      "gt": {
+        "package": "android.content",
+        "class": "Context",
+        "method": "getExternalFilesDirs",
+        "signature": "getExternalFilesDirs((String))",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.content\",\"class\":\"Context\",\"method\":\"getExternalFilesDirs\",\"signature\":\"getExternalFilesDirs((String))\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 64,
+      "gt": {
+        "package": "android.widget",
+        "class": "EditText",
+        "method": "getText",
+        "signature": "getText()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.widget\",\"class\":\"EditText\",\"method\":\"getText\",\"signature\":\"getText()\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 65,
+      "gt": {
+        "package": "android.widget",
+        "class": "EditText",
+        "method": "getText",
+        "signature": "getText()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.widget\",\"class\":\"EditText\",\"method\":\"getText\",\"signature\":\"getText()\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 66,
+      "gt": {
+        "package": "android.widget",
+        "class": "EditText",
+        "method": "getText",
+        "signature": "getText()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.widget\",\"class\":\"EditText\",\"method\":\"getText\",\"signature\":\"getText()\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 67,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeCount",
+        "signature": "getAttributeCount()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getAttributeCount\",\"signature\":\"getAttributeCount()\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 68,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeCount",
+        "signature": "getAttributeCount()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getAttributeCount\",\"signature\":\"getAttributeCount()\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 69,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeCount",
+        "signature": "getAttributeCount()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getAttributeCount\",\"signature\":\"getAttributeCount()\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 70,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeIntValue",
+        "signature": "getAttributeIntValue()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getAttributeIntValue\",\"signature\":\"getAttributeIntValue()\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 71,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeIntValue",
+        "signature": "getAttributeIntValue()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getAttributeIntValue\",\"signature\":\"getAttributeIntValue()\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 72,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeIntValue",
+        "signature": "getAttributeIntValue()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getAttributeIntValue\",\"signature\":\"getAttributeIntValue()\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 73,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeListValue",
+        "signature": "getAttributeListValue()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getAttributeListValue\",\"signature\":\"getAttributeListValue()\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 74,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeListValue",
+        "signature": "getAttributeListValue()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getAttributeListValue\",\"signature\":\"getAttributeListValue()\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 75,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeListValue",
+        "signature": "getAttributeListValue()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getAttributeListValue\",\"signature\":\"getAttributeListValue()\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 76,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeResourceValue",
+        "signature": "getAttributeResourceValue()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getAttributeResourceValue\",\"signature\":\"getAttributeResourceValue()\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 77,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeResourceValue",
+        "signature": "getAttributeResourceValue()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getAttributeResourceValue\",\"signature\":\"getAttributeResourceValue()\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 78,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeResourceValue",
+        "signature": "getAttributeResourceValue()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getAttributeResourceValue\",\"signature\":\"getAttributeResourceValue()\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 79,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getPositionDescription",
+        "signature": "getPositionDescription()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getPositionDescription\",\"signature\":\"getPositionDescription()\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 80,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getPositionDescription",
+        "signature": "getPositionDescription()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getPositionDescription\",\"signature\":\"getPositionDescription()\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 81,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getPositionDescription",
+        "signature": "getPositionDescription()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getPositionDescription\",\"signature\":\"getPositionDescription()\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 82,
+      "gt": {
+        "package": "android.os",
+        "class": "Environment",
+        "method": "getExternalStorageDirectory",
+        "signature": "getExternalStorageDirectory(())",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.os\",\"class\":\"Environment\",\"method\":\"getExternalStorageDirectory\",\"signature\":\"getExternalStorageDirectory(())\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 83,
+      "gt": {
+        "package": "android.os",
+        "class": "Environment",
+        "method": "getExternalStorageDirectory",
+        "signature": "getExternalStorageDirectory(())",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.os\",\"class\":\"Environment\",\"method\":\"getExternalStorageDirectory\",\"signature\":\"getExternalStorageDirectory(())\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 84,
+      "gt": {
+        "package": "android.os",
+        "class": "Environment",
+        "method": "getExternalStorageDirectory",
+        "signature": "getExternalStorageDirectory(())",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.os\",\"class\":\"Environment\",\"method\":\"getExternalStorageDirectory\",\"signature\":\"getExternalStorageDirectory(())\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 85,
+      "gt": {
+        "package": "android.os",
+        "class": "Environment",
+        "method": "getExternalStoragePublicDirectory",
+        "signature": "getExternalStoragePublicDirectory((String))",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.os\",\"class\":\"Environment\",\"method\":\"getExternalStoragePublicDirectory\",\"signature\":\"getExternalStoragePublicDirectory((String))\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 86,
+      "gt": {
+        "package": "android.os",
+        "class": "Environment",
+        "method": "getExternalStoragePublicDirectory",
+        "signature": "getExternalStoragePublicDirectory((String))",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "sink",
+        "lenient_type": "sink",
+        "sink_args": [
+          "0"
+        ],
+        "raw": "{\"package\":\"android.os\",\"class\":\"Environment\",\"method\":\"getExternalStoragePublicDirectory\",\"signature\":\"getExternalStoragePublicDirectory((String))\",\"sink_args\":[\"0\"],\"type\":\"sink\"}"
+      },
+      "is_strict_correct": false
+    },
+    {
+      "idx": 87,
+      "gt": {
+        "package": "android.os",
+        "class": "Environment",
+        "method": "getExternalStoragePublicDirectory",
+        "signature": "getExternalStoragePublicDirectory((String))",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "taint-propagator",
+        "lenient_type": "taint-propagator",
+        "sink_args": [],
+        "raw": "{\"package\":\"android.os\",\"class\":\"Environment\",\"method\":\"getExternalStoragePublicDirectory\",\"signature\":\"getExternalStoragePublicDirectory((String))\",\"sink_args\":[],\"type\":\"taint-propagator\"}"
+      },
+      "is_strict_correct": false
+    },
+    {
+      "idx": 88,
+      "gt": {
+        "package": "android.os",
+        "class": "ParcelFileDescriptor",
+        "method": "open",
+        "signature": "open()",
+        "sink_args": [
+          "Argument[0]"
+        ],
+        "type": "sink"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "sink",
+        "lenient_type": "sink",
+        "sink_args": [
+          "this"
+        ],
+        "raw": "{\"package\":\"android.os\",\"class\":\"ParcelFileDescriptor\",\"method\":\"open\",\"signature\":\"open()\",\"sink_args\":[\"this\"],\"type\":\"sink\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 89,
+      "gt": {
+        "package": "hudson.util.io",
+        "class": "ReopenableFileOutputStream",
+        "method": "ReopenableFileOutputStream",
+        "signature": "ReopenableFileOutputStream((File))",
+        "sink_args": [
+          "Argument[0]"
+        ],
+        "type": "sink"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "sink",
+        "lenient_type": "sink",
+        "sink_args": [
+          "0"
+        ],
+        "raw": "{\"package\":\"hudson.util.io\",\"class\":\"ReopenableFileOutputStream\",\"method\":\"ReopenableFileOutputStream\",\"signature\":\"ReopenableFileOutputStream((File))\",\"sink_args\":[\"0\"],\"type\":\"sink\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 90,
+      "gt": {
+        "package": "hudson.util.io",
+        "class": "RewindableFileOutputStream",
+        "method": "RewindableFileOutputStream",
+        "signature": "RewindableFileOutputStream((File))",
+        "sink_args": [
+          "Argument[0]"
+        ],
+        "type": "sink"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "sink",
+        "lenient_type": "sink",
+        "sink_args": [
+          "0"
+        ],
+        "raw": "{\"package\":\"hudson.util.io\",\"class\":\"RewindableFileOutputStream\",\"method\":\"RewindableFileOutputStream\",\"signature\":\"RewindableFileOutputStream((File))\",\"sink_args\":[\"0\"],\"type\":\"sink\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 91,
+      "gt": {
+        "package": "hudson.util",
+        "class": "TextFile",
+        "method": "delete",
+        "signature": "delete(())",
+        "sink_args": [
+          "Argument[this]"
+        ],
+        "type": "sink"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "sink",
+        "lenient_type": "sink",
+        "sink_args": [
+          "this"
+        ],
+        "raw": "{\"package\":\"hudson.util\",\"class\":\"TextFile\",\"method\":\"delete\",\"signature\":\"delete(())\",\"sink_args\":[\"this\"],\"type\":\"sink\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 92,
+      "gt": {
+        "package": "hudson.util",
+        "class": "TextFile",
+        "method": "lines",
+        "signature": "lines(())",
+        "sink_args": [
+          "Argument[this]"
+        ],
+        "type": "sink"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "sink",
+        "lenient_type": "sink",
+        "sink_args": [
+          "this"
+        ],
+        "raw": "{\"package\":\"hudson.util\",\"class\":\"TextFile\",\"method\":\"lines\",\"signature\":\"lines(())\",\"sink_args\":[\"this\"],\"type\":\"sink\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 93,
+      "gt": {
+        "package": "hudson.util",
+        "class": "TextFile",
+        "method": "read",
+        "signature": "read(())",
+        "sink_args": [
+          "Argument[this]"
+        ],
+        "type": "sink"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "sink",
+        "lenient_type": "sink",
+        "sink_args": [
+          "this"
+        ],
+        "raw": "{\"package\":\"hudson.util\",\"class\":\"TextFile\",\"method\":\"read\",\"signature\":\"read(())\",\"sink_args\":[\"this\"],\"type\":\"sink\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 94,
+      "gt": {
+        "package": "hudson.util",
+        "class": "TextFile",
+        "method": "write",
+        "signature": "write((String))",
+        "sink_args": [
+          "Argument[this]"
+        ],
+        "type": "sink"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "sink",
+        "lenient_type": "sink",
+        "sink_args": [
+          "0"
+        ],
+        "raw": "{\"package\":\"hudson.util\",\"class\":\"TextFile\",\"method\":\"write\",\"signature\":\"write((String))\",\"sink_args\":[\"0\"],\"type\":\"sink\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 95,
+      "gt": {
+        "package": "hudson",
+        "class": "FilePath",
+        "method": "unzipFrom",
+        "signature": "unzipFrom((InputStream))",
+        "sink_args": [
+          "Argument[0]"
+        ],
+        "type": "sink"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "sink",
+        "lenient_type": "sink",
+        "sink_args": [
+          "0"
+        ],
+        "raw": "{\"package\":\"hudson\",\"class\":\"FilePath\",\"method\":\"unzipFrom\",\"signature\":\"unzipFrom((InputStream))\",\"sink_args\":[\"0\"],\"type\":\"sink\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 96,
+      "gt": {
+        "package": "hudson",
+        "class": "FilePath",
+        "method": "copyFrom",
+        "signature": "copyFrom()",
+        "sink_args": [
+          "Argument[this]"
+        ],
+        "type": "sink"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "sink",
+        "lenient_type": "sink",
+        "sink_args": [
+          "this"
+        ],
+        "raw": "{\"package\":\"hudson\",\"class\":\"FilePath\",\"method\":\"copyFrom\",\"signature\":\"copyFrom()\",\"sink_args\":[\"this\"],\"type\":\"sink\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 97,
+      "gt": {
+        "package": "hudson",
+        "class": "FilePath",
+        "method": "copyFrom",
+        "signature": "copyFrom((FilePath))",
+        "sink_args": [
+          "Argument[0]"
+        ],
+        "type": "sink"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "sink",
+        "lenient_type": "sink",
+        "sink_args": [
+          "0"
+        ],
+        "raw": "{\"package\":\"hudson\",\"class\":\"FilePath\",\"method\":\"copyFrom\",\"signature\":\"copyFrom((FilePath))\",\"sink_args\":[\"0\"],\"type\":\"sink\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 98,
+      "gt": {
+        "package": "hudson",
+        "class": "FilePath",
+        "method": "copyFrom",
+        "signature": "copyFrom((URL))",
+        "sink_args": [
+          "Argument[0]"
+        ],
+        "type": "sink"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "sink",
+        "lenient_type": "sink",
+        "sink_args": [
+          "0"
+        ],
+        "raw": "{\"package\":\"hudson\",\"class\":\"FilePath\",\"method\":\"copyFrom\",\"signature\":\"copyFrom((URL))\",\"sink_args\":[\"0\"],\"type\":\"sink\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 99,
+      "gt": {
+        "package": "hudson",
+        "class": "FilePath",
+        "method": "copyFrom",
+        "signature": "copyFrom((FileItem))",
+        "sink_args": [
+          "Argument[0]"
+        ],
+        "type": "sink"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "sink",
+        "lenient_type": "sink",
+        "sink_args": [
+          "0"
+        ],
+        "raw": "{\"package\":\"hudson\",\"class\":\"FilePath\",\"method\":\"copyFrom\",\"signature\":\"copyFrom((FileItem))\",\"sink_args\":[\"0\"],\"type\":\"sink\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 100,
+      "gt": {
+        "package": "hudson",
+        "class": "FilePath",
+        "method": "copyRecursiveTo",
+        "signature": "copyRecursiveTo()",
+        "sink_args": [
+          "Argument[this]"
+        ],
+        "type": "sink"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "sink",
+        "lenient_type": "sink",
+        "sink_args": [
+          "this"
+        ],
+        "raw": "{\"package\":\"hudson\",\"class\":\"FilePath\",\"method\":\"copyRecursiveTo\",\"signature\":\"copyRecursiveTo()\",\"sink_args\":[\"this\"],\"type\":\"sink\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 101,
+      "gt": {
+        "package": "hudson",
+        "class": "FilePath",
+        "method": "copyRecursiveTo",
+        "signature": "copyRecursiveTo((DirScanner)",
+        "sink_args": [
+          "Argument[0]"
+        ],
+        "type": "sink"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "none",
+        "lenient_type": "none",
+        "sink_args": [],
+        "raw": "{\"package\":\"hudson\",\"class\":\"FilePath\",\"method\":\"copyRecursiveTo\",\"signature\":\"copyRecursiveTo((DirScanner)\",\"sink_args\":[],\"type\":\"none\"}"
+      },
+      "is_strict_correct": false
+    },
+    {
+      "idx": 102,
+      "gt": {
+        "package": "hudson",
+        "class": "FilePath",
+        "method": "copyTo",
+        "signature": "copyTo()",
+        "sink_args": [
+          "Argument[this]"
+        ],
+        "type": "sink"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "sink",
+        "lenient_type": "sink",
+        "sink_args": [
+          "this"
+        ],
+        "raw": "{\"package\":\"hudson\",\"class\":\"FilePath\",\"method\":\"copyTo\",\"signature\":\"copyTo()\",\"sink_args\":[\"this\"],\"type\":\"sink\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 103,
+      "gt": {
+        "package": "hudson",
+        "class": "FilePath",
+        "method": "copyTo",
+        "signature": "copyTo((FilePath))",
+        "sink_args": [
+          "Argument[0]"
+        ],
+        "type": "sink"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "sink",
+        "lenient_type": "sink",
+        "sink_args": [
+          "0"
+        ],
+        "raw": "{\"package\":\"hudson\",\"class\":\"FilePath\",\"method\":\"copyTo\",\"signature\":\"copyTo((FilePath))\",\"sink_args\":[\"0\"],\"type\":\"sink\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 104,
+      "gt": {
+        "package": "hudson",
+        "class": "FilePath",
+        "method": "copyToWithPermission",
+        "signature": "copyToWithPermission()",
+        "sink_args": [
+          "Argument[this]"
+        ],
+        "type": "sink"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "sink",
+        "lenient_type": "sink",
+        "sink_args": [
+          "this"
+        ],
+        "raw": "{\"package\":\"hudson\",\"class\":\"FilePath\",\"method\":\"copyToWithPermission\",\"signature\":\"copyToWithPermission()\",\"sink_args\":[\"this\"],\"type\":\"sink\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 105,
+      "gt": {
+        "package": "hudson",
+        "class": "FilePath",
+        "method": "copyToWithPermission",
+        "signature": "copyToWithPermission((FilePath))",
+        "sink_args": [
+          "Argument[0]"
+        ],
+        "type": "sink"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "sink",
+        "lenient_type": "sink",
+        "sink_args": [
+          "0"
+        ],
+        "raw": "{\"package\":\"hudson\",\"class\":\"FilePath\",\"method\":\"copyToWithPermission\",\"signature\":\"copyToWithPermission((FilePath))\",\"sink_args\":[\"0\"],\"type\":\"sink\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 106,
+      "gt": {
+        "package": "hudson",
+        "class": "FilePath",
+        "method": "exists",
+        "signature": "exists(())",
+        "sink_args": [
+          "Argument[this]"
+        ],
+        "type": "sink"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "none",
+        "lenient_type": "none",
+        "sink_args": [],
+        "raw": "{\"package\":\"hudson\",\"class\":\"FilePath\",\"method\":\"exists\",\"signature\":\"exists(())\",\"sink_args\":[],\"type\":\"none\"}"
+      },
+      "is_strict_correct": false
+    },
+    {
+      "idx": 107,
+      "gt": {
+        "package": "hudson",
+        "class": "FilePath",
+        "method": "renameTo",
+        "signature": "renameTo()",
+        "sink_args": [
+          "Argument[this]"
+        ],
+        "type": "sink"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "sink",
+        "lenient_type": "sink",
+        "sink_args": [
+          "0"
+        ],
+        "raw": "{\"package\":\"hudson\",\"class\":\"FilePath\",\"method\":\"renameTo\",\"signature\":\"renameTo()\",\"sink_args\":[\"0\"],\"type\":\"sink\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 108,
+      "gt": {
+        "package": "hudson",
+        "class": "FilePath",
+        "method": "write",
+        "signature": "write()",
+        "sink_args": [
+          "Argument[this]"
+        ],
+        "type": "sink"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "sink",
+        "lenient_type": "sink",
+        "sink_args": [
+          "0"
+        ],
+        "raw": "{\"package\":\"hudson\",\"class\":\"FilePath\",\"method\":\"write\",\"signature\":\"write()\",\"sink_args\":[\"0\"],\"type\":\"sink\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 109,
+      "gt": {
+        "package": "hudson",
+        "class": "FilePath",
+        "method": "newInputStreamDenyingSymlinkAsNeeded",
+        "signature": "newInputStreamDenyingSymlinkAsNeeded()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "none",
+        "lenient_type": "none",
+        "sink_args": [],
+        "raw": "{\"package\":\"hudson\",\"class\":\"FilePath\",\"method\":\"newInputStreamDenyingSymlinkAsNeeded\",\"signature\":\"newInputStreamDenyingSymlinkAsNeeded()\",\"sink_args\":[],\"type\":\"none\"}"
+      },
+      "is_strict_correct": false
+    },
+    {
+      "idx": 110,
+      "gt": {
+        "package": "hudson",
+        "class": "FilePath",
+        "method": "newInputStreamDenyingSymlinkAsNeeded",
+        "signature": "newInputStreamDenyingSymlinkAsNeeded()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "sink",
+        "lenient_type": "sink",
+        "sink_args": [
+          "this"
+        ],
+        "raw": "{\"package\":\"hudson\",\"class\":\"FilePath\",\"method\":\"newInputStreamDenyingSymlinkAsNeeded\",\"signature\":\"newInputStreamDenyingSymlinkAsNeeded()\",\"sink_args\":[\"this\"],\"type\":\"sink\"}"
+      },
+      "is_strict_correct": false
+    },
+    {
+      "idx": 111,
+      "gt": {
+        "package": "hudson",
+        "class": "FilePath",
+        "method": "newInputStreamDenyingSymlinkAsNeeded",
+        "signature": "newInputStreamDenyingSymlinkAsNeeded()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "taint-propagator",
+        "lenient_type": "taint-propagator",
+        "sink_args": [],
+        "raw": "{\"package\":\"hudson\",\"class\":\"FilePath\",\"method\":\"newInputStreamDenyingSymlinkAsNeeded\",\"signature\":\"newInputStreamDenyingSymlinkAsNeeded()\",\"sink_args\":[],\"type\":\"taint-propagator\"}"
+      },
+      "is_strict_correct": false
+    },
+    {
+      "idx": 112,
+      "gt": {
+        "package": "hudson",
+        "class": "FilePath",
+        "method": "openInputStream",
+        "signature": "openInputStream()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "none",
+        "lenient_type": "none",
+        "sink_args": [],
+        "raw": "{\"package\":\"hudson\",\"class\":\"FilePath\",\"method\":\"openInputStream\",\"signature\":\"openInputStream()\",\"sink_args\":[],\"type\":\"none\"}"
+      },
+      "is_strict_correct": false
+    },
+    {
+      "idx": 113,
+      "gt": {
+        "package": "hudson",
+        "class": "FilePath",
+        "method": "openInputStream",
+        "signature": "openInputStream()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "sink",
+        "lenient_type": "sink",
+        "sink_args": [
+          "this"
+        ],
+        "raw": "{\"package\":\"hudson\",\"class\":\"FilePath\",\"method\":\"openInputStream\",\"signature\":\"openInputStream()\",\"sink_args\":[\"this\"],\"type\":\"sink\"}"
+      },
+      "is_strict_correct": false
+    },
+    {
+      "idx": 114,
+      "gt": {
+        "package": "hudson",
+        "class": "FilePath",
+        "method": "openInputStream",
+        "signature": "openInputStream()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "taint-propagator",
+        "lenient_type": "taint-propagator",
+        "sink_args": [],
+        "raw": "{\"package\":\"hudson\",\"class\":\"FilePath\",\"method\":\"openInputStream\",\"signature\":\"openInputStream()\",\"sink_args\":[],\"type\":\"taint-propagator\"}"
+      },
+      "is_strict_correct": false
+    },
+    {
+      "idx": 115,
+      "gt": {
+        "package": "hudson",
+        "class": "FilePath",
+        "method": "read",
+        "signature": "read()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"hudson\",\"class\":\"FilePath\",\"method\":\"read\",\"signature\":\"read()\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 116,
+      "gt": {
+        "package": "hudson",
+        "class": "FilePath",
+        "method": "read",
+        "signature": "read()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "sink",
+        "lenient_type": "sink",
+        "sink_args": [
+          "this"
+        ],
+        "raw": "{\"package\":\"hudson\",\"class\":\"FilePath\",\"method\":\"read\",\"signature\":\"read()\",\"sink_args\":[\"this\"],\"type\":\"sink\"}"
+      },
+      "is_strict_correct": false
+    },
+    {
+      "idx": 117,
+      "gt": {
+        "package": "hudson",
+        "class": "FilePath",
+        "method": "readFromOffset",
+        "signature": "readFromOffset()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "none",
+        "lenient_type": "none",
+        "sink_args": [],
+        "raw": "{\"package\":\"hudson\",\"class\":\"FilePath\",\"method\":\"readFromOffset\",\"signature\":\"readFromOffset()\",\"sink_args\":[],\"type\":\"none\"}"
+      },
+      "is_strict_correct": false
+    },
+    {
+      "idx": 118,
+      "gt": {
+        "package": "hudson",
+        "class": "FilePath",
+        "method": "readFromOffset",
+        "signature": "readFromOffset()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "taint-propagator",
+        "lenient_type": "taint-propagator",
+        "sink_args": [],
+        "raw": "{\"package\":\"hudson\",\"class\":\"FilePath\",\"method\":\"readFromOffset\",\"signature\":\"readFromOffset()\",\"sink_args\":[],\"type\":\"taint-propagator\"}"
+      },
+      "is_strict_correct": false
+    },
+    {
+      "idx": 119,
+      "gt": {
+        "package": "hudson",
+        "class": "FilePath",
+        "method": "readToString",
+        "signature": "readToString()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "raw": "{\"package\":\"hudson\",\"class\":\"FilePath\",\"method\":\"readToString\",\"signature\":\"readToString()\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 120,
+      "gt": {
+        "package": "hudson",
+        "class": "FilePath",
+        "method": "readToString",
+        "signature": "readToString()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "taint-propagator",
+        "lenient_type": "taint-propagator",
+        "sink_args": [],
+        "raw": "{\"package\":\"hudson\",\"class\":\"FilePath\",\"method\":\"readToString\",\"signature\":\"readToString()\",\"sink_args\":[],\"type\":\"taint-propagator\"}"
+      },
+      "is_strict_correct": false
+    },
+    {
+      "idx": 121,
+      "gt": {
+        "package": "hudson",
+        "class": "Plugin",
+        "method": "configure",
+        "signature": "configure()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "none",
+        "lenient_type": "none",
+        "sink_args": [],
+        "raw": "{\"package\":\"hudson\",\"class\":\"Plugin\",\"method\":\"configure\",\"signature\":\"configure()\",\"sink_args\":[],\"type\":\"none\"}"
+      },
+      "is_strict_correct": false
+    },
+    {
+      "idx": 122,
+      "gt": {
+        "package": "hudson",
+        "class": "Plugin",
+        "method": "configure",
+        "signature": "configure()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "none",
+        "lenient_type": "none",
+        "sink_args": [],
+        "raw": "{\"package\":\"hudson\",\"class\":\"Plugin\",\"method\":\"configure\",\"signature\":\"configure()\",\"sink_args\":[],\"type\":\"none\"}"
+      },
+      "is_strict_correct": false
+    },
+    {
+      "idx": 123,
+      "gt": {
+        "package": "hudson",
+        "class": "Plugin",
+        "method": "configure",
+        "signature": "configure()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "taint-propagator",
+        "lenient_type": "taint-propagator",
+        "sink_args": [],
+        "raw": "{\"package\":\"hudson\",\"class\":\"Plugin\",\"method\":\"configure\",\"signature\":\"configure()\",\"sink_args\":[],\"type\":\"taint-propagator\"}"
+      },
+      "is_strict_correct": false
+    },
+    {
+      "idx": 124,
+      "gt": {
+        "package": "hudson.lifecycle",
+        "class": "Lifecycle",
+        "method": "rewriteHudsonWar",
+        "signature": "rewriteHudsonWar((File))",
+        "sink_args": [
+          "Argument[0]"
+        ],
+        "type": "sink"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "sink",
+        "lenient_type": "sink",
+        "sink_args": [
+          "0"
+        ],
+        "raw": "{\"package\":\"hudson.lifecycle\",\"class\":\"Lifecycle\",\"method\":\"rewriteHudsonWar\",\"signature\":\"rewriteHudsonWar((File))\",\"sink_args\":[\"0\"],\"type\":\"sink\"}"
+      },
+      "is_strict_correct": true
+    },
+    {
+      "idx": 125,
+      "gt": {
+        "package": "hudson.model",
+        "class": "Descriptor",
+        "method": "configure",
+        "signature": "configure()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "none",
+        "lenient_type": "none",
+        "sink_args": [],
+        "raw": "{\"package\":\"hudson.model\",\"class\":\"Descriptor\",\"method\":\"configure\",\"signature\":\"configure()\",\"sink_args\":[],\"type\":\"none\"}"
+      },
+      "is_strict_correct": false
+    },
+    {
+      "idx": 126,
+      "gt": {
+        "package": "hudson.model",
+        "class": "Descriptor",
+        "method": "configure",
+        "signature": "configure()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "none",
+        "lenient_type": "none",
+        "sink_args": [],
+        "raw": "{\"package\":\"hudson.model\",\"class\":\"Descriptor\",\"method\":\"configure\",\"signature\":\"configure()\",\"sink_args\":[],\"type\":\"none\"}"
+      },
+      "is_strict_correct": false
+    },
+    {
+      "idx": 127,
+      "gt": {
+        "package": "hudson.model",
+        "class": "Descriptor",
+        "method": "configure",
+        "signature": "configure()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "taint-propagator",
+        "lenient_type": "taint-propagator",
+        "sink_args": [],
+        "raw": "{\"package\":\"hudson.model\",\"class\":\"Descriptor\",\"method\":\"configure\",\"signature\":\"configure()\",\"sink_args\":[],\"type\":\"taint-propagator\"}"
+      },
+      "is_strict_correct": false
+    }
+  ]
+}
