@@ -1,10 +1,17 @@
 """
 Local LoRA AI Verifier for SAST Findings.
-Đồ án Tốt nghiệp NTK / IRIS - Giai đoạn 3.
+Đồ án Tốt nghiệp NTK / IRIS - Giai đoạn 3 & 5 (Phiên bản Chuẩn hóa Khoa học V2.2).
 
 Nạp trực tiếp trọng số LoRA đã fine-tune (best_adapter: 73.9 MB)
 kết hợp Qwen2.5-Coder-1.5B-Instruct trên GPU RTX 4060 Ti cục bộ.
 Không gửi bất kỳ dữ liệu mã nguồn nào lên đám mây (100% On-Premise Privacy).
+
+Cải tiến Khoa học & An toàn:
+- Thống nhất cơ chế phân tích cú pháp giữa single và batch inference.
+- Xóa bỏ triệt để lỗi biến invalid JSON thành nhãn 'none' (thay bằng UNKNOWN / NEEDS_REVIEW).
+- Nâng max_new_tokens=128 để chống cắt cụt JSON trên các signature dài.
+- Tách bạch dứt điểm vai trò API (API-role) khỏi phán quyết cấp độ cảnh báo (Finding-level verdict).
+- Bóc tách API cú pháp chính xác, loại bỏ việc tự bịa signature giả Object method(...).
 """
 
 import os
@@ -12,11 +19,15 @@ import sys
 import json
 import re
 from pathlib import Path
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, List, Optional, Tuple
 import torch
 
 MODEL_DIR = os.environ.get("NTK_BASE_MODEL_DIR", "/home/tuankhoa/models/Qwen2.5-Coder-1.5B-Instruct")
-ADAPTER_DIR = os.environ.get("NTK_ADAPTER_DIR", "/home/tuankhoa/migration/qwen25_coder_15b_stage3_qlora_v3/best_adapter")
+ADAPTER_DIR = os.environ.get("NTK_ADAPTER_DIR", "/home/tuankhoa/iris/models/qwen25_coder_15b_stage3_qlora_v3/best_adapter")
+if not os.path.exists(ADAPTER_DIR):
+    alt_dir = "/home/tuankhoa/migration/qwen25_coder_15b_stage3_qlora_v3/best_adapter"
+    if os.path.exists(alt_dir):
+        ADAPTER_DIR = alt_dir
 
 CWE_DESCRIPTIONS = {
     "CWE-089": (
@@ -69,6 +80,44 @@ For every other type, sink_args must be an empty list.
 
 Do not classify an API merely because it is security-sensitive in some unrelated context.
 Do not output anything except the JSON object."""
+
+VALID_ROLES = ["source", "sink", "taint-propagator", "none"]
+
+def parse_stage3_completion(completion: str) -> Tuple[str, str, List[Any]]:
+    """
+    Hàm phân tích cú pháp chuẩn tắc dùng chung cho cả Single và Batch inference.
+    Tuyệt đối không nuốt lỗi cú pháp thành nhãn 'none'.
+    Trả về: (api_role, parse_status, sink_args)
+    """
+    clean = completion.strip()
+    pred_type = "unknown"
+    parse_status = "UNKNOWN"
+    sink_args = []
+
+    try:
+        parsed = json.loads(clean)
+        raw_type = str(parsed.get("type", "unknown")).lower().strip()
+        sink_args = parsed.get("sink_args", [])
+        if not isinstance(sink_args, list):
+            sink_args = [sink_args] if sink_args else []
+
+        if raw_type in VALID_ROLES:
+            pred_type = raw_type
+            parse_status = "STRICT_JSON_VALID"
+        else:
+            pred_type = "unknown"
+            parse_status = "SCHEMA_ERROR"
+    except Exception:
+        # Lenient regex fallback
+        for cand in VALID_ROLES:
+            if f'"{cand}"' in clean or f"'{cand}'" in clean:
+                pred_type = cand
+                parse_status = "LENIENT_REGEX_FALLBACK"
+                break
+        if pred_type == "unknown":
+            parse_status = "PARSE_ERROR"
+
+    return pred_type, parse_status, sink_args
 
 class LocalLoRAVerifier:
     """
@@ -128,13 +177,13 @@ class LocalLoRAVerifier:
         self.is_loaded = True
         print("[✓] Mô hình LoRA cục bộ đã sẵn sàng thẩm định cảnh báo!", flush=True)
 
-    def extract_api_info_from_finding(self, finding: Dict[str, Any]) -> tuple[str, str, str, str]:
+    def extract_api_info_from_finding(self, finding: Dict[str, Any]) -> Tuple[str, str, str, str]:
         """
-        Trích xuất (package, class, method, signature) từ finding code snippet hoặc path.
+        Trích xuất thông tin API (package, class, method, signature) từ finding.
+        Không tự tạo signature giả định Object method(...).
         """
         code = finding.get("code", "")
         path = finding.get("path", "")
-        message = finding.get("message", "")
 
         # Trích xuất class từ path
         class_name = "UnknownClass"
@@ -142,36 +191,40 @@ class LocalLoRAVerifier:
             p = Path(path)
             class_name = p.stem
 
-        # Mặc định package
-        package_name = "org.app.security"
+        # Trích xuất package từ Java path
+        package_name = "unknown"
         if "/java/" in path:
             sub = path.split("/java/")[-1]
             parts = sub.split("/")
             if len(parts) > 1:
                 package_name = ".".join(parts[:-1])
+        elif "/src/" in path:
+            sub = path.split("/src/")[-1]
+            parts = sub.split("/")
+            if len(parts) > 1:
+                package_name = ".".join(parts[:-1])
 
-        # Phân tích method name từ code
-        method_name = "handleRequest"
-        signature = f"void {method_name}()"
+        # Phân tích method invocation từ dòng code
+        method_name = "unknown"
+        signature = "UNKNOWN_API_IDENTITY"
 
-        # Regex tìm lời gọi hàm Java trong dòng có chứa >>> hoặc code
         matches = re.findall(r"([a-zA-Z0-9_]+)\s*\(([^)]*)\)", code)
         if matches:
-            # Chọn lời gọi hàm đáng ngờ nhất (exec, executeQuery, write, getParameter...)
-            priority_names = ["exec", "execute", "executeQuery", "executeUpdate", "query", "getParameter", "eval"]
+            priority_names = ["exec", "execute", "executeQuery", "executeUpdate", "query", "getParameter", "eval", "newDocumentBuilder"]
             chosen = matches[0]
             for m in matches:
                 if any(p in m[0] for p in priority_names):
                     chosen = m
                     break
             method_name = chosen[0]
-            signature = f"Object {chosen[0]}({chosen[1]})"
+            # Signature trung thực không giả mạo kiểu trả về
+            raw_args = chosen[1].strip()
+            signature = f"{method_name}({raw_args})"
 
         return package_name, class_name, method_name, signature
 
     def build_verification_prompt(self, finding: Dict[str, Any]) -> str:
-        """Tạo prompt chuẩn hóa khớp với phân phối huấn luyện Dataset V3."""
-        # Xác định CWE
+        """Tạo prompt chuẩn hóa khớp với phân phối huấn luyện."""
         cwe_raw = finding.get("metadata", {}).get("cwe")
         cwe_key = "CWE-089"
         if cwe_raw:
@@ -198,72 +251,60 @@ class LocalLoRAVerifier:
 
         return self.tokenizer.apply_chat_template(messages, add_generation_prompt=True, tokenize=False)
 
-    def verify_finding(self, finding: Dict[str, Any]) -> Dict[str, Any]:
+    def _assign_finding_verdict(self, finding: Dict[str, Any], completion: str) -> Dict[str, Any]:
         """
-        Thẩm định một cảnh báo đơn lẻ qua mô hình LoRA.
-        Trả về cấu trúc ai_validation chuẩn hóa.
+        Quy tắc gán phán quyết cấp độ cảnh báo (Finding-level verdict)
+        kết hợp vai trò API (API role), mức nghiêm trọng của rule (severity),
+        và luồng dữ liệu (dataflow).
+        Bảo đảm Safety Invariants V2.2:
+        - Không gán SUSPECTED_FALSE_POSITIVE nếu rule là CRITICAL/HIGH hoặc có dataflow.
+        - Không gán nhãn none khi lỗi phân tích cú pháp JSON.
         """
-        if not self.is_loaded:
-            self.load_model()
+        pred_type, parse_status, sink_args = parse_stage3_completion(completion)
 
-        prompt_text = self.build_verification_prompt(finding)
-        inputs = self.tokenizer([prompt_text], return_tensors="pt").to(self.device)
+        raw_sev = str(finding.get("severity", "UNKNOWN")).upper()
+        dataflow = finding.get("dataflow", [])
+        has_dataflow = bool(isinstance(dataflow, list) and len(dataflow) > 0)
 
-        with torch.no_grad():
-            out_ids = self.model.generate(
-                **inputs,
-                max_new_tokens=80,
-                do_sample=False,
-                pad_token_id=self.tokenizer.pad_token_id
-            )
-
-        input_len = inputs["input_ids"].shape[1]
-        completion = self.tokenizer.decode(out_ids[0][input_len:], skip_special_tokens=True).strip()
-
-        # Parse JSON output with strict tracking
-        pred_type = "unknown"
-        parse_status = "STRICT_JSON_VALID"
-        sink_args = []
-        try:
-            parsed = json.loads(completion)
-            pred_type = parsed.get("type", "unknown").lower()
-            sink_args = parsed.get("sink_args", [])
-        except Exception:
-            parse_status = "LENIENT_REGEX_FALLBACK"
-            for cand in ["sink", "source", "taint-propagator", "none"]:
-                if f'"{cand}"' in completion or f"'{cand}'" in completion:
-                    pred_type = cand
-                    break
-            if pred_type == "unknown":
-                parse_status = "PARSE_ERROR"
-
-        # Scientific Remediation: Decouple API-role classification from Finding-level verdict
-        # An API being a sink/source does not prove vulnerability; none does not prove benignness.
         if pred_type == "sink":
-            finding_status = "LIKELY_VULNERABLE"
-            evidence_weight = "HIGH"
-            is_valid = True
-            justification = "Mô hình AI LoRA xác nhận lời gọi hàm đóng vai trò SINK nhạy cảm đối với CWE này."
+            if has_dataflow or raw_sev in ["CRITICAL", "ERROR", "HIGH"]:
+                finding_status = "LIKELY_VULNERABLE"
+                evidence_weight = "HIGH"
+                is_valid = True
+                justification = "Mô hình AI LoRA xác nhận API là SINK nhạy cảm đối với CWE này, đồng thời có bằng chứng tĩnh tương hỗ."
+            else:
+                finding_status = "POTENTIAL_SINK_DETECTED"
+                evidence_weight = "MEDIUM"
+                is_valid = True
+                justification = "Mô hình AI LoRA xác nhận API là SINK nhạy cảm đối với CWE này; khuyến nghị rà soát taint flow."
         elif pred_type == "source":
             finding_status = "POTENTIAL_TAINT_ENTRY"
             evidence_weight = "MEDIUM"
             is_valid = True
-            justification = "Mô hình AI LoRA xác nhận lời gọi hàm là SOURCE nhập dữ liệu đầu vào người dùng."
+            justification = "Mô hình AI LoRA xác nhận API đóng vai trò SOURCE nhập dữ liệu người dùng."
         elif pred_type == "taint-propagator":
             finding_status = "PROPAGATION_DETECTED"
             evidence_weight = "MEDIUM"
             is_valid = True
-            justification = "Mô hình AI LoRA xác nhận lời gọi hàm là TAINT-PROPAGATOR truyền tiếp dữ liệu bẩn."
+            justification = "Mô hình AI LoRA xác nhận API đóng vai trò TAINT-PROPAGATOR truyền tiếp luồng dữ liệu tainted."
         elif pred_type == "none":
-            finding_status = "SUSPECTED_FALSE_POSITIVE"
-            evidence_weight = "LOW"
-            is_valid = False
-            justification = "Mô hình AI LoRA phân loại phương thức là hàm vô hại (NONE) đối với CWE này; khuyến nghị giảm mức độ ưu tiên."
+            # Safety Invariant: Cảnh báo CRITICAL/HIGH hoặc có dataflow tuyệt đối không bị gán SUSPECTED_FALSE_POSITIVE
+            if raw_sev in ["CRITICAL", "ERROR", "HIGH"] or has_dataflow:
+                finding_status = "NEEDS_REVIEW"
+                evidence_weight = "MEDIUM"
+                is_valid = None
+                justification = "Mô hình AI LoRA phân loại API là NONE, nhưng cảnh báo có mức nghiêm trọng cao hoặc có luồng dữ liệu; giữ trạng thái cần rà soát an toàn."
+            else:
+                finding_status = "SUSPECTED_FALSE_POSITIVE"
+                evidence_weight = "LOW"
+                is_valid = False
+                justification = "Mô hình AI LoRA phân loại API là hàm vô hại (NONE) và cảnh báo mức thấp không có luồng dữ liệu; khuyến nghị giảm ưu tiên."
         else:
+            # Lỗi cú pháp hoặc không nhận diện được nhãn
             finding_status = "NEEDS_REVIEW"
             evidence_weight = "UNKNOWN"
             is_valid = None
-            justification = "Mô hình trả về định dạng không chuẩn hoặc lỗi phân tích cú pháp; chuyển sang chuyên viên rà soát thủ công."
+            justification = "Mô hình trả về định dạng không hợp lệ hoặc lỗi phân tích cú pháp; chuyển sang chuyên viên rà soát thủ công."
 
         ai_validation = {
             "is_valid": is_valid,
@@ -280,10 +321,28 @@ class LocalLoRAVerifier:
         finding["ai_validation"] = ai_validation
         return finding
 
+    def verify_finding(self, finding: Dict[str, Any]) -> Dict[str, Any]:
+        """Thẩm định một cảnh báo đơn lẻ qua mô hình LoRA."""
+        if not self.is_loaded:
+            self.load_model()
+
+        prompt_text = self.build_verification_prompt(finding)
+        inputs = self.tokenizer([prompt_text], return_tensors="pt").to(self.device)
+
+        with torch.no_grad():
+            out_ids = self.model.generate(
+                **inputs,
+                max_new_tokens=128,
+                do_sample=False,
+                pad_token_id=self.tokenizer.pad_token_id
+            )
+
+        input_len = inputs["input_ids"].shape[1]
+        completion = self.tokenizer.decode(out_ids[0][input_len:], skip_special_tokens=True).strip()
+        return self._assign_finding_verdict(finding, completion)
+
     def verify_findings_batch(self, findings: List[Dict[str, Any]], batch_size: int = 4) -> List[Dict[str, Any]]:
-        """
-        Thẩm định danh sách cảnh báo theo batch để tối ưu tốc độ suy luận GPU.
-        """
+        """Thẩm định danh sách cảnh báo theo batch để tối ưu thông lượng GPU."""
         if not self.is_loaded:
             self.load_model()
 
@@ -298,7 +357,7 @@ class LocalLoRAVerifier:
             with torch.no_grad():
                 out_ids = self.model.generate(
                     **inputs,
-                    max_new_tokens=80,
+                    max_new_tokens=128,
                     do_sample=False,
                     pad_token_id=self.tokenizer.pad_token_id
                 )
@@ -306,50 +365,6 @@ class LocalLoRAVerifier:
             input_len = inputs["input_ids"].shape[1]
             for j, f in enumerate(batch):
                 completion = self.tokenizer.decode(out_ids[j][input_len:], skip_special_tokens=True).strip()
-                pred_type = "none"
-                try:
-                    parsed = json.loads(completion)
-                    pred_type = parsed.get("type", "none").lower()
-                except Exception:
-                    for cand in ["sink", "source", "taint-propagator", "none"]:
-                        if f'"{cand}"' in completion or f"'{cand}'" in completion:
-                            pred_type = cand
-                            break
-
-                if pred_type == "sink":
-                    finding_status = "LIKELY_VULNERABLE"
-                    evidence_weight = "HIGH"
-                    is_valid = True
-                    justification = f"Mô hình AI LoRA xác nhận phương thức là SINK nhạy cảm đối với CWE này."
-                elif pred_type == "source":
-                    finding_status = "POTENTIAL_TAINT_ENTRY"
-                    evidence_weight = "MEDIUM"
-                    is_valid = True
-                    justification = f"Mô hình AI LoRA xác nhận phương thức là SOURCE."
-                elif pred_type == "taint-propagator":
-                    finding_status = "PROPAGATION_DETECTED"
-                    evidence_weight = "MEDIUM"
-                    is_valid = True
-                    justification = f"Mô hình AI LoRA xác nhận phương thức là TAINT-PROPAGATOR."
-                elif pred_type == "none":
-                    finding_status = "SUSPECTED_FALSE_POSITIVE"
-                    evidence_weight = "LOW"
-                    is_valid = False
-                    justification = "Mô hình AI LoRA phân loại phương thức là hàm vô hại (NONE); khuyến nghị giảm ưu tiên."
-                else:
-                    finding_status = "NEEDS_REVIEW"
-                    evidence_weight = "UNKNOWN"
-                    is_valid = None
-                    justification = "Không xác định được nhãn API hoặc lỗi phân tích cú pháp."
-
-                f["ai_validation"] = {
-                    "is_valid": is_valid,
-                    "verdict": finding_status,
-                    "evidence_weight": evidence_weight,
-                    "api_role": pred_type,
-                    "raw_completion": completion,
-                    "justification": justification,
-                    "model_version": "Qwen2.5-Coder-1.5B-QLoRA-V3-Local"
-                }
+                self._assign_finding_verdict(f, completion)
 
         return findings
