@@ -1,0 +1,693 @@
+{
+  "splits_statistics": {
+    "train": {
+      "total_rows": 1227,
+      "unique_signatures": 1025,
+      "unique_methods": 1036,
+      "unique_classes": 638,
+      "unique_packages": 315,
+      "unique_families": 171,
+      "unique_cwe_api": 1167,
+      "type_counts": {
+        "source": 287,
+        "taint-propagator": 316,
+        "none": 368,
+        "sink": 256
+      },
+      "cwe_counts": {
+        "CWE-078": 228,
+        "CWE-089": 395,
+        "CWE-022": 411,
+        "CWE-502": 49,
+        "CWE-079": 131,
+        "CWE-611": 13
+      },
+      "top_families": [
+        [
+          "org.apache.struts2",
+          93
+        ],
+        [
+          "org.apache.commons",
+          86
+        ],
+        [
+          "java.lang",
+          67
+        ],
+        [
+          "kotlin.collections",
+          49
+        ],
+        [
+          "java.util",
+          48
+        ],
+        [
+          "javax.servlet",
+          42
+        ],
+        [
+          "hudson.model",
+          41
+        ],
+        [
+          "java.sql",
+          34
+        ],
+        [
+          "org.kohsuke.stapler",
+          32
+        ],
+        [
+          "org.springframework.jdbc",
+          28
+        ]
+      ],
+      "sink_total": 256,
+      "sink_p0_count": 18,
+      "sink_this_count": 22,
+      "sink_named_count": 216
+    },
+    "validation": {
+      "total_rows": 236,
+      "unique_signatures": 188,
+      "unique_methods": 191,
+      "unique_classes": 117,
+      "unique_packages": 95,
+      "unique_families": 66,
+      "unique_cwe_api": 229,
+      "type_counts": {
+        "source": 89,
+        "none": 56,
+        "sink": 33,
+        "taint-propagator": 58
+      },
+      "cwe_counts": {
+        "CWE-078": 38,
+        "CWE-022": 72,
+        "CWE-089": 77,
+        "CWE-079": 29,
+        "CWE-502": 8,
+        "CWE-611": 12
+      },
+      "top_families": [
+        [
+          "org.apache.struts2",
+          17
+        ],
+        [
+          "jakarta.servlet.http",
+          17
+        ],
+        [
+          "javax.servlet",
+          15
+        ],
+        [
+          "org.apache.commons",
+          13
+        ],
+        [
+          "ratpack.core.http",
+          12
+        ],
+        [
+          "jakarta.ws.rs",
+          12
+        ],
+        [
+          "javax.xml",
+          11
+        ],
+        [
+          "android.content",
+          11
+        ],
+        [
+          "com.opensymphony.xwork2",
+          10
+        ],
+        [
+          "java.io",
+          9
+        ]
+      ],
+      "sink_total": 33,
+      "sink_p0_count": 4,
+      "sink_this_count": 1,
+      "sink_named_count": 28
+    },
+    "test": {
+      "total_rows": 330,
+      "unique_signatures": 268,
+      "unique_methods": 255,
+      "unique_classes": 166,
+      "unique_packages": 130,
+      "unique_families": 76,
+      "unique_cwe_api": 314,
+      "type_counts": {
+        "taint-propagator": 86,
+        "source": 109,
+        "none": 76,
+        "sink": 59
+      },
+      "cwe_counts": {
+        "CWE-078": 72,
+        "CWE-022": 117,
+        "CWE-089": 82,
+        "CWE-079": 39,
+        "CWE-502": 18,
+        "CWE-611": 2
+      },
+      "top_families": [
+        [
+          "org.apache.struts2",
+          40
+        ],
+        [
+          "org.apache.commons",
+          32
+        ],
+        [
+          "hudson",
+          19
+        ],
+        [
+          "java.io",
+          17
+        ],
+        [
+          "java.lang",
+          13
+        ],
+        [
+          "javax.ws",
+          13
+        ],
+        [
+          "org.springframework.web",
+          12
+        ],
+        [
+          "java.util",
+          12
+        ],
+        [
+          "ratpack.core.handling",
+          11
+        ],
+        [
+          "com.rabbitmq.client",
+          10
+        ]
+      ],
+      "sink_total": 59,
+      "sink_p0_count": 4,
+      "sink_this_count": 6,
+      "sink_named_count": 49
+    }
+  },
+  "leakage_audit": {
+    "class_overlap_train_test": 0,
+    "method_overlap_train_test": 0,
+    "signature_overlap_train_test": 37,
+    "package_overlap_train_test": 82,
+    "family_overlap_train_test": 54,
+    "shared_packages": [
+      "com.google.common.io",
+      "com.opensymphony.xwork2",
+      "com.opensymphony.xwork2.config.entities",
+      "com.opensymphony.xwork2.validator",
+      "com.rabbitmq.client",
+      "hudson",
+      "hudson.model",
+      "hudson.scheduler",
+      "hudson.search",
+      "hudson.slaves",
+      "hudson.tools",
+      "hudson.util",
+      "jakarta.faces.context",
+      "java.io",
+      "java.lang",
+      "java.lang.invoke",
+      "java.lang.management",
+      "java.lang.module",
+      "java.net",
+      "java.nio",
+      "java.nio.channels",
+      "java.nio.file",
+      "java.security",
+      "java.security.spec",
+      "java.sql",
+      "java.util",
+      "java.util.concurrent",
+      "java.util.concurrent.atomic",
+      "java.util.zip",
+      "javax.faces.context",
+      "javax.imageio",
+      "javax.jms",
+      "javax.management.openmbean",
+      "javax.management.relation",
+      "javax.naming",
+      "javax.naming.ldap",
+      "javax.print",
+      "javax.servlet",
+      "javax.servlet.http",
+      "javax.sound.midi",
+      "javax.sql.rowset.serial",
+      "javax.ws.rs.core",
+      "javax.xml.crypto.dsig",
+      "javax.xml.datatype",
+      "jenkins.model",
+      "jenkins.security",
+      "kotlin",
+      "kotlin.jvm.internal",
+      "kotlin.text",
+      "org.apache.avro.file",
+      "org.apache.commons.fileupload",
+      "org.apache.commons.io",
+      "org.apache.commons.io.filefilter",
+      "org.apache.commons.io.output",
+      "org.apache.commons.lang",
+      "org.apache.commons.lang.builder",
+      "org.apache.commons.lang.text",
+      "org.apache.commons.lang3",
+      "org.apache.http",
+      "org.apache.struts2.components",
+      "org.apache.struts2.config.entities",
+      "org.apache.struts2.dispatcher",
+      "org.apache.struts2.el.parser",
+      "org.apache.struts2.jasper",
+      "org.apache.struts2.jasper.compiler",
+      "org.apache.struts2.json",
+      "org.apache.struts2.json.rpc",
+      "org.apache.struts2.mock.web.portlet",
+      "org.apache.struts2.portlet.result",
+      "org.apache.struts2.result",
+      "org.apache.struts2.showcase.chat",
+      "org.apache.struts2.showcase.tag.nonui.iteratortag",
+      "org.apache.struts2.views.freemarker",
+      "org.apache.struts2.views.jsp.ui",
+      "org.json",
+      "org.kohsuke.stapler",
+      "org.owasp.benchmark.testcode",
+      "org.springframework.core.io",
+      "org.springframework.util",
+      "org.springframework.validation",
+      "org.springframework.web.util",
+      "software.amazon.awssdk.transfer.s3.model"
+    ],
+    "shared_families": [
+      "com.google.common",
+      "com.opensymphony.xwork2",
+      "com.rabbitmq.client",
+      "hudson",
+      "hudson.model",
+      "hudson.scheduler",
+      "hudson.search",
+      "hudson.slaves",
+      "hudson.tools",
+      "hudson.util",
+      "io.jans.configapi",
+      "jakarta.faces.context",
+      "java.io",
+      "java.lang",
+      "java.net",
+      "java.nio",
+      "java.rmi",
+      "java.security",
+      "java.sql",
+      "java.time",
+      "java.util",
+      "javax.crypto",
+      "javax.faces",
+      "javax.imageio",
+      "javax.jms",
+      "javax.lang",
+      "javax.management",
+      "javax.naming",
+      "javax.print",
+      "javax.servlet",
+      "javax.sound",
+      "javax.sql",
+      "javax.ws",
+      "javax.xml",
+      "jenkins.model",
+      "jenkins.security",
+      "kotlin",
+      "kotlin.jvm.internal",
+      "kotlin.text",
+      "org.apache.avro",
+      "org.apache.catalina",
+      "org.apache.commons",
+      "org.apache.cxf",
+      "org.apache.hc",
+      "org.apache.http",
+      "org.apache.struts2",
+      "org.json",
+      "org.kohsuke.stapler",
+      "org.owasp.benchmark",
+      "org.springframework.core",
+      "org.springframework.util",
+      "org.springframework.validation",
+      "org.springframework.web",
+      "software.amazon.awssdk"
+    ],
+    "prompt_example_collisions_test": [
+      {
+        "package": "java.io",
+        "class": "FileInputStream",
+        "method": "FileInputStream",
+        "cwe": "CWE-022",
+        "type": "sink"
+      },
+      {
+        "package": "java.io",
+        "class": "FileInputStream",
+        "method": "FileInputStream",
+        "cwe": "CWE-079",
+        "type": "source"
+      },
+      {
+        "package": "java.io",
+        "class": "FileInputStream",
+        "method": "FileInputStream",
+        "cwe": "CWE-022",
+        "type": "sink"
+      },
+      {
+        "package": "java.io",
+        "class": "FileInputStream",
+        "method": "FileInputStream",
+        "cwe": "CWE-089",
+        "type": "source"
+      },
+      {
+        "package": "java.io",
+        "class": "FileInputStream",
+        "method": "FileInputStream",
+        "cwe": "CWE-022",
+        "type": "sink"
+      },
+      {
+        "package": "java.io",
+        "class": "FileInputStream",
+        "method": "FileInputStream",
+        "cwe": "CWE-022",
+        "type": "source"
+      },
+      {
+        "package": "org.apache.commons.lang3",
+        "class": "SerializationUtils",
+        "method": "deserialize",
+        "cwe": "CWE-502",
+        "type": "sink"
+      },
+      {
+        "package": "org.apache.commons.lang3",
+        "class": "SerializationUtils",
+        "method": "deserialize",
+        "cwe": "CWE-502",
+        "type": "sink"
+      },
+      {
+        "package": "org.apache.commons.lang3",
+        "class": "SerializationUtils",
+        "method": "deserialize",
+        "cwe": "CWE-502",
+        "type": "sink"
+      }
+    ]
+  },
+  "p0_sink_ratio": 0.0747,
+  "quality_gates": {
+    "DATASET_SCHEMA_PASS": true,
+    "DATASET_PROVENANCE_PASS": false,
+    "DATASET_SEMANTIC_LABEL_PASS": false,
+    "DATASET_SINK_ARGS_PASS": true,
+    "DATASET_SPLIT_INTEGRITY_PASS": false,
+    "DATASET_PROMPT_COLLISION_PASS": false,
+    "DATASET_DIVERSITY_AUDITED": true,
+    "DATASET_READY_FOR_CONTROLLED_FINETUNING": false
+  },
+  "cwe_label_family_matrix": {
+    "CWE-022": {
+      "source": {
+        "total_count": 150,
+        "unique_families": 50,
+        "top_families": {
+          "javax.servlet": 16,
+          "org.apache.commons": 11,
+          "org.springframework.web": 10,
+          "android.util": 8,
+          "org.apache.avro": 8
+        }
+      },
+      "sink": {
+        "total_count": 150,
+        "unique_families": 31,
+        "top_families": {
+          "java.io": 37,
+          "java.nio": 15,
+          "org.apache.commons": 11,
+          "hudson": 9,
+          "org.springframework.core": 8
+        }
+      },
+      "taint-propagator": {
+        "total_count": 150,
+        "unique_families": 48,
+        "top_families": {
+          "org.apache.struts2": 37,
+          "org.apache.commons": 19,
+          "hudson.model": 9,
+          "com.opensymphony.xwork2": 9,
+          "java.lang": 5
+        }
+      },
+      "none": {
+        "total_count": 150,
+        "unique_families": 51,
+        "top_families": {
+          "kotlin.collections": 16,
+          "java.util": 11,
+          "org.apache.commons": 9,
+          "org.apache.struts2": 9,
+          "com.opensymphony.xwork2": 8
+        }
+      }
+    },
+    "CWE-078": {
+      "source": {
+        "total_count": 100,
+        "unique_families": 37,
+        "top_families": {
+          "javax.servlet": 13,
+          "org.apache.commons": 9,
+          "com.rabbitmq.client": 8,
+          "org.apache.avro": 7,
+          "ratpack.http": 4
+        }
+      },
+      "sink": {
+        "total_count": 38,
+        "unique_families": 7,
+        "top_families": {
+          "java.lang": 24,
+          "org.apache.commons": 6,
+          "hudson": 4,
+          "org.keycloak.services": 1,
+          "org.apache.directory": 1
+        }
+      },
+      "taint-propagator": {
+        "total_count": 100,
+        "unique_families": 40,
+        "top_families": {
+          "org.apache.struts2": 27,
+          "java.util": 6,
+          "com.opensymphony.xwork2": 6,
+          "org.apache.commons": 5,
+          "org.kohsuke.stapler": 5
+        }
+      },
+      "none": {
+        "total_count": 100,
+        "unique_families": 38,
+        "top_families": {
+          "kotlin.collections": 9,
+          "java.util": 8,
+          "java.lang": 8,
+          "hudson.model": 6,
+          "org.apache.commons": 5
+        }
+      }
+    },
+    "CWE-079": {
+      "source": {
+        "total_count": 60,
+        "unique_families": 32,
+        "top_families": {
+          "org.springframework.web": 7,
+          "org.apache.commons": 6,
+          "javax.servlet": 6,
+          "org.apache.avro": 6,
+          "org.kohsuke.stapler": 2
+        }
+      },
+      "sink": {
+        "total_count": 19,
+        "unique_families": 10,
+        "top_families": {
+          "hudson.util": 4,
+          "javax.servlet": 3,
+          "jakarta.faces.context": 2,
+          "org.kohsuke.stapler": 2,
+          "android.webkit": 2
+        }
+      },
+      "taint-propagator": {
+        "total_count": 60,
+        "unique_families": 29,
+        "top_families": {
+          "org.apache.struts2": 12,
+          "org.apache.commons": 5,
+          "java.nio": 3,
+          "hudson.util": 3,
+          "java.sql": 3
+        }
+      },
+      "none": {
+        "total_count": 60,
+        "unique_families": 27,
+        "top_families": {
+          "java.util": 10,
+          "kotlin.collections": 6,
+          "java.time": 4,
+          "hudson.model": 4,
+          "java.lang": 4
+        }
+      }
+    },
+    "CWE-089": {
+      "source": {
+        "total_count": 150,
+        "unique_families": 46,
+        "top_families": {
+          "javax.servlet": 19,
+          "org.springframework.web": 14,
+          "org.apache.commons": 12,
+          "jakarta.servlet.http": 10,
+          "android.content": 8
+        }
+      },
+      "sink": {
+        "total_count": 104,
+        "unique_families": 37,
+        "top_families": {
+          "org.springframework.jdbc": 32,
+          "java.sql": 23,
+          "org.hibernate.query": 6,
+          "org.hibernate": 4,
+          "org.apache.inlong": 2
+        }
+      },
+      "taint-propagator": {
+        "total_count": 150,
+        "unique_families": 49,
+        "top_families": {
+          "org.apache.struts2": 44,
+          "org.apache.commons": 10,
+          "hudson.model": 10,
+          "com.opensymphony.xwork2": 9,
+          "java.lang": 6
+        }
+      },
+      "none": {
+        "total_count": 150,
+        "unique_families": 50,
+        "top_families": {
+          "java.util": 17,
+          "kotlin.collections": 14,
+          "hudson.model": 13,
+          "java.lang": 11,
+          "org.apache.struts2": 9
+        }
+      }
+    },
+    "CWE-502": {
+      "source": {
+        "total_count": 25,
+        "unique_families": 18,
+        "top_families": {
+          "com.rabbitmq.client": 3,
+          "javax.servlet": 2,
+          "javax.jms": 2,
+          "org.springframework.web": 2,
+          "javax.ws": 2
+        }
+      },
+      "sink": {
+        "total_count": 25,
+        "unique_families": 12,
+        "top_families": {
+          "org.ho.yaml": 7,
+          "org.apache.commons": 4,
+          "com.caucho.hessian": 2,
+          "java.beans": 2,
+          "com.alibaba.com": 2
+        }
+      },
+      "taint-propagator": {
+        "total_count": 0,
+        "unique_families": 0,
+        "top_families": {}
+      },
+      "none": {
+        "total_count": 25,
+        "unique_families": 15,
+        "top_families": {
+          "org.apache.struts2": 5,
+          "java.time": 5,
+          "hudson.cli": 2,
+          "org.apache.commons": 2,
+          "hudson.util": 1
+        }
+      }
+    },
+    "CWE-611": {
+      "source": {
+        "total_count": 0,
+        "unique_families": 0,
+        "top_families": {}
+      },
+      "sink": {
+        "total_count": 12,
+        "unique_families": 4,
+        "top_families": {
+          "javax.xml": 7,
+          "org.jdom2.input": 2,
+          "org.dom4j.io": 2,
+          "io.github.bonigarcia": 1
+        }
+      },
+      "taint-propagator": {
+        "total_count": 0,
+        "unique_families": 0,
+        "top_families": {}
+      },
+      "none": {
+        "total_count": 15,
+        "unique_families": 9,
+        "top_families": {
+          "org.apache.commons": 4,
+          "java.util": 3,
+          "java.time": 2,
+          "hudson.model": 1,
+          "javax.xml": 1
+        }
+      }
+    }
+  }
+}

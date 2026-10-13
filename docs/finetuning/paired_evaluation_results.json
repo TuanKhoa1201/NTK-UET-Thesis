@@ -1,0 +1,2811 @@
+{
+  "dataset": "NTK-IRIS-STAGE3-AUGMENTED-V3-20261012 (test.jsonl)",
+  "total_test_samples": 330,
+  "base_model": {
+    "name": "Qwen2.5-Coder-1.5B-Instruct (4-bit NF4)",
+    "accuracy": 0.3879,
+    "valid_json_rate": 0.0,
+    "avg_latency_ms": 2482.5,
+    "metrics": {
+      "source": {
+        "precision": 0.42657342657342656,
+        "recall": 0.5596330275229358,
+        "f1-score": 0.48412698412698413,
+        "support": 109.0
+      },
+      "sink": {
+        "precision": 0.3178294573643411,
+        "recall": 0.6949152542372882,
+        "f1-score": 0.43617021276595747,
+        "support": 59.0
+      },
+      "taint-propagator": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1-score": 0.0,
+        "support": 86.0
+      },
+      "none": {
+        "precision": 0.4482758620689655,
+        "recall": 0.34210526315789475,
+        "f1-score": 0.3880597014925373,
+        "support": 76.0
+      },
+      "accuracy": 0.3878787878787879,
+      "macro avg": {
+        "precision": 0.2981696865016833,
+        "recall": 0.3991633862295296,
+        "f1-score": 0.32708922459636974,
+        "support": 330.0
+      },
+      "weighted avg": {
+        "precision": 0.3009618393886091,
+        "recall": 0.3878787878787879,
+        "f1-score": 0.32726188223171393,
+        "support": 330.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        61,
+        33,
+        0,
+        15
+      ],
+      [
+        16,
+        41,
+        0,
+        2
+      ],
+      [
+        39,
+        32,
+        0,
+        15
+      ],
+      [
+        27,
+        23,
+        0,
+        26
+      ]
+    ]
+  },
+  "finetuned_model": {
+    "name": "Qwen2.5-Coder-1.5B-Instruct + best_adapter (QLoRA V3)",
+    "accuracy": 0.6727,
+    "valid_json_rate": 1.0,
+    "avg_latency_ms": 3537.6,
+    "metrics": {
+      "source": {
+        "precision": 0.8888888888888888,
+        "recall": 0.6605504587155964,
+        "f1-score": 0.7578947368421053,
+        "support": 109.0
+      },
+      "sink": {
+        "precision": 0.8596491228070176,
+        "recall": 0.8305084745762712,
+        "f1-score": 0.8448275862068966,
+        "support": 59.0
+      },
+      "taint-propagator": {
+        "precision": 0.6,
+        "recall": 0.3488372093023256,
+        "f1-score": 0.4411764705882353,
+        "support": 86.0
+      },
+      "none": {
+        "precision": 0.5,
+        "recall": 0.9342105263157895,
+        "f1-score": 0.6513761467889908,
+        "support": 76.0
+      },
+      "accuracy": 0.6727272727272727,
+      "macro avg": {
+        "precision": 0.7121345029239766,
+        "recall": 0.6935266672274957,
+        "f1-score": 0.673818735106557,
+        "support": 330.0
+      },
+      "weighted avg": {
+        "precision": 0.7188126882863725,
+        "recall": 0.6727272727272727,
+        "f1-score": 0.6663670228137815,
+        "support": 330.0
+      }
+    },
+    "confusion_matrix": [
+      [
+        72,
+        6,
+        17,
+        14
+      ],
+      [
+        4,
+        49,
+        0,
+        6
+      ],
+      [
+        3,
+        2,
+        30,
+        51
+      ],
+      [
+        2,
+        0,
+        3,
+        71
+      ]
+    ]
+  },
+  "paired_analysis": {
+    "both_correct": 99,
+    "base_correct_ft_wrong": 29,
+    "base_wrong_ft_correct": 123,
+    "both_wrong": 79,
+    "mcnemar_chi2": 56.9013
+  },
+  "sample_242_resolution": {
+    "base": {
+      "idx": 242,
+      "ground_truth": "source",
+      "prediction": "none",
+      "is_valid_json": false,
+      "raw_output": "```json\n{\n  \"package\": \"org.graylog2.rest.resources.users\",\n  \"class\": \"UsersResource\",\n  \"method\": \"generateNewToken\",\n  \"signature\": \"generateNewToken(java.lang.String, java.lang.String, org.graylog2.rest.resources.users.UsersResource.GenerateTokenTTL)\",\n  \"type\": \"none\"\n}\n```"
+    },
+    "finetuned": {
+      "idx": 242,
+      "ground_truth": "source",
+      "prediction": "taint-propagator",
+      "is_valid_json": true,
+      "raw_output": "{\"package\":\"org.graylog2.rest.resources.users\",\"class\":\"UsersResource\",\"method\":\"generateNewToken\",\"signature\":\"generateNewToken(java.lang.String, java.lang.String, org.graylog2.rest.resources.users.UsersResource.GenerateTokenTTL)\",\"sink_args\":[],\"type\":\"taint-propagator\"}"
+    }
+  },
+  "raw_comparisons": [
+    {
+      "idx": 0,
+      "ground_truth": "taint-propagator",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 1,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 2,
+      "ground_truth": "source",
+      "base_pred": "sink",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 3,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 4,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 5,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 6,
+      "ground_truth": "source",
+      "base_pred": "sink",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 7,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 8,
+      "ground_truth": "source",
+      "base_pred": "sink",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 9,
+      "ground_truth": "source",
+      "base_pred": "sink",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 10,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 11,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 12,
+      "ground_truth": "taint-propagator",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 13,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 14,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 15,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 16,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 17,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 18,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 19,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 20,
+      "ground_truth": "source",
+      "base_pred": "sink",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 21,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 22,
+      "ground_truth": "taint-propagator",
+      "base_pred": "none",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 23,
+      "ground_truth": "taint-propagator",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 24,
+      "ground_truth": "taint-propagator",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 25,
+      "ground_truth": "taint-propagator",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 26,
+      "ground_truth": "taint-propagator",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 27,
+      "ground_truth": "taint-propagator",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 28,
+      "ground_truth": "none",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 29,
+      "ground_truth": "taint-propagator",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 30,
+      "ground_truth": "none",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 31,
+      "ground_truth": "taint-propagator",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 32,
+      "ground_truth": "taint-propagator",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 33,
+      "ground_truth": "sink",
+      "base_pred": "sink",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 34,
+      "ground_truth": "sink",
+      "base_pred": "source",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 35,
+      "ground_truth": "sink",
+      "base_pred": "sink",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 36,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 37,
+      "ground_truth": "sink",
+      "base_pred": "sink",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 38,
+      "ground_truth": "source",
+      "base_pred": "none",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 39,
+      "ground_truth": "sink",
+      "base_pred": "sink",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 40,
+      "ground_truth": "sink",
+      "base_pred": "sink",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 41,
+      "ground_truth": "source",
+      "base_pred": "sink",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 42,
+      "ground_truth": "none",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 43,
+      "ground_truth": "taint-propagator",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 44,
+      "ground_truth": "none",
+      "base_pred": "sink",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 45,
+      "ground_truth": "none",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 46,
+      "ground_truth": "none",
+      "base_pred": "none",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 47,
+      "ground_truth": "none",
+      "base_pred": "none",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 48,
+      "ground_truth": "none",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 49,
+      "ground_truth": "taint-propagator",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 50,
+      "ground_truth": "sink",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 51,
+      "ground_truth": "none",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 52,
+      "ground_truth": "none",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 53,
+      "ground_truth": "sink",
+      "base_pred": "sink",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 54,
+      "ground_truth": "sink",
+      "base_pred": "source",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 55,
+      "ground_truth": "sink",
+      "base_pred": "source",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 56,
+      "ground_truth": "none",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 57,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 58,
+      "ground_truth": "none",
+      "base_pred": "none",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 59,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 60,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 61,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 62,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 63,
+      "ground_truth": "taint-propagator",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 64,
+      "ground_truth": "taint-propagator",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 65,
+      "ground_truth": "taint-propagator",
+      "base_pred": "sink",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 66,
+      "ground_truth": "none",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 67,
+      "ground_truth": "sink",
+      "base_pred": "source",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 68,
+      "ground_truth": "sink",
+      "base_pred": "source",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 69,
+      "ground_truth": "sink",
+      "base_pred": "source",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 70,
+      "ground_truth": "sink",
+      "base_pred": "sink",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 71,
+      "ground_truth": "sink",
+      "base_pred": "sink",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 72,
+      "ground_truth": "taint-propagator",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 73,
+      "ground_truth": "sink",
+      "base_pred": "sink",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 74,
+      "ground_truth": "none",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 75,
+      "ground_truth": "sink",
+      "base_pred": "source",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 76,
+      "ground_truth": "source",
+      "base_pred": "sink",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 77,
+      "ground_truth": "source",
+      "base_pred": "sink",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 78,
+      "ground_truth": "none",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 79,
+      "ground_truth": "source",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 80,
+      "ground_truth": "sink",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 81,
+      "ground_truth": "sink",
+      "base_pred": "sink",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 82,
+      "ground_truth": "sink",
+      "base_pred": "sink",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 83,
+      "ground_truth": "source",
+      "base_pred": "sink",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 84,
+      "ground_truth": "sink",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 85,
+      "ground_truth": "source",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 86,
+      "ground_truth": "source",
+      "base_pred": "sink",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 87,
+      "ground_truth": "sink",
+      "base_pred": "sink",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 88,
+      "ground_truth": "source",
+      "base_pred": "none",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 89,
+      "ground_truth": "sink",
+      "base_pred": "source",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 90,
+      "ground_truth": "taint-propagator",
+      "base_pred": "sink",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 91,
+      "ground_truth": "sink",
+      "base_pred": "sink",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 92,
+      "ground_truth": "none",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 93,
+      "ground_truth": "source",
+      "base_pred": "none",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 94,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 95,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 96,
+      "ground_truth": "source",
+      "base_pred": "sink",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 97,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 98,
+      "ground_truth": "source",
+      "base_pred": "sink",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 99,
+      "ground_truth": "source",
+      "base_pred": "sink",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 100,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 101,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 102,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 103,
+      "ground_truth": "source",
+      "base_pred": "none",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 104,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 105,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 106,
+      "ground_truth": "source",
+      "base_pred": "sink",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 107,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 108,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 109,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 110,
+      "ground_truth": "source",
+      "base_pred": "sink",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 111,
+      "ground_truth": "taint-propagator",
+      "base_pred": "sink",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 112,
+      "ground_truth": "none",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 113,
+      "ground_truth": "taint-propagator",
+      "base_pred": "sink",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 114,
+      "ground_truth": "taint-propagator",
+      "base_pred": "none",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 115,
+      "ground_truth": "source",
+      "base_pred": "sink",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 116,
+      "ground_truth": "none",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 117,
+      "ground_truth": "taint-propagator",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 118,
+      "ground_truth": "none",
+      "base_pred": "none",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 119,
+      "ground_truth": "none",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 120,
+      "ground_truth": "none",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 121,
+      "ground_truth": "none",
+      "base_pred": "none",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 122,
+      "ground_truth": "none",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 123,
+      "ground_truth": "none",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 124,
+      "ground_truth": "none",
+      "base_pred": "none",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 125,
+      "ground_truth": "sink",
+      "base_pred": "sink",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 126,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 127,
+      "ground_truth": "source",
+      "base_pred": "sink",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 128,
+      "ground_truth": "source",
+      "base_pred": "sink",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 129,
+      "ground_truth": "source",
+      "base_pred": "none",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 130,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 131,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 132,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 133,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 134,
+      "ground_truth": "source",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 135,
+      "ground_truth": "source",
+      "base_pred": "sink",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 136,
+      "ground_truth": "none",
+      "base_pred": "none",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 137,
+      "ground_truth": "none",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 138,
+      "ground_truth": "none",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 139,
+      "ground_truth": "none",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 140,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 141,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 142,
+      "ground_truth": "source",
+      "base_pred": "sink",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 143,
+      "ground_truth": "source",
+      "base_pred": "sink",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 144,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 145,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 146,
+      "ground_truth": "source",
+      "base_pred": "sink",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 147,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 148,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 149,
+      "ground_truth": "source",
+      "base_pred": "sink",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 150,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 151,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 152,
+      "ground_truth": "taint-propagator",
+      "base_pred": "source",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 153,
+      "ground_truth": "taint-propagator",
+      "base_pred": "source",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 154,
+      "ground_truth": "none",
+      "base_pred": "none",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 155,
+      "ground_truth": "source",
+      "base_pred": "sink",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 156,
+      "ground_truth": "source",
+      "base_pred": "sink",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 157,
+      "ground_truth": "source",
+      "base_pred": "none",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 158,
+      "ground_truth": "source",
+      "base_pred": "sink",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 159,
+      "ground_truth": "source",
+      "base_pred": "none",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 160,
+      "ground_truth": "source",
+      "base_pred": "none",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 161,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 162,
+      "ground_truth": "none",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 163,
+      "ground_truth": "none",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 164,
+      "ground_truth": "taint-propagator",
+      "base_pred": "source",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 165,
+      "ground_truth": "taint-propagator",
+      "base_pred": "source",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 166,
+      "ground_truth": "sink",
+      "base_pred": "sink",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 167,
+      "ground_truth": "sink",
+      "base_pred": "sink",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 168,
+      "ground_truth": "sink",
+      "base_pred": "sink",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 169,
+      "ground_truth": "sink",
+      "base_pred": "sink",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 170,
+      "ground_truth": "sink",
+      "base_pred": "sink",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 171,
+      "ground_truth": "none",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 172,
+      "ground_truth": "none",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 173,
+      "ground_truth": "sink",
+      "base_pred": "sink",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 174,
+      "ground_truth": "sink",
+      "base_pred": "sink",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 175,
+      "ground_truth": "sink",
+      "base_pred": "sink",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 176,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 177,
+      "ground_truth": "none",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 178,
+      "ground_truth": "sink",
+      "base_pred": "source",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 179,
+      "ground_truth": "source",
+      "base_pred": "sink",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 180,
+      "ground_truth": "source",
+      "base_pred": "sink",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 181,
+      "ground_truth": "taint-propagator",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 182,
+      "ground_truth": "taint-propagator",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 183,
+      "ground_truth": "taint-propagator",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 184,
+      "ground_truth": "sink",
+      "base_pred": "sink",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 185,
+      "ground_truth": "source",
+      "base_pred": "none",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 186,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 187,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 188,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 189,
+      "ground_truth": "source",
+      "base_pred": "sink",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 190,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 191,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 192,
+      "ground_truth": "taint-propagator",
+      "base_pred": "sink",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 193,
+      "ground_truth": "taint-propagator",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 194,
+      "ground_truth": "taint-propagator",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 195,
+      "ground_truth": "sink",
+      "base_pred": "sink",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 196,
+      "ground_truth": "sink",
+      "base_pred": "sink",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 197,
+      "ground_truth": "sink",
+      "base_pred": "sink",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 198,
+      "ground_truth": "sink",
+      "base_pred": "sink",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 199,
+      "ground_truth": "taint-propagator",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 200,
+      "ground_truth": "none",
+      "base_pred": "none",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 201,
+      "ground_truth": "none",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 202,
+      "ground_truth": "taint-propagator",
+      "base_pred": "none",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 203,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 204,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 205,
+      "ground_truth": "taint-propagator",
+      "base_pred": "sink",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 206,
+      "ground_truth": "taint-propagator",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 207,
+      "ground_truth": "taint-propagator",
+      "base_pred": "none",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 208,
+      "ground_truth": "taint-propagator",
+      "base_pred": "none",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 209,
+      "ground_truth": "taint-propagator",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 210,
+      "ground_truth": "sink",
+      "base_pred": "sink",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 211,
+      "ground_truth": "sink",
+      "base_pred": "sink",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 212,
+      "ground_truth": "none",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 213,
+      "ground_truth": "taint-propagator",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 214,
+      "ground_truth": "taint-propagator",
+      "base_pred": "source",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 215,
+      "ground_truth": "none",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 216,
+      "ground_truth": "none",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 217,
+      "ground_truth": "sink",
+      "base_pred": "source",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 218,
+      "ground_truth": "taint-propagator",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 219,
+      "ground_truth": "taint-propagator",
+      "base_pred": "source",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 220,
+      "ground_truth": "none",
+      "base_pred": "none",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 221,
+      "ground_truth": "source",
+      "base_pred": "none",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 222,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 223,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 224,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 225,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 226,
+      "ground_truth": "taint-propagator",
+      "base_pred": "source",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 227,
+      "ground_truth": "none",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 228,
+      "ground_truth": "none",
+      "base_pred": "none",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 229,
+      "ground_truth": "taint-propagator",
+      "base_pred": "source",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 230,
+      "ground_truth": "none",
+      "base_pred": "none",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 231,
+      "ground_truth": "none",
+      "base_pred": "none",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 232,
+      "ground_truth": "taint-propagator",
+      "base_pred": "none",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 233,
+      "ground_truth": "taint-propagator",
+      "base_pred": "sink",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 234,
+      "ground_truth": "none",
+      "base_pred": "none",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 235,
+      "ground_truth": "none",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 236,
+      "ground_truth": "none",
+      "base_pred": "none",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 237,
+      "ground_truth": "taint-propagator",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 238,
+      "ground_truth": "none",
+      "base_pred": "source",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 239,
+      "ground_truth": "sink",
+      "base_pred": "sink",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 240,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 241,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 242,
+      "ground_truth": "source",
+      "base_pred": "none",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 243,
+      "ground_truth": "none",
+      "base_pred": "none",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 244,
+      "ground_truth": "taint-propagator",
+      "base_pred": "none",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 245,
+      "ground_truth": "sink",
+      "base_pred": "source",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 246,
+      "ground_truth": "taint-propagator",
+      "base_pred": "source",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 247,
+      "ground_truth": "none",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 248,
+      "ground_truth": "none",
+      "base_pred": "none",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 249,
+      "ground_truth": "taint-propagator",
+      "base_pred": "source",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 250,
+      "ground_truth": "taint-propagator",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 251,
+      "ground_truth": "taint-propagator",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 252,
+      "ground_truth": "taint-propagator",
+      "base_pred": "source",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 253,
+      "ground_truth": "taint-propagator",
+      "base_pred": "source",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 254,
+      "ground_truth": "taint-propagator",
+      "base_pred": "sink",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 255,
+      "ground_truth": "none",
+      "base_pred": "sink",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 256,
+      "ground_truth": "none",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 257,
+      "ground_truth": "none",
+      "base_pred": "none",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 258,
+      "ground_truth": "taint-propagator",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 259,
+      "ground_truth": "sink",
+      "base_pred": "none",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 260,
+      "ground_truth": "none",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 261,
+      "ground_truth": "source",
+      "base_pred": "sink",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 262,
+      "ground_truth": "none",
+      "base_pred": "none",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 263,
+      "ground_truth": "none",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 264,
+      "ground_truth": "taint-propagator",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 265,
+      "ground_truth": "taint-propagator",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 266,
+      "ground_truth": "taint-propagator",
+      "base_pred": "source",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 267,
+      "ground_truth": "sink",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 268,
+      "ground_truth": "none",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 269,
+      "ground_truth": "taint-propagator",
+      "base_pred": "sink",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 270,
+      "ground_truth": "taint-propagator",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 271,
+      "ground_truth": "source",
+      "base_pred": "none",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 272,
+      "ground_truth": "taint-propagator",
+      "base_pred": "source",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 273,
+      "ground_truth": "taint-propagator",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 274,
+      "ground_truth": "taint-propagator",
+      "base_pred": "sink",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 275,
+      "ground_truth": "taint-propagator",
+      "base_pred": "none",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 276,
+      "ground_truth": "sink",
+      "base_pred": "source",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 277,
+      "ground_truth": "none",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 278,
+      "ground_truth": "sink",
+      "base_pred": "none",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 279,
+      "ground_truth": "source",
+      "base_pred": "none",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 280,
+      "ground_truth": "sink",
+      "base_pred": "sink",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 281,
+      "ground_truth": "sink",
+      "base_pred": "sink",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 282,
+      "ground_truth": "sink",
+      "base_pred": "sink",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 283,
+      "ground_truth": "none",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 284,
+      "ground_truth": "none",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 285,
+      "ground_truth": "none",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 286,
+      "ground_truth": "none",
+      "base_pred": "none",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 287,
+      "ground_truth": "taint-propagator",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 288,
+      "ground_truth": "taint-propagator",
+      "base_pred": "none",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 289,
+      "ground_truth": "taint-propagator",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 290,
+      "ground_truth": "taint-propagator",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 291,
+      "ground_truth": "taint-propagator",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 292,
+      "ground_truth": "none",
+      "base_pred": "none",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 293,
+      "ground_truth": "source",
+      "base_pred": "none",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 294,
+      "ground_truth": "taint-propagator",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 295,
+      "ground_truth": "taint-propagator",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 296,
+      "ground_truth": "none",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 297,
+      "ground_truth": "taint-propagator",
+      "base_pred": "none",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 298,
+      "ground_truth": "taint-propagator",
+      "base_pred": "sink",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 299,
+      "ground_truth": "sink",
+      "base_pred": "sink",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 300,
+      "ground_truth": "taint-propagator",
+      "base_pred": "none",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 301,
+      "ground_truth": "sink",
+      "base_pred": "source",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 302,
+      "ground_truth": "taint-propagator",
+      "base_pred": "none",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 303,
+      "ground_truth": "none",
+      "base_pred": "none",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 304,
+      "ground_truth": "none",
+      "base_pred": "none",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 305,
+      "ground_truth": "none",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 306,
+      "ground_truth": "none",
+      "base_pred": "none",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 307,
+      "ground_truth": "taint-propagator",
+      "base_pred": "source",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 308,
+      "ground_truth": "taint-propagator",
+      "base_pred": "none",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 309,
+      "ground_truth": "none",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 310,
+      "ground_truth": "sink",
+      "base_pred": "sink",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 311,
+      "ground_truth": "none",
+      "base_pred": "none",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 312,
+      "ground_truth": "taint-propagator",
+      "base_pred": "source",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 313,
+      "ground_truth": "sink",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 314,
+      "ground_truth": "sink",
+      "base_pred": "source",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 315,
+      "ground_truth": "taint-propagator",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 316,
+      "ground_truth": "none",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 317,
+      "ground_truth": "taint-propagator",
+      "base_pred": "source",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 318,
+      "ground_truth": "sink",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 319,
+      "ground_truth": "taint-propagator",
+      "base_pred": "none",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 320,
+      "ground_truth": "source",
+      "base_pred": "none",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 321,
+      "ground_truth": "sink",
+      "base_pred": "source",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 322,
+      "ground_truth": "taint-propagator",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 323,
+      "ground_truth": "none",
+      "base_pred": "sink",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 324,
+      "ground_truth": "none",
+      "base_pred": "none",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 325,
+      "ground_truth": "none",
+      "base_pred": "source",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 326,
+      "ground_truth": "taint-propagator",
+      "base_pred": "source",
+      "ft_pred": "taint-propagator",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 327,
+      "ground_truth": "source",
+      "base_pred": "source",
+      "ft_pred": "source",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 328,
+      "ground_truth": "sink",
+      "base_pred": "sink",
+      "ft_pred": "sink",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    },
+    {
+      "idx": 329,
+      "ground_truth": "taint-propagator",
+      "base_pred": "none",
+      "ft_pred": "none",
+      "base_valid_json": false,
+      "ft_valid_json": true
+    }
+  ]
+}
