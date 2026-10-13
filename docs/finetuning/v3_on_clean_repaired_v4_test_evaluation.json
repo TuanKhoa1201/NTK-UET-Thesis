@@ -1,54 +1,54 @@
 {
   "dataset_version": "NTK-IRIS-STAGE3-CANONICAL-V4.1-SCIENTIFIC-VERIFIED",
   "dataset_status": "CLEAN_HELDOUT_EVALUATION",
-  "sample_count": 42,
+  "sample_count": 17,
   "strict_json_validity_rate": 1.0,
   "full_schema_keyset_validity_rate": 1.0,
-  "role_label_classification_accuracy": 0.5238095238095238,
-  "full_strict_exact_match_rate": 0.5238095238095238,
-  "semantic_structured_match_rate": 0.5238095238095238,
+  "role_label_classification_accuracy": 0.29411764705882354,
+  "full_strict_exact_match_rate": 0.23529411764705882,
+  "semantic_structured_match_rate": 0.29411764705882354,
   "sink_args_exact_accuracy": 0.0,
-  "sink_args_semantic_accuracy": 0.0,
-  "macro_f1": 0.2860344137655062,
-  "weighted_f1": 0.5818060557556356,
-  "avg_latency_ms": 4249.731864248003,
+  "sink_args_semantic_accuracy": 1.0,
+  "macro_f1": 0.3820512820512821,
+  "weighted_f1": 0.3414781297134239,
+  "avg_latency_ms": 5413.67366734673,
   "classification_report": {
     "source": {
-      "precision": 0.9047619047619048,
-      "recall": 0.6785714285714286,
-      "f1-score": 0.7755102040816326,
-      "support": 28.0
+      "precision": 1.0,
+      "recall": 0.25,
+      "f1-score": 0.4,
+      "support": 4.0
     },
     "sink": {
-      "precision": 0.0,
-      "recall": 0.0,
-      "f1-score": 0.0,
-      "support": 2.0
+      "precision": 0.5,
+      "recall": 1.0,
+      "f1-score": 0.6666666666666666,
+      "support": 1.0
     },
     "taint-propagator": {
-      "precision": 0.07142857142857142,
+      "precision": 0.08333333333333333,
       "recall": 1.0,
-      "f1-score": 0.13333333333333333,
+      "f1-score": 0.15384615384615385,
       "support": 1.0
     },
     "none": {
-      "precision": 0.3333333333333333,
+      "precision": 1.0,
       "recall": 0.18181818181818182,
-      "f1-score": 0.23529411764705882,
+      "f1-score": 0.3076923076923077,
       "support": 11.0
     },
-    "accuracy": 0.5238095238095238,
+    "accuracy": 0.29411764705882354,
     "macro avg": {
-      "precision": 0.3273809523809524,
-      "recall": 0.4650974025974026,
-      "f1-score": 0.2860344137655062,
-      "support": 42.0
+      "precision": 0.6458333333333333,
+      "recall": 0.6079545454545454,
+      "f1-score": 0.3820512820512821,
+      "support": 17.0
     },
     "weighted avg": {
-      "precision": 0.6921768707482994,
-      "recall": 0.5238095238095238,
-      "f1-score": 0.5818060557556356,
-      "support": 42.0
+      "precision": 0.9166666666666666,
+      "recall": 0.29411764705882354,
+      "f1-score": 0.3414781297134239,
+      "support": 17.0
     }
   },
   "scientific_audit_notes": {
@@ -438,33 +438,35 @@
     {
       "idx": 13,
       "gt": {
-        "package": "org.apache.jena.fuseki.webapp",
-        "class": "FusekiWebapp",
-        "method": "allowConfigFiles",
-        "signature": "allowConfigFiles()",
+        "package": "javax.xml.parsers",
+        "class": "DocumentBuilder",
+        "method": "parse",
+        "signature": "parse(java.io.InputStream)",
         "sink_args": [
-          "ReturnValue"
+          "Argument[0]"
         ],
         "type": "sink"
       },
       "parsed": {
         "is_valid_json": true,
         "full_schema_valid": true,
-        "strict_type": "source",
-        "lenient_type": "source",
-        "sink_args": [],
-        "package": "org.apache.jena.fuseki.webapp",
-        "class": "FusekiWebapp",
-        "method": "allowConfigFiles",
-        "signature": "allowConfigFiles()",
-        "raw": "{\"package\":\"org.apache.jena.fuseki.webapp\",\"class\":\"FusekiWebapp\",\"method\":\"allowConfigFiles\",\"signature\":\"allowConfigFiles()\",\"sink_args\":[],\"type\":\"source\"}"
+        "strict_type": "sink",
+        "lenient_type": "sink",
+        "sink_args": [
+          "0"
+        ],
+        "package": "javax.xml.parsers",
+        "class": "DocumentBuilder",
+        "method": "parse",
+        "signature": "parse(java.io.InputStream)",
+        "raw": "{\"package\":\"javax.xml.parsers\",\"class\":\"DocumentBuilder\",\"method\":\"parse\",\"signature\":\"parse(java.io.InputStream)\",\"sink_args\":[\"0\"],\"type\":\"sink\"}"
       },
-      "role_label_correct": false,
+      "role_label_correct": true,
       "api_identity_correct": true,
       "sink_args_exact_correct": false,
-      "sink_args_semantic_correct": false,
+      "sink_args_semantic_correct": true,
       "full_strict_exact_match": false,
-      "semantic_structured_match": false
+      "semantic_structured_match": true
     },
     {
       "idx": 14,
@@ -547,733 +549,6 @@
         "method": "getInlineEnabledFileExtensions",
         "signature": "getInlineEnabledFileExtensions()",
         "raw": "{\"package\":\"com.haulmont.addon.jpawebapi.api.config\",\"class\":\"JpaWebApiConfig\",\"method\":\"getInlineEnabledFileExtensions\",\"signature\":\"getInlineEnabledFileExtensions()\",\"sink_args\":[],\"type\":\"taint-propagator\"}"
-      },
-      "role_label_correct": false,
-      "api_identity_correct": true,
-      "sink_args_exact_correct": null,
-      "sink_args_semantic_correct": null,
-      "full_strict_exact_match": false,
-      "semantic_structured_match": false
-    },
-    {
-      "idx": 17,
-      "gt": {
-        "package": "org.apache.hadoop.hive.ql.metadata",
-        "class": "Hive",
-        "method": "copyFiles",
-        "signature": "copyFiles((HiveConf)",
-        "sink_args": [
-          "Path"
-        ],
-        "type": "sink"
-      },
-      "parsed": {
-        "is_valid_json": true,
-        "full_schema_valid": true,
-        "strict_type": "source",
-        "lenient_type": "source",
-        "sink_args": [],
-        "package": "org.apache.hadoop.hive.ql.metadata",
-        "class": "Hive",
-        "method": "copyFiles",
-        "signature": "copyFiles((HiveConf)",
-        "raw": "{\"package\":\"org.apache.hadoop.hive.ql.metadata\",\"class\":\"Hive\",\"method\":\"copyFiles\",\"signature\":\"copyFiles((HiveConf)\",\"sink_args\":[],\"type\":\"source\"}"
-      },
-      "role_label_correct": false,
-      "api_identity_correct": true,
-      "sink_args_exact_correct": false,
-      "sink_args_semantic_correct": false,
-      "full_strict_exact_match": false,
-      "semantic_structured_match": false
-    },
-    {
-      "idx": 18,
-      "gt": {
-        "package": "android.widget",
-        "class": "EditText",
-        "method": "getText",
-        "signature": "getText()",
-        "sink_args": [],
-        "type": "source"
-      },
-      "parsed": {
-        "is_valid_json": true,
-        "full_schema_valid": true,
-        "strict_type": "source",
-        "lenient_type": "source",
-        "sink_args": [],
-        "package": "android.widget",
-        "class": "EditText",
-        "method": "getText",
-        "signature": "getText()",
-        "raw": "{\"package\":\"android.widget\",\"class\":\"EditText\",\"method\":\"getText\",\"signature\":\"getText()\",\"sink_args\":[],\"type\":\"source\"}"
-      },
-      "role_label_correct": true,
-      "api_identity_correct": true,
-      "sink_args_exact_correct": null,
-      "sink_args_semantic_correct": null,
-      "full_strict_exact_match": true,
-      "semantic_structured_match": true
-    },
-    {
-      "idx": 19,
-      "gt": {
-        "package": "android.widget",
-        "class": "EditText",
-        "method": "getText",
-        "signature": "getText()",
-        "sink_args": [],
-        "type": "source"
-      },
-      "parsed": {
-        "is_valid_json": true,
-        "full_schema_valid": true,
-        "strict_type": "source",
-        "lenient_type": "source",
-        "sink_args": [],
-        "package": "android.widget",
-        "class": "EditText",
-        "method": "getText",
-        "signature": "getText()",
-        "raw": "{\"package\":\"android.widget\",\"class\":\"EditText\",\"method\":\"getText\",\"signature\":\"getText()\",\"sink_args\":[],\"type\":\"source\"}"
-      },
-      "role_label_correct": true,
-      "api_identity_correct": true,
-      "sink_args_exact_correct": null,
-      "sink_args_semantic_correct": null,
-      "full_strict_exact_match": true,
-      "semantic_structured_match": true
-    },
-    {
-      "idx": 20,
-      "gt": {
-        "package": "android.widget",
-        "class": "EditText",
-        "method": "getText",
-        "signature": "getText()",
-        "sink_args": [],
-        "type": "source"
-      },
-      "parsed": {
-        "is_valid_json": true,
-        "full_schema_valid": true,
-        "strict_type": "source",
-        "lenient_type": "source",
-        "sink_args": [],
-        "package": "android.widget",
-        "class": "EditText",
-        "method": "getText",
-        "signature": "getText()",
-        "raw": "{\"package\":\"android.widget\",\"class\":\"EditText\",\"method\":\"getText\",\"signature\":\"getText()\",\"sink_args\":[],\"type\":\"source\"}"
-      },
-      "role_label_correct": true,
-      "api_identity_correct": true,
-      "sink_args_exact_correct": null,
-      "sink_args_semantic_correct": null,
-      "full_strict_exact_match": true,
-      "semantic_structured_match": true
-    },
-    {
-      "idx": 21,
-      "gt": {
-        "package": "android.util",
-        "class": "AttributeSet",
-        "method": "getAttributeCount",
-        "signature": "getAttributeCount()",
-        "sink_args": [],
-        "type": "source"
-      },
-      "parsed": {
-        "is_valid_json": true,
-        "full_schema_valid": true,
-        "strict_type": "source",
-        "lenient_type": "source",
-        "sink_args": [],
-        "package": "android.util",
-        "class": "AttributeSet",
-        "method": "getAttributeCount",
-        "signature": "getAttributeCount()",
-        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getAttributeCount\",\"signature\":\"getAttributeCount()\",\"sink_args\":[],\"type\":\"source\"}"
-      },
-      "role_label_correct": true,
-      "api_identity_correct": true,
-      "sink_args_exact_correct": null,
-      "sink_args_semantic_correct": null,
-      "full_strict_exact_match": true,
-      "semantic_structured_match": true
-    },
-    {
-      "idx": 22,
-      "gt": {
-        "package": "android.util",
-        "class": "AttributeSet",
-        "method": "getAttributeCount",
-        "signature": "getAttributeCount()",
-        "sink_args": [],
-        "type": "source"
-      },
-      "parsed": {
-        "is_valid_json": true,
-        "full_schema_valid": true,
-        "strict_type": "source",
-        "lenient_type": "source",
-        "sink_args": [],
-        "package": "android.util",
-        "class": "AttributeSet",
-        "method": "getAttributeCount",
-        "signature": "getAttributeCount()",
-        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getAttributeCount\",\"signature\":\"getAttributeCount()\",\"sink_args\":[],\"type\":\"source\"}"
-      },
-      "role_label_correct": true,
-      "api_identity_correct": true,
-      "sink_args_exact_correct": null,
-      "sink_args_semantic_correct": null,
-      "full_strict_exact_match": true,
-      "semantic_structured_match": true
-    },
-    {
-      "idx": 23,
-      "gt": {
-        "package": "android.util",
-        "class": "AttributeSet",
-        "method": "getAttributeCount",
-        "signature": "getAttributeCount()",
-        "sink_args": [],
-        "type": "source"
-      },
-      "parsed": {
-        "is_valid_json": true,
-        "full_schema_valid": true,
-        "strict_type": "source",
-        "lenient_type": "source",
-        "sink_args": [],
-        "package": "android.util",
-        "class": "AttributeSet",
-        "method": "getAttributeCount",
-        "signature": "getAttributeCount()",
-        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getAttributeCount\",\"signature\":\"getAttributeCount()\",\"sink_args\":[],\"type\":\"source\"}"
-      },
-      "role_label_correct": true,
-      "api_identity_correct": true,
-      "sink_args_exact_correct": null,
-      "sink_args_semantic_correct": null,
-      "full_strict_exact_match": true,
-      "semantic_structured_match": true
-    },
-    {
-      "idx": 24,
-      "gt": {
-        "package": "android.util",
-        "class": "AttributeSet",
-        "method": "getAttributeIntValue",
-        "signature": "getAttributeIntValue()",
-        "sink_args": [],
-        "type": "source"
-      },
-      "parsed": {
-        "is_valid_json": true,
-        "full_schema_valid": true,
-        "strict_type": "source",
-        "lenient_type": "source",
-        "sink_args": [],
-        "package": "android.util",
-        "class": "AttributeSet",
-        "method": "getAttributeIntValue",
-        "signature": "getAttributeIntValue()",
-        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getAttributeIntValue\",\"signature\":\"getAttributeIntValue()\",\"sink_args\":[],\"type\":\"source\"}"
-      },
-      "role_label_correct": true,
-      "api_identity_correct": true,
-      "sink_args_exact_correct": null,
-      "sink_args_semantic_correct": null,
-      "full_strict_exact_match": true,
-      "semantic_structured_match": true
-    },
-    {
-      "idx": 25,
-      "gt": {
-        "package": "android.util",
-        "class": "AttributeSet",
-        "method": "getAttributeIntValue",
-        "signature": "getAttributeIntValue()",
-        "sink_args": [],
-        "type": "source"
-      },
-      "parsed": {
-        "is_valid_json": true,
-        "full_schema_valid": true,
-        "strict_type": "source",
-        "lenient_type": "source",
-        "sink_args": [],
-        "package": "android.util",
-        "class": "AttributeSet",
-        "method": "getAttributeIntValue",
-        "signature": "getAttributeIntValue()",
-        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getAttributeIntValue\",\"signature\":\"getAttributeIntValue()\",\"sink_args\":[],\"type\":\"source\"}"
-      },
-      "role_label_correct": true,
-      "api_identity_correct": true,
-      "sink_args_exact_correct": null,
-      "sink_args_semantic_correct": null,
-      "full_strict_exact_match": true,
-      "semantic_structured_match": true
-    },
-    {
-      "idx": 26,
-      "gt": {
-        "package": "android.util",
-        "class": "AttributeSet",
-        "method": "getAttributeIntValue",
-        "signature": "getAttributeIntValue()",
-        "sink_args": [],
-        "type": "source"
-      },
-      "parsed": {
-        "is_valid_json": true,
-        "full_schema_valid": true,
-        "strict_type": "source",
-        "lenient_type": "source",
-        "sink_args": [],
-        "package": "android.util",
-        "class": "AttributeSet",
-        "method": "getAttributeIntValue",
-        "signature": "getAttributeIntValue()",
-        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getAttributeIntValue\",\"signature\":\"getAttributeIntValue()\",\"sink_args\":[],\"type\":\"source\"}"
-      },
-      "role_label_correct": true,
-      "api_identity_correct": true,
-      "sink_args_exact_correct": null,
-      "sink_args_semantic_correct": null,
-      "full_strict_exact_match": true,
-      "semantic_structured_match": true
-    },
-    {
-      "idx": 27,
-      "gt": {
-        "package": "android.util",
-        "class": "AttributeSet",
-        "method": "getAttributeListValue",
-        "signature": "getAttributeListValue()",
-        "sink_args": [],
-        "type": "source"
-      },
-      "parsed": {
-        "is_valid_json": true,
-        "full_schema_valid": true,
-        "strict_type": "source",
-        "lenient_type": "source",
-        "sink_args": [],
-        "package": "android.util",
-        "class": "AttributeSet",
-        "method": "getAttributeListValue",
-        "signature": "getAttributeListValue()",
-        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getAttributeListValue\",\"signature\":\"getAttributeListValue()\",\"sink_args\":[],\"type\":\"source\"}"
-      },
-      "role_label_correct": true,
-      "api_identity_correct": true,
-      "sink_args_exact_correct": null,
-      "sink_args_semantic_correct": null,
-      "full_strict_exact_match": true,
-      "semantic_structured_match": true
-    },
-    {
-      "idx": 28,
-      "gt": {
-        "package": "android.util",
-        "class": "AttributeSet",
-        "method": "getAttributeListValue",
-        "signature": "getAttributeListValue()",
-        "sink_args": [],
-        "type": "source"
-      },
-      "parsed": {
-        "is_valid_json": true,
-        "full_schema_valid": true,
-        "strict_type": "source",
-        "lenient_type": "source",
-        "sink_args": [],
-        "package": "android.util",
-        "class": "AttributeSet",
-        "method": "getAttributeListValue",
-        "signature": "getAttributeListValue()",
-        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getAttributeListValue\",\"signature\":\"getAttributeListValue()\",\"sink_args\":[],\"type\":\"source\"}"
-      },
-      "role_label_correct": true,
-      "api_identity_correct": true,
-      "sink_args_exact_correct": null,
-      "sink_args_semantic_correct": null,
-      "full_strict_exact_match": true,
-      "semantic_structured_match": true
-    },
-    {
-      "idx": 29,
-      "gt": {
-        "package": "android.util",
-        "class": "AttributeSet",
-        "method": "getAttributeListValue",
-        "signature": "getAttributeListValue()",
-        "sink_args": [],
-        "type": "source"
-      },
-      "parsed": {
-        "is_valid_json": true,
-        "full_schema_valid": true,
-        "strict_type": "source",
-        "lenient_type": "source",
-        "sink_args": [],
-        "package": "android.util",
-        "class": "AttributeSet",
-        "method": "getAttributeListValue",
-        "signature": "getAttributeListValue()",
-        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getAttributeListValue\",\"signature\":\"getAttributeListValue()\",\"sink_args\":[],\"type\":\"source\"}"
-      },
-      "role_label_correct": true,
-      "api_identity_correct": true,
-      "sink_args_exact_correct": null,
-      "sink_args_semantic_correct": null,
-      "full_strict_exact_match": true,
-      "semantic_structured_match": true
-    },
-    {
-      "idx": 30,
-      "gt": {
-        "package": "android.util",
-        "class": "AttributeSet",
-        "method": "getAttributeResourceValue",
-        "signature": "getAttributeResourceValue()",
-        "sink_args": [],
-        "type": "source"
-      },
-      "parsed": {
-        "is_valid_json": true,
-        "full_schema_valid": true,
-        "strict_type": "source",
-        "lenient_type": "source",
-        "sink_args": [],
-        "package": "android.util",
-        "class": "AttributeSet",
-        "method": "getAttributeResourceValue",
-        "signature": "getAttributeResourceValue()",
-        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getAttributeResourceValue\",\"signature\":\"getAttributeResourceValue()\",\"sink_args\":[],\"type\":\"source\"}"
-      },
-      "role_label_correct": true,
-      "api_identity_correct": true,
-      "sink_args_exact_correct": null,
-      "sink_args_semantic_correct": null,
-      "full_strict_exact_match": true,
-      "semantic_structured_match": true
-    },
-    {
-      "idx": 31,
-      "gt": {
-        "package": "android.util",
-        "class": "AttributeSet",
-        "method": "getAttributeResourceValue",
-        "signature": "getAttributeResourceValue()",
-        "sink_args": [],
-        "type": "source"
-      },
-      "parsed": {
-        "is_valid_json": true,
-        "full_schema_valid": true,
-        "strict_type": "source",
-        "lenient_type": "source",
-        "sink_args": [],
-        "package": "android.util",
-        "class": "AttributeSet",
-        "method": "getAttributeResourceValue",
-        "signature": "getAttributeResourceValue()",
-        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getAttributeResourceValue\",\"signature\":\"getAttributeResourceValue()\",\"sink_args\":[],\"type\":\"source\"}"
-      },
-      "role_label_correct": true,
-      "api_identity_correct": true,
-      "sink_args_exact_correct": null,
-      "sink_args_semantic_correct": null,
-      "full_strict_exact_match": true,
-      "semantic_structured_match": true
-    },
-    {
-      "idx": 32,
-      "gt": {
-        "package": "android.util",
-        "class": "AttributeSet",
-        "method": "getAttributeResourceValue",
-        "signature": "getAttributeResourceValue()",
-        "sink_args": [],
-        "type": "source"
-      },
-      "parsed": {
-        "is_valid_json": true,
-        "full_schema_valid": true,
-        "strict_type": "source",
-        "lenient_type": "source",
-        "sink_args": [],
-        "package": "android.util",
-        "class": "AttributeSet",
-        "method": "getAttributeResourceValue",
-        "signature": "getAttributeResourceValue()",
-        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getAttributeResourceValue\",\"signature\":\"getAttributeResourceValue()\",\"sink_args\":[],\"type\":\"source\"}"
-      },
-      "role_label_correct": true,
-      "api_identity_correct": true,
-      "sink_args_exact_correct": null,
-      "sink_args_semantic_correct": null,
-      "full_strict_exact_match": true,
-      "semantic_structured_match": true
-    },
-    {
-      "idx": 33,
-      "gt": {
-        "package": "android.util",
-        "class": "AttributeSet",
-        "method": "getPositionDescription",
-        "signature": "getPositionDescription()",
-        "sink_args": [],
-        "type": "source"
-      },
-      "parsed": {
-        "is_valid_json": true,
-        "full_schema_valid": true,
-        "strict_type": "source",
-        "lenient_type": "source",
-        "sink_args": [],
-        "package": "android.util",
-        "class": "AttributeSet",
-        "method": "getPositionDescription",
-        "signature": "getPositionDescription()",
-        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getPositionDescription\",\"signature\":\"getPositionDescription()\",\"sink_args\":[],\"type\":\"source\"}"
-      },
-      "role_label_correct": true,
-      "api_identity_correct": true,
-      "sink_args_exact_correct": null,
-      "sink_args_semantic_correct": null,
-      "full_strict_exact_match": true,
-      "semantic_structured_match": true
-    },
-    {
-      "idx": 34,
-      "gt": {
-        "package": "android.util",
-        "class": "AttributeSet",
-        "method": "getPositionDescription",
-        "signature": "getPositionDescription()",
-        "sink_args": [],
-        "type": "source"
-      },
-      "parsed": {
-        "is_valid_json": true,
-        "full_schema_valid": true,
-        "strict_type": "source",
-        "lenient_type": "source",
-        "sink_args": [],
-        "package": "android.util",
-        "class": "AttributeSet",
-        "method": "getPositionDescription",
-        "signature": "getPositionDescription()",
-        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getPositionDescription\",\"signature\":\"getPositionDescription()\",\"sink_args\":[],\"type\":\"source\"}"
-      },
-      "role_label_correct": true,
-      "api_identity_correct": true,
-      "sink_args_exact_correct": null,
-      "sink_args_semantic_correct": null,
-      "full_strict_exact_match": true,
-      "semantic_structured_match": true
-    },
-    {
-      "idx": 35,
-      "gt": {
-        "package": "android.util",
-        "class": "AttributeSet",
-        "method": "getPositionDescription",
-        "signature": "getPositionDescription()",
-        "sink_args": [],
-        "type": "source"
-      },
-      "parsed": {
-        "is_valid_json": true,
-        "full_schema_valid": true,
-        "strict_type": "source",
-        "lenient_type": "source",
-        "sink_args": [],
-        "package": "android.util",
-        "class": "AttributeSet",
-        "method": "getPositionDescription",
-        "signature": "getPositionDescription()",
-        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getPositionDescription\",\"signature\":\"getPositionDescription()\",\"sink_args\":[],\"type\":\"source\"}"
-      },
-      "role_label_correct": true,
-      "api_identity_correct": true,
-      "sink_args_exact_correct": null,
-      "sink_args_semantic_correct": null,
-      "full_strict_exact_match": true,
-      "semantic_structured_match": true
-    },
-    {
-      "idx": 36,
-      "gt": {
-        "package": "hudson",
-        "class": "Plugin",
-        "method": "configure",
-        "signature": "configure()",
-        "sink_args": [],
-        "type": "source"
-      },
-      "parsed": {
-        "is_valid_json": true,
-        "full_schema_valid": true,
-        "strict_type": "none",
-        "lenient_type": "none",
-        "sink_args": [],
-        "package": "hudson",
-        "class": "Plugin",
-        "method": "configure",
-        "signature": "configure()",
-        "raw": "{\"package\":\"hudson\",\"class\":\"Plugin\",\"method\":\"configure\",\"signature\":\"configure()\",\"sink_args\":[],\"type\":\"none\"}"
-      },
-      "role_label_correct": false,
-      "api_identity_correct": true,
-      "sink_args_exact_correct": null,
-      "sink_args_semantic_correct": null,
-      "full_strict_exact_match": false,
-      "semantic_structured_match": false
-    },
-    {
-      "idx": 37,
-      "gt": {
-        "package": "hudson",
-        "class": "Plugin",
-        "method": "configure",
-        "signature": "configure()",
-        "sink_args": [],
-        "type": "source"
-      },
-      "parsed": {
-        "is_valid_json": true,
-        "full_schema_valid": true,
-        "strict_type": "none",
-        "lenient_type": "none",
-        "sink_args": [],
-        "package": "hudson",
-        "class": "Plugin",
-        "method": "configure",
-        "signature": "configure()",
-        "raw": "{\"package\":\"hudson\",\"class\":\"Plugin\",\"method\":\"configure\",\"signature\":\"configure()\",\"sink_args\":[],\"type\":\"none\"}"
-      },
-      "role_label_correct": false,
-      "api_identity_correct": true,
-      "sink_args_exact_correct": null,
-      "sink_args_semantic_correct": null,
-      "full_strict_exact_match": false,
-      "semantic_structured_match": false
-    },
-    {
-      "idx": 38,
-      "gt": {
-        "package": "hudson",
-        "class": "Plugin",
-        "method": "configure",
-        "signature": "configure()",
-        "sink_args": [],
-        "type": "source"
-      },
-      "parsed": {
-        "is_valid_json": true,
-        "full_schema_valid": true,
-        "strict_type": "taint-propagator",
-        "lenient_type": "taint-propagator",
-        "sink_args": [],
-        "package": "hudson",
-        "class": "Plugin",
-        "method": "configure",
-        "signature": "configure()",
-        "raw": "{\"package\":\"hudson\",\"class\":\"Plugin\",\"method\":\"configure\",\"signature\":\"configure()\",\"sink_args\":[],\"type\":\"taint-propagator\"}"
-      },
-      "role_label_correct": false,
-      "api_identity_correct": true,
-      "sink_args_exact_correct": null,
-      "sink_args_semantic_correct": null,
-      "full_strict_exact_match": false,
-      "semantic_structured_match": false
-    },
-    {
-      "idx": 39,
-      "gt": {
-        "package": "hudson.model",
-        "class": "Descriptor",
-        "method": "configure",
-        "signature": "configure()",
-        "sink_args": [],
-        "type": "source"
-      },
-      "parsed": {
-        "is_valid_json": true,
-        "full_schema_valid": true,
-        "strict_type": "none",
-        "lenient_type": "none",
-        "sink_args": [],
-        "package": "hudson.model",
-        "class": "Descriptor",
-        "method": "configure",
-        "signature": "configure()",
-        "raw": "{\"package\":\"hudson.model\",\"class\":\"Descriptor\",\"method\":\"configure\",\"signature\":\"configure()\",\"sink_args\":[],\"type\":\"none\"}"
-      },
-      "role_label_correct": false,
-      "api_identity_correct": true,
-      "sink_args_exact_correct": null,
-      "sink_args_semantic_correct": null,
-      "full_strict_exact_match": false,
-      "semantic_structured_match": false
-    },
-    {
-      "idx": 40,
-      "gt": {
-        "package": "hudson.model",
-        "class": "Descriptor",
-        "method": "configure",
-        "signature": "configure()",
-        "sink_args": [],
-        "type": "source"
-      },
-      "parsed": {
-        "is_valid_json": true,
-        "full_schema_valid": true,
-        "strict_type": "none",
-        "lenient_type": "none",
-        "sink_args": [],
-        "package": "hudson.model",
-        "class": "Descriptor",
-        "method": "configure",
-        "signature": "configure()",
-        "raw": "{\"package\":\"hudson.model\",\"class\":\"Descriptor\",\"method\":\"configure\",\"signature\":\"configure()\",\"sink_args\":[],\"type\":\"none\"}"
-      },
-      "role_label_correct": false,
-      "api_identity_correct": true,
-      "sink_args_exact_correct": null,
-      "sink_args_semantic_correct": null,
-      "full_strict_exact_match": false,
-      "semantic_structured_match": false
-    },
-    {
-      "idx": 41,
-      "gt": {
-        "package": "hudson.model",
-        "class": "Descriptor",
-        "method": "configure",
-        "signature": "configure()",
-        "sink_args": [],
-        "type": "source"
-      },
-      "parsed": {
-        "is_valid_json": true,
-        "full_schema_valid": true,
-        "strict_type": "taint-propagator",
-        "lenient_type": "taint-propagator",
-        "sink_args": [],
-        "package": "hudson.model",
-        "class": "Descriptor",
-        "method": "configure",
-        "signature": "configure()",
-        "raw": "{\"package\":\"hudson.model\",\"class\":\"Descriptor\",\"method\":\"configure\",\"signature\":\"configure()\",\"sink_args\":[],\"type\":\"taint-propagator\"}"
       },
       "role_label_correct": false,
       "api_identity_correct": true,

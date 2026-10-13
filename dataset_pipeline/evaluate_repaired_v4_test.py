@@ -37,16 +37,23 @@ VALID_CLASSES = ["source", "sink", "taint-propagator", "none"]
 def normalize_arg_representation(arg):
     if not arg:
         return ""
-    s = str(arg).strip().strip("[]'\"")
-    if s.isdigit():
-        return f"Argument[{s}]"
+    s = str(arg).strip()
     if s.startswith("Argument[") and s.endswith("]"):
+        inner = s[9:-1].strip()
+        if inner.isdigit() or inner == "this":
+            return f"Argument[{inner}]"
         return s
-    if s in ("this", "Argument[this]"):
+    # Strip quotes or outer brackets for raw representations
+    inner = s.strip("'\"")
+    if inner.startswith("[") and inner.endswith("]"):
+        inner = inner[1:-1].strip("'\" ")
+    if inner.isdigit():
+        return f"Argument[{inner}]"
+    if inner in ("this", "Argument[this]"):
         return "Argument[this]"
-    if s.startswith("p") and s[1:].isdigit():
-        return f"Argument[{s[1:]}]"
-    return s
+    if inner.startswith("p") and inner[1:].isdigit():
+        return f"Argument[{inner[1:]}]"
+    return inner
 
 def normalize_arg_list(arg_list):
     if not arg_list:
@@ -218,11 +225,12 @@ def main():
         api_identity_match = (
             parsed["package"] == gt_obj.get("package", "") and
             parsed["class"] == gt_obj.get("class", "") and
-            parsed["method"] == gt_obj.get("method", "")
+            parsed["method"] == gt_obj.get("method", "") and
+            parsed["signature"] == gt_obj.get("signature", "")
         )
         
-        is_full_exact = type_match and api_identity_match and args_exact
-        is_semantic_structured = type_match and api_identity_match and args_semantic
+        is_full_exact = parsed["is_valid_json"] and parsed["full_schema_valid"] and type_match and api_identity_match and args_exact
+        is_semantic_structured = parsed["is_valid_json"] and parsed["full_schema_valid"] and type_match and api_identity_match and args_semantic
         
         if is_full_exact:
             full_exact_matches += 1

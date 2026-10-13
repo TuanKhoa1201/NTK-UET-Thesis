@@ -209,6 +209,23 @@ class SASTScoringEngineV2:
         calculated_score = raw_score * penalty
         raw_sev = str(getattr(finding, "severity", "UNKNOWN") if not isinstance(finding, dict) else finding.get("severity", "UNKNOWN")).upper()
 
+        # Check for corroborating sanitizer evidence
+        has_sanitizer = False
+        if isinstance(finding, dict):
+            has_sanitizer = bool(
+                finding.get("sanitizer")
+                or finding.get("has_sanitizer")
+                or finding.get("sanitizer_detected")
+                or finding.get("ai_validation", {}).get("sanitizer_detected")
+            )
+        else:
+            has_sanitizer = bool(
+                getattr(finding, "sanitizer", False)
+                or getattr(finding, "has_sanitizer", False)
+                or getattr(finding, "sanitizer_detected", False)
+                or (getattr(finding, "ai_validation", {}) or {}).get("sanitizer_detected")
+            )
+
         # Invariant 5 & 6: High/Critical Safety Floor & Demotion Protection
         safety_floor_applied = False
         if (raw_sev in ["CRITICAL", "ERROR"] or effective_s >= 0.85):
@@ -218,12 +235,20 @@ class SASTScoringEngineV2:
             else:
                 final_score = round(max(0.0, min(100.0, calculated_score)), 1)
         elif (raw_sev == "HIGH" or effective_s >= 0.70):
-            # High findings are protected by Safety Guard >= 30.0 (cannot drop to Informational)
-            if calculated_score < 30.0:
-                final_score = 30.0
-                safety_floor_applied = True
+            # Without corroborating sanitizer evidence, High findings MUST NOT be demoted below Medium (Safety Floor >= 40.0)
+            if not has_sanitizer:
+                if calculated_score < 40.0:
+                    final_score = 40.0
+                    safety_floor_applied = True
+                else:
+                    final_score = round(max(0.0, min(100.0, calculated_score)), 1)
             else:
-                final_score = round(max(0.0, min(100.0, calculated_score)), 1)
+                # When explicit sanitizer is present, demotion to Low (Safety Guard >= 30.0) is permitted
+                if calculated_score < 30.0:
+                    final_score = 30.0
+                    safety_floor_applied = True
+                else:
+                    final_score = round(max(0.0, min(100.0, calculated_score)), 1)
         else:
             final_score = round(max(0.0, min(100.0, calculated_score)), 1)
 
@@ -240,8 +265,11 @@ class SASTScoringEngineV2:
             risk_level = "Medium"
             risk_desc = "Critical severity protected by Safety Floor >= 40.0"
 
-        # Invariant 6: High finding can NEVER be demoted to Informational
-        if (raw_sev == "HIGH" or effective_s >= 0.70) and risk_level == "Informational":
+        # Invariant 6: High finding without sanitizer can NEVER be demoted to Low or Informational
+        if (raw_sev == "HIGH" or effective_s >= 0.70) and not has_sanitizer and risk_level in ["Informational", "Low"]:
+            risk_level = "Medium"
+            risk_desc = "High severity protected from Low demotion without sanitizer evidence (Safety Floor >= 40.0)"
+        elif (raw_sev == "HIGH" or effective_s >= 0.70) and risk_level == "Informational":
             risk_level = "Low"
             risk_desc = "High severity protected from Informational demotion (Safety Guard >= 30.0)"
 

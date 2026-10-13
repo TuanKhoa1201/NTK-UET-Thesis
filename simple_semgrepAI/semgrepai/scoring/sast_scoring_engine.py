@@ -250,7 +250,14 @@ class SASTScoringEngine:
         calculated_score = raw_score * penalty
         raw_sev = str(finding.get("severity", "UNKNOWN")).upper()
 
-        # Safety Invariant 6: Critical Safety Floor
+        has_sanitizer = bool(
+            finding.get("sanitizer")
+            or finding.get("has_sanitizer")
+            or finding.get("sanitizer_detected")
+            or finding.get("ai_validation", {}).get("sanitizer_detected")
+        )
+
+        # Safety Invariant 6: Critical & High Safety Floor
         safety_floor_applied = False
         if (raw_sev in ["CRITICAL", "ERROR"] or effective_s >= 0.85):
             if calculated_score < 40.0:
@@ -258,6 +265,19 @@ class SASTScoringEngine:
                 safety_floor_applied = True
             else:
                 final_score = round(max(0.0, min(100.0, calculated_score)), 1)
+        elif (raw_sev in ["HIGH", "WARNING"] or effective_s >= 0.70):
+            if not has_sanitizer:
+                if calculated_score < 40.0:
+                    final_score = 40.0
+                    safety_floor_applied = True
+                else:
+                    final_score = round(max(0.0, min(100.0, calculated_score)), 1)
+            else:
+                if calculated_score < 30.0:
+                    final_score = 30.0
+                    safety_floor_applied = True
+                else:
+                    final_score = round(max(0.0, min(100.0, calculated_score)), 1)
         else:
             final_score = round(max(0.0, min(100.0, calculated_score)), 1)
 
@@ -270,10 +290,13 @@ class SASTScoringEngine:
                 risk_desc = desc
                 break
 
-        # Safety Invariant: Cảnh báo CRITICAL không bao giờ rơi vào BENIGN_OR_FP
-        if raw_sev in ["CRITICAL", "ERROR"] and risk_level == "BENIGN_OR_FP":
+        # Safety Invariant: Cảnh báo CRITICAL/HIGH không bao giờ rơi vào BENIGN_OR_FP
+        if (raw_sev in ["CRITICAL", "ERROR"] or effective_s >= 0.85) and risk_level in ["BENIGN_OR_FP", "LOW"]:
             risk_level = "MEDIUM"
-            risk_desc = "Cảnh báo nghiêm trọng; được bảo vệ bởi sàn an toàn (Safety Floor)."
+            risk_desc = "Cảnh báo nghiêm trọng; được bảo vệ bởi sàn an toàn (Safety Floor >= 40.0)."
+        elif (raw_sev in ["HIGH", "WARNING"] or effective_s >= 0.70) and not has_sanitizer and risk_level in ["BENIGN_OR_FP", "LOW"]:
+            risk_level = "MEDIUM"
+            risk_desc = "Cảnh báo High được bảo vệ bởi sàn an toàn khi chưa có bằng chứng khử độc (Safety Floor >= 40.0)."
 
         return ScoreBreakdown(
             static_severity_score=round(base_s, 2),

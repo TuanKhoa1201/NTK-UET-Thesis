@@ -1,0 +1,2371 @@
+{
+  "benchmark_name": "PAIRED_LLM_STAGE3_EVALUATION",
+  "dataset_status": "CONSUMED_HELD_OUT_EVIDENCE",
+  "test_path": "/home/tuankhoa/migration/dataset_v4_repaired_20261013/test_clean_heldout.jsonl",
+  "sample_count": 42,
+  "ground_truth_distribution": {
+    "none": 11,
+    "taint-propagator": 1,
+    "source": 28,
+    "sink": 2
+  },
+  "base_model": {
+    "name": "Base Model (Qwen2.5-Coder-1.5B-Instruct)",
+    "valid_json_rate": 0.0,
+    "full_schema_valid_rate": 0.0,
+    "strict_role_accuracy": 0.0,
+    "full_exact_match_rate": 0.0,
+    "macro_f1": 0.0,
+    "weighted_f1": 0.0,
+    "per_class": {
+      "source": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 28.0
+      },
+      "sink": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 2.0
+      },
+      "taint-propagator": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 1.0
+      },
+      "none": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 11.0
+      }
+    }
+  },
+  "fine_tuned_model": {
+    "name": "Fine-Tuned (QLoRA V3 Adapter)",
+    "valid_json_rate": 1.0,
+    "full_schema_valid_rate": 1.0,
+    "strict_role_accuracy": 0.5238,
+    "full_exact_match_rate": 0.5238,
+    "macro_f1": 0.286,
+    "weighted_f1": 0.5818,
+    "per_class": {
+      "source": {
+        "precision": 0.9048,
+        "recall": 0.6786,
+        "f1": 0.7755,
+        "support": 28.0
+      },
+      "sink": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 2.0
+      },
+      "taint-propagator": {
+        "precision": 0.0714,
+        "recall": 1.0,
+        "f1": 0.1333,
+        "support": 1.0
+      },
+      "none": {
+        "precision": 0.3333,
+        "recall": 0.1818,
+        "f1": 0.2353,
+        "support": 11.0
+      }
+    }
+  },
+  "delta": {
+    "json_validity_delta": 1.0,
+    "role_accuracy_delta": 0.5238,
+    "strict_exact_delta": 0.5238,
+    "macro_f1_delta": 0.286,
+    "weighted_f1_delta": 0.5818
+  },
+  "base_details": [
+    {
+      "idx": 0,
+      "gt": {
+        "package": "org.springframework.validation",
+        "class": "DataBinder",
+        "method": "setDisallowedFields",
+        "signature": "void setDisallowedFields(String[] p0)",
+        "sink_args": [],
+        "type": "none"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"org.springframework.validation\",\n  \"class\": \"DataBinder\",\n  \"method\": \"setDisallowedFields\",\n  \"signature\": \"void setDisallowedFields(String[] p0)\",\n  \"sink_args\": [\"p0\"],\n  \"type\": \"source\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 1,
+      "gt": {
+        "package": "org.springframework.validation",
+        "class": "DataBinder",
+        "method": "setDisallowedFields",
+        "signature": "void setDisallowedFields(String[] p0)",
+        "sink_args": [],
+        "type": "none"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"org.springframework.validation\",\n  \"class\": \"DataBinder\",\n  \"method\": \"setDisallowedFields\",\n  \"signature\": \"void setDisallowedFields(String[] p0)\",\n  \"type\": \"source\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 2,
+      "gt": {
+        "package": "org.springframework.validation",
+        "class": "DataBinder",
+        "method": "setDisallowedFields",
+        "signature": "void setDisallowedFields(String[] p0)",
+        "sink_args": [],
+        "type": "none"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"org.springframework.validation\",\n  \"class\": \"DataBinder\",\n  \"method\": \"setDisallowedFields\",\n  \"signature\": \"void setDisallowedFields(String[] p0)\",\n  \"sink_args\": [],\n  \"type\": \"source\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 3,
+      "gt": {
+        "package": "org.springframework.validation",
+        "class": "DataBinder",
+        "method": "setDisallowedFields",
+        "signature": "void setDisallowedFields(String[] p0)",
+        "sink_args": [],
+        "type": "none"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "sink",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"org.springframework.validation\",\n  \"class\": \"DataBinder\",\n  \"method\": \"setDisallowedFields\",\n  \"signature\": \"void setDisallowedFields(String[] p0)\",\n  \"sink_args\": [\"p0\"],\n  \"type\": \"sink\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 4,
+      "gt": {
+        "package": "org.springframework.validation",
+        "class": "DataBinder",
+        "method": "setValidator",
+        "signature": "void setValidator(Validator p0)",
+        "sink_args": [],
+        "type": "none"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"org.springframework.validation\",\n  \"class\": \"DataBinder\",\n  \"method\": \"setValidator\",\n  \"signature\": \"void setValidator(Validator p0)\",\n  \"sink_args\": [\"p0\"],\n  \"type\": \"source\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 5,
+      "gt": {
+        "package": "org.springframework.validation",
+        "class": "DataBinder",
+        "method": "setValidator",
+        "signature": "void setValidator(Validator p0)",
+        "sink_args": [],
+        "type": "none"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"org.springframework.validation\",\n  \"class\": \"DataBinder\",\n  \"method\": \"setValidator\",\n  \"signature\": \"void setValidator(Validator p0)\",\n  \"type\": \"source\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 6,
+      "gt": {
+        "package": "org.springframework.validation",
+        "class": "DataBinder",
+        "method": "setValidator",
+        "signature": "void setValidator(Validator p0)",
+        "sink_args": [],
+        "type": "none"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"org.springframework.validation\",\n  \"class\": \"DataBinder\",\n  \"method\": \"setValidator\",\n  \"signature\": \"void setValidator(Validator p0)\",\n  \"sink_args\": [],\n  \"type\": \"source\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 7,
+      "gt": {
+        "package": "org.springframework.validation",
+        "class": "DataBinder",
+        "method": "setValidator",
+        "signature": "void setValidator(Validator p0)",
+        "sink_args": [],
+        "type": "none"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"org.springframework.validation\",\n  \"class\": \"DataBinder\",\n  \"method\": \"setValidator\",\n  \"signature\": \"void setValidator(Validator p0)\",\n  \"sink_args\": [\"p0\"],\n  \"type\": \"source\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 8,
+      "gt": {
+        "package": "org.springframework.validation",
+        "class": "Errors",
+        "method": "rejectValue",
+        "signature": "void rejectValue(String p0, String p1, String p2)",
+        "sink_args": [],
+        "type": "none"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"org.springframework.validation\",\n  \"class\": \"Errors\",\n  \"method\": \"rejectValue\",\n  \"signature\": \"void rejectValue(String p0, String p1, String p2)\",\n  \"sink_args\": [\"p0\"],\n  \"type\": \"source\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 9,
+      "gt": {
+        "package": "org.springframework.validation",
+        "class": "Errors",
+        "method": "rejectValue",
+        "signature": "void rejectValue(String p0, String p1, String p2)",
+        "sink_args": [],
+        "type": "none"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"org.springframework.validation\",\n  \"class\": \"Errors\",\n  \"method\": \"rejectValue\",\n  \"signature\": \"void rejectValue(String p0, String p1, String p2)\",\n  \"type\": \"source\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 10,
+      "gt": {
+        "package": "org.springframework.validation",
+        "class": "Errors",
+        "method": "rejectValue",
+        "signature": "void rejectValue(String p0, String p1, String p2)",
+        "sink_args": [],
+        "type": "taint-propagator"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"org.springframework.validation\",\n  \"class\": \"Errors\",\n  \"method\": \"rejectValue\",\n  \"signature\": \"void rejectValue(String p0, String p1, String p2)\",\n  \"sink_args\": [],\n  \"type\": \"source\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 11,
+      "gt": {
+        "package": "org.springframework.validation",
+        "class": "Errors",
+        "method": "rejectValue",
+        "signature": "void rejectValue(String p0, String p1, String p2)",
+        "sink_args": [],
+        "type": "none"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"org.springframework.validation\",\n  \"class\": \"Errors\",\n  \"method\": \"rejectValue\",\n  \"signature\": \"void rejectValue(String p0, String p1, String p2)\",\n  \"sink_args\": [\"p0\"],\n  \"type\": \"source\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 12,
+      "gt": {
+        "package": "java.lang",
+        "class": "System",
+        "method": "getProperty",
+        "signature": "getProperty(java.lang.String)",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"java.lang.System\",\n  \"class\": \"System\",\n  \"method\": \"getProperty\",\n  \"signature\": \"getProperty(java.lang.String)\",\n  \"sink_args\": [],\n  \"type\": \"source\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 13,
+      "gt": {
+        "package": "org.apache.jena.fuseki.webapp",
+        "class": "FusekiWebapp",
+        "method": "allowConfigFiles",
+        "signature": "allowConfigFiles()",
+        "sink_args": [
+          "ReturnValue"
+        ],
+        "type": "sink"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"org.apache.jena.fuseki.webapp\",\n  \"class\": \"FusekiWebapp\",\n  \"method\": \"allowConfigFiles\",\n  \"signature\": \"boolean allowConfigFiles()\",\n  \"sink_args\": [],\n  \"type\": \"source\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": false,
+      "full_exact_match": false
+    },
+    {
+      "idx": 14,
+      "gt": {
+        "package": "com.cloudbees.jenkins.plugins.advisor",
+        "class": "BundleUpload",
+        "method": "executeInternal",
+        "signature": "executeInternal(java.lang.String, java.io.File, java.lang.String)",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"com.cloudbees.jenkins.plugins.advisor\",\n  \"class\": \"BundleUpload\",\n  \"method\": \"executeInternal\",\n  \"signature\": \"void executeInternal(java.lang.String, java.io.File, java.lang.String)\",\n  \"sink_args\": [],\n  \"type\": \"source\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 15,
+      "gt": {
+        "package": "org.xwiki.contrib.rendering.markdown.commonmark12.internal",
+        "class": "DefaultMarkdownConfiguration",
+        "method": "getOptions",
+        "signature": "getOptions()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"org.xwiki.contrib.rendering.markdown.commonmark12.internal\",\n  \"class\": \"DefaultMarkdownConfiguration\",\n  \"method\": \"getOptions\",\n  \"signature\": \"Options getOptions()\",\n  \"sink_args\": [],\n  \"type\": \"source\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 16,
+      "gt": {
+        "package": "com.haulmont.addon.jpawebapi.api.config",
+        "class": "JpaWebApiConfig",
+        "method": "getInlineEnabledFileExtensions",
+        "signature": "getInlineEnabledFileExtensions()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"com.haulmont.addon.jpawebapi.api.config\",\n  \"class\": \"JpaWebApiConfig\",\n  \"method\": \"getInlineEnabledFileExtensions\",\n  \"signature\": \"List<String> getInlineEnabledFileExtensions()\",\n  \"sink_args\": [],\n  \"type\": \"source\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 17,
+      "gt": {
+        "package": "org.apache.hadoop.hive.ql.metadata",
+        "class": "Hive",
+        "method": "copyFiles",
+        "signature": "copyFiles((HiveConf)",
+        "sink_args": [
+          "Path"
+        ],
+        "type": "sink"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "sink",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"org.apache.hadoop.hive.ql.metadata\",\n  \"class\": \"Hive\",\n  \"method\": \"copyFiles\",\n  \"signature\": \"void copyFiles(HiveConf conf, String srcPath, String destPath)\",\n  \"sink_args\": [\"destPath\"],\n  \"type\": \"sink\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": false,
+      "full_exact_match": false
+    },
+    {
+      "idx": 18,
+      "gt": {
+        "package": "android.widget",
+        "class": "EditText",
+        "method": "getText",
+        "signature": "getText()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"android.widget\",\n  \"class\": \"EditText\",\n  \"method\": \"getText\",\n  \"signature\": \"CharSequence getText()\",\n  \"sink_args\": [],\n  \"type\": \"source\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 19,
+      "gt": {
+        "package": "android.widget",
+        "class": "EditText",
+        "method": "getText",
+        "signature": "getText()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"android.widget\",\n  \"class\": \"EditText\",\n  \"method\": \"getText\",\n  \"signature\": \"CharSequence getText()\",\n  \"sink_args\": [\"this\"],\n  \"type\": \"source\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 20,
+      "gt": {
+        "package": "android.widget",
+        "class": "EditText",
+        "method": "getText",
+        "signature": "getText()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"android.widget\",\n  \"class\": \"EditText\",\n  \"method\": \"getText\",\n  \"signature\": \"CharSequence getText()\",\n  \"type\": \"source\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 21,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeCount",
+        "signature": "getAttributeCount()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "none",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"android.util\",\n  \"class\": \"AttributeSet\",\n  \"method\": \"getAttributeCount\",\n  \"signature\": \"int getAttributeCount()\",\n  \"sink_args\": [],\n  \"type\": \"none\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 22,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeCount",
+        "signature": "getAttributeCount()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"android.util\",\n  \"class\": \"AttributeSet\",\n  \"method\": \"getAttributeCount\",\n  \"signature\": \"int getAttributeCount()\",\n  \"sink_args\": [],\n  \"type\": \"source\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 23,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeCount",
+        "signature": "getAttributeCount()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "none",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"android.util\",\n  \"class\": \"AttributeSet\",\n  \"method\": \"getAttributeCount\",\n  \"signature\": \"int getAttributeCount()\",\n  \"type\": \"none\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 24,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeIntValue",
+        "signature": "getAttributeIntValue()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "sink",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"android.util\",\n  \"class\": \"AttributeSet\",\n  \"method\": \"getAttributeIntValue\",\n  \"signature\": \"int getAttributeIntValue(String name, int defaultValue)\",\n  \"sink_args\": [\"name\"],\n  \"type\": \"sink\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 25,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeIntValue",
+        "signature": "getAttributeIntValue()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"android.util\",\n  \"class\": \"AttributeSet\",\n  \"method\": \"getAttributeIntValue\",\n  \"signature\": \"int getAttributeIntValue(int index, int defaultValue)\",\n  \"sink_args\": [\"index\", \"defaultValue\"],\n  \"type\": \"source\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 26,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeIntValue",
+        "signature": "getAttributeIntValue()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"android.util\",\n  \"class\": \"AttributeSet\",\n  \"method\": \"getAttributeIntValue\",\n  \"signature\": \"int getAttributeIntValue(String name, int def)\",\n  \"type\": \"source\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 27,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeListValue",
+        "signature": "getAttributeListValue()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "sink",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"android.util\",\n  \"class\": \"AttributeSet\",\n  \"method\": \"getAttributeListValue\",\n  \"signature\": \"String getAttributeListValue(String attrName)\",\n  \"sink_args\": [\"attrName\"],\n  \"type\": \"sink\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 28,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeListValue",
+        "signature": "getAttributeListValue()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"android.util\",\n  \"class\": \"AttributeSet\",\n  \"method\": \"getAttributeListValue\",\n  \"signature\": \"List<String> getAttributeListValue(String attribute)\",\n  \"sink_args\": [\"attribute\"],\n  \"type\": \"source\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 29,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeListValue",
+        "signature": "getAttributeListValue()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"android.util\",\n  \"class\": \"AttributeSet\",\n  \"method\": \"getAttributeListValue\",\n  \"signature\": \"String getAttributeListValue(String attrName)\",\n  \"type\": \"source\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 30,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeResourceValue",
+        "signature": "getAttributeResourceValue()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "sink",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"android.util\",\n  \"class\": \"AttributeSet\",\n  \"method\": \"getAttributeResourceValue\",\n  \"signature\": \"int getAttributeResourceValue(int index, int defaultResId)\",\n  \"sink_args\": [\"index\", \"defaultResId\"],\n  \"type\": \"sink\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 31,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeResourceValue",
+        "signature": "getAttributeResourceValue()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"android.util\",\n  \"class\": \"AttributeSet\",\n  \"method\": \"getAttributeResourceValue\",\n  \"signature\": \"int getAttributeResourceValue(int index, int defaultResId)\",\n  \"sink_args\": [\"index\", \"defaultResId\"],\n  \"type\": \"source\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 32,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeResourceValue",
+        "signature": "getAttributeResourceValue()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"android.util\",\n  \"class\": \"AttributeSet\",\n  \"method\": \"getAttributeResourceValue\",\n  \"signature\": \"int getAttributeResourceValue(int index, int def)\",\n  \"type\": \"source\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 33,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getPositionDescription",
+        "signature": "getPositionDescription()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "none",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"android.util\",\n  \"class\": \"AttributeSet\",\n  \"method\": \"getPositionDescription\",\n  \"signature\": \"String getPositionDescription()\",\n  \"sink_args\": [],\n  \"type\": \"none\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 34,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getPositionDescription",
+        "signature": "getPositionDescription()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"android.util\",\n  \"class\": \"AttributeSet\",\n  \"method\": \"getPositionDescription\",\n  \"signature\": \"String getPositionDescription()\",\n  \"sink_args\": [],\n  \"type\": \"source\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 35,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getPositionDescription",
+        "signature": "getPositionDescription()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "none",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"android.util\",\n  \"class\": \"AttributeSet\",\n  \"method\": \"getPositionDescription\",\n  \"signature\": \"String getPositionDescription()\",\n  \"type\": \"none\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 36,
+      "gt": {
+        "package": "hudson",
+        "class": "Plugin",
+        "method": "configure",
+        "signature": "configure()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "sink",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"hudson.plugins\",\n  \"class\": \"Plugin\",\n  \"method\": \"configure\",\n  \"signature\": \"void configure(org.jenkinsci.remoting.launcher.Launcher launcher, org.jenkinsci.remoting.launcher.Listener listener)\",\n  \"sink_args\": [\"launcher\", \"listener\"],\n  \"type\": \"sink\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 37,
+      "gt": {
+        "package": "hudson",
+        "class": "Plugin",
+        "method": "configure",
+        "signature": "configure()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "sink",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"org.jenkinsci.plugins\",\n  \"class\": \"Plugin\",\n  \"method\": \"configure\",\n  \"signature\": \"void configure(org.jenkinsci.model.Buildable buildable)\",\n  \"sink_args\": [\"buildable\"],\n  \"type\": \"sink\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 38,
+      "gt": {
+        "package": "hudson",
+        "class": "Plugin",
+        "method": "configure",
+        "signature": "configure()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "sink",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"hudson.plugins\",\n  \"class\": \"Plugin\",\n  \"method\": \"configure\",\n  \"signature\": \"void configure(org.jenkinsci.remoting.launcher.Launcher launcher)\",\n  \"sink_args\": [\"launcher\"],\n  \"type\": \"sink\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 39,
+      "gt": {
+        "package": "hudson.model",
+        "class": "Descriptor",
+        "method": "configure",
+        "signature": "configure()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "sink",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"hudson.model\",\n  \"class\": \"Descriptor\",\n  \"method\": \"configure\",\n  \"signature\": \"void configure(org.jenkinsci.remoting.config.Configurable config)\",\n  \"sink_args\": [\"config\"],\n  \"type\": \"sink\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 40,
+      "gt": {
+        "package": "hudson.model",
+        "class": "Descriptor",
+        "method": "configure",
+        "signature": "configure()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "sink",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"hudson.model\",\n  \"class\": \"Descriptor\",\n  \"method\": \"configure\",\n  \"signature\": \"void configure(org.jenkinsci.remoting.RemoteBuildListener listener)\",\n  \"sink_args\": [\"listener\"],\n  \"type\": \"sink\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 41,
+      "gt": {
+        "package": "hudson.model",
+        "class": "Descriptor",
+        "method": "configure",
+        "signature": "configure()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": false,
+        "full_schema_valid": false,
+        "strict_type": "unknown",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "",
+        "class": "",
+        "method": "",
+        "signature": "",
+        "raw": "```json\n{\n  \"package\": \"hudson.model\",\n  \"class\": \"Descriptor\",\n  \"method\": \"configure\",\n  \"signature\": \"void configure()\",\n  \"type\": \"source\"\n}\n```"
+      },
+      "role_match": false,
+      "ident_match": false,
+      "args_match": true,
+      "full_exact_match": false
+    }
+  ],
+  "fine_tuned_details": [
+    {
+      "idx": 0,
+      "gt": {
+        "package": "org.springframework.validation",
+        "class": "DataBinder",
+        "method": "setDisallowedFields",
+        "signature": "void setDisallowedFields(String[] p0)",
+        "sink_args": [],
+        "type": "none"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "none",
+        "lenient_type": "none",
+        "sink_args": [],
+        "package": "org.springframework.validation",
+        "class": "DataBinder",
+        "method": "setDisallowedFields",
+        "signature": "void setDisallowedFields(String[] p0)",
+        "raw": "{\"package\":\"org.springframework.validation\",\"class\":\"DataBinder\",\"method\":\"setDisallowedFields\",\"signature\":\"void setDisallowedFields(String[] p0)\",\"sink_args\":[],\"type\":\"none\"}"
+      },
+      "role_match": true,
+      "ident_match": true,
+      "args_match": true,
+      "full_exact_match": true
+    },
+    {
+      "idx": 1,
+      "gt": {
+        "package": "org.springframework.validation",
+        "class": "DataBinder",
+        "method": "setDisallowedFields",
+        "signature": "void setDisallowedFields(String[] p0)",
+        "sink_args": [],
+        "type": "none"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "taint-propagator",
+        "lenient_type": "taint-propagator",
+        "sink_args": [],
+        "package": "org.springframework.validation",
+        "class": "DataBinder",
+        "method": "setDisallowedFields",
+        "signature": "void setDisallowedFields(String[] p0)",
+        "raw": "{\"package\":\"org.springframework.validation\",\"class\":\"DataBinder\",\"method\":\"setDisallowedFields\",\"signature\":\"void setDisallowedFields(String[] p0)\",\"sink_args\":[],\"type\":\"taint-propagator\"}"
+      },
+      "role_match": false,
+      "ident_match": true,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 2,
+      "gt": {
+        "package": "org.springframework.validation",
+        "class": "DataBinder",
+        "method": "setDisallowedFields",
+        "signature": "void setDisallowedFields(String[] p0)",
+        "sink_args": [],
+        "type": "none"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "taint-propagator",
+        "lenient_type": "taint-propagator",
+        "sink_args": [],
+        "package": "org.springframework.validation",
+        "class": "DataBinder",
+        "method": "setDisallowedFields",
+        "signature": "void setDisallowedFields(String[] p0)",
+        "raw": "{\"package\":\"org.springframework.validation\",\"class\":\"DataBinder\",\"method\":\"setDisallowedFields\",\"signature\":\"void setDisallowedFields(String[] p0)\",\"sink_args\":[],\"type\":\"taint-propagator\"}"
+      },
+      "role_match": false,
+      "ident_match": true,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 3,
+      "gt": {
+        "package": "org.springframework.validation",
+        "class": "DataBinder",
+        "method": "setDisallowedFields",
+        "signature": "void setDisallowedFields(String[] p0)",
+        "sink_args": [],
+        "type": "none"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "none",
+        "lenient_type": "none",
+        "sink_args": [],
+        "package": "org.springframework.validation",
+        "class": "DataBinder",
+        "method": "setDisallowedFields",
+        "signature": "void setDisallowedFields(String[] p0)",
+        "raw": "{\"package\":\"org.springframework.validation\",\"class\":\"DataBinder\",\"method\":\"setDisallowedFields\",\"signature\":\"void setDisallowedFields(String[] p0)\",\"sink_args\":[],\"type\":\"none\"}"
+      },
+      "role_match": true,
+      "ident_match": true,
+      "args_match": true,
+      "full_exact_match": true
+    },
+    {
+      "idx": 4,
+      "gt": {
+        "package": "org.springframework.validation",
+        "class": "DataBinder",
+        "method": "setValidator",
+        "signature": "void setValidator(Validator p0)",
+        "sink_args": [],
+        "type": "none"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "taint-propagator",
+        "lenient_type": "taint-propagator",
+        "sink_args": [],
+        "package": "org.springframework.validation",
+        "class": "DataBinder",
+        "method": "setValidator",
+        "signature": "void setValidator(Validator p0)",
+        "raw": "{\"package\":\"org.springframework.validation\",\"class\":\"DataBinder\",\"method\":\"setValidator\",\"signature\":\"void setValidator(Validator p0)\",\"sink_args\":[],\"type\":\"taint-propagator\"}"
+      },
+      "role_match": false,
+      "ident_match": true,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 5,
+      "gt": {
+        "package": "org.springframework.validation",
+        "class": "DataBinder",
+        "method": "setValidator",
+        "signature": "void setValidator(Validator p0)",
+        "sink_args": [],
+        "type": "none"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "taint-propagator",
+        "lenient_type": "taint-propagator",
+        "sink_args": [],
+        "package": "org.springframework.validation",
+        "class": "DataBinder",
+        "method": "setValidator",
+        "signature": "void setValidator(Validator p0)",
+        "raw": "{\"package\":\"org.springframework.validation\",\"class\":\"DataBinder\",\"method\":\"setValidator\",\"signature\":\"void setValidator(Validator p0)\",\"sink_args\":[],\"type\":\"taint-propagator\"}"
+      },
+      "role_match": false,
+      "ident_match": true,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 6,
+      "gt": {
+        "package": "org.springframework.validation",
+        "class": "DataBinder",
+        "method": "setValidator",
+        "signature": "void setValidator(Validator p0)",
+        "sink_args": [],
+        "type": "none"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "taint-propagator",
+        "lenient_type": "taint-propagator",
+        "sink_args": [],
+        "package": "org.springframework.validation",
+        "class": "DataBinder",
+        "method": "setValidator",
+        "signature": "void setValidator(Validator p0)",
+        "raw": "{\"package\":\"org.springframework.validation\",\"class\":\"DataBinder\",\"method\":\"setValidator\",\"signature\":\"void setValidator(Validator p0)\",\"sink_args\":[],\"type\":\"taint-propagator\"}"
+      },
+      "role_match": false,
+      "ident_match": true,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 7,
+      "gt": {
+        "package": "org.springframework.validation",
+        "class": "DataBinder",
+        "method": "setValidator",
+        "signature": "void setValidator(Validator p0)",
+        "sink_args": [],
+        "type": "none"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "taint-propagator",
+        "lenient_type": "taint-propagator",
+        "sink_args": [],
+        "package": "org.springframework.validation",
+        "class": "DataBinder",
+        "method": "setValidator",
+        "signature": "void setValidator(Validator p0)",
+        "raw": "{\"package\":\"org.springframework.validation\",\"class\":\"DataBinder\",\"method\":\"setValidator\",\"signature\":\"void setValidator(Validator p0)\",\"sink_args\":[],\"type\":\"taint-propagator\"}"
+      },
+      "role_match": false,
+      "ident_match": true,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 8,
+      "gt": {
+        "package": "org.springframework.validation",
+        "class": "Errors",
+        "method": "rejectValue",
+        "signature": "void rejectValue(String p0, String p1, String p2)",
+        "sink_args": [],
+        "type": "none"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "taint-propagator",
+        "lenient_type": "taint-propagator",
+        "sink_args": [],
+        "package": "org.springframework.validation",
+        "class": "Errors",
+        "method": "rejectValue",
+        "signature": "void rejectValue(String p0, String p1, String p2)",
+        "raw": "{\"package\":\"org.springframework.validation\",\"class\":\"Errors\",\"method\":\"rejectValue\",\"signature\":\"void rejectValue(String p0, String p1, String p2)\",\"sink_args\":[],\"type\":\"taint-propagator\"}"
+      },
+      "role_match": false,
+      "ident_match": true,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 9,
+      "gt": {
+        "package": "org.springframework.validation",
+        "class": "Errors",
+        "method": "rejectValue",
+        "signature": "void rejectValue(String p0, String p1, String p2)",
+        "sink_args": [],
+        "type": "none"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "taint-propagator",
+        "lenient_type": "taint-propagator",
+        "sink_args": [],
+        "package": "org.springframework.validation",
+        "class": "Errors",
+        "method": "rejectValue",
+        "signature": "void rejectValue(String p0, String p1, String p2)",
+        "raw": "{\"package\":\"org.springframework.validation\",\"class\":\"Errors\",\"method\":\"rejectValue\",\"signature\":\"void rejectValue(String p0, String p1, String p2)\",\"sink_args\":[],\"type\":\"taint-propagator\"}"
+      },
+      "role_match": false,
+      "ident_match": true,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 10,
+      "gt": {
+        "package": "org.springframework.validation",
+        "class": "Errors",
+        "method": "rejectValue",
+        "signature": "void rejectValue(String p0, String p1, String p2)",
+        "sink_args": [],
+        "type": "taint-propagator"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "taint-propagator",
+        "lenient_type": "taint-propagator",
+        "sink_args": [],
+        "package": "org.springframework.validation",
+        "class": "Errors",
+        "method": "rejectValue",
+        "signature": "void rejectValue(String p0, String p1, String p2)",
+        "raw": "{\"package\":\"org.springframework.validation\",\"class\":\"Errors\",\"method\":\"rejectValue\",\"signature\":\"void rejectValue(String p0, String p1, String p2)\",\"sink_args\":[],\"type\":\"taint-propagator\"}"
+      },
+      "role_match": true,
+      "ident_match": true,
+      "args_match": true,
+      "full_exact_match": true
+    },
+    {
+      "idx": 11,
+      "gt": {
+        "package": "org.springframework.validation",
+        "class": "Errors",
+        "method": "rejectValue",
+        "signature": "void rejectValue(String p0, String p1, String p2)",
+        "sink_args": [],
+        "type": "none"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "taint-propagator",
+        "lenient_type": "taint-propagator",
+        "sink_args": [],
+        "package": "org.springframework.validation",
+        "class": "Errors",
+        "method": "rejectValue",
+        "signature": "void rejectValue(String p0, String p1, String p2)",
+        "raw": "{\"package\":\"org.springframework.validation\",\"class\":\"Errors\",\"method\":\"rejectValue\",\"signature\":\"void rejectValue(String p0, String p1, String p2)\",\"sink_args\":[],\"type\":\"taint-propagator\"}"
+      },
+      "role_match": false,
+      "ident_match": true,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 12,
+      "gt": {
+        "package": "java.lang",
+        "class": "System",
+        "method": "getProperty",
+        "signature": "getProperty(java.lang.String)",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "java.lang",
+        "class": "System",
+        "method": "getProperty",
+        "signature": "getProperty(java.lang.String)",
+        "raw": "{\"package\":\"java.lang\",\"class\":\"System\",\"method\":\"getProperty\",\"signature\":\"getProperty(java.lang.String)\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "role_match": true,
+      "ident_match": true,
+      "args_match": true,
+      "full_exact_match": true
+    },
+    {
+      "idx": 13,
+      "gt": {
+        "package": "org.apache.jena.fuseki.webapp",
+        "class": "FusekiWebapp",
+        "method": "allowConfigFiles",
+        "signature": "allowConfigFiles()",
+        "sink_args": [
+          "ReturnValue"
+        ],
+        "type": "sink"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "org.apache.jena.fuseki.webapp",
+        "class": "FusekiWebapp",
+        "method": "allowConfigFiles",
+        "signature": "allowConfigFiles()",
+        "raw": "{\"package\":\"org.apache.jena.fuseki.webapp\",\"class\":\"FusekiWebapp\",\"method\":\"allowConfigFiles\",\"signature\":\"allowConfigFiles()\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "role_match": false,
+      "ident_match": true,
+      "args_match": false,
+      "full_exact_match": false
+    },
+    {
+      "idx": 14,
+      "gt": {
+        "package": "com.cloudbees.jenkins.plugins.advisor",
+        "class": "BundleUpload",
+        "method": "executeInternal",
+        "signature": "executeInternal(java.lang.String, java.io.File, java.lang.String)",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "sink",
+        "lenient_type": "sink",
+        "sink_args": [
+          "p0"
+        ],
+        "package": "com.cloudbees.jenkins.plugins.advisor",
+        "class": "BundleUpload",
+        "method": "executeInternal",
+        "signature": "executeInternal(java.lang.String, java.io.File, java.lang.String)",
+        "raw": "{\"package\":\"com.cloudbees.jenkins.plugins.advisor\",\"class\":\"BundleUpload\",\"method\":\"executeInternal\",\"signature\":\"executeInternal(java.lang.String, java.io.File, java.lang.String)\",\"sink_args\":[\"p0\"],\"type\":\"sink\"}"
+      },
+      "role_match": false,
+      "ident_match": true,
+      "args_match": false,
+      "full_exact_match": false
+    },
+    {
+      "idx": 15,
+      "gt": {
+        "package": "org.xwiki.contrib.rendering.markdown.commonmark12.internal",
+        "class": "DefaultMarkdownConfiguration",
+        "method": "getOptions",
+        "signature": "getOptions()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "taint-propagator",
+        "lenient_type": "taint-propagator",
+        "sink_args": [],
+        "package": "org.xwiki.contrib.rendering.markdown.commonmark12.internal",
+        "class": "DefaultMarkdownConfiguration",
+        "method": "getOptions",
+        "signature": "getOptions()",
+        "raw": "{\"package\":\"org.xwiki.contrib.rendering.markdown.commonmark12.internal\",\"class\":\"DefaultMarkdownConfiguration\",\"method\":\"getOptions\",\"signature\":\"getOptions()\",\"sink_args\":[],\"type\":\"taint-propagator\"}"
+      },
+      "role_match": false,
+      "ident_match": true,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 16,
+      "gt": {
+        "package": "com.haulmont.addon.jpawebapi.api.config",
+        "class": "JpaWebApiConfig",
+        "method": "getInlineEnabledFileExtensions",
+        "signature": "getInlineEnabledFileExtensions()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "taint-propagator",
+        "lenient_type": "taint-propagator",
+        "sink_args": [],
+        "package": "com.haulmont.addon.jpawebapi.api.config",
+        "class": "JpaWebApiConfig",
+        "method": "getInlineEnabledFileExtensions",
+        "signature": "getInlineEnabledFileExtensions()",
+        "raw": "{\"package\":\"com.haulmont.addon.jpawebapi.api.config\",\"class\":\"JpaWebApiConfig\",\"method\":\"getInlineEnabledFileExtensions\",\"signature\":\"getInlineEnabledFileExtensions()\",\"sink_args\":[],\"type\":\"taint-propagator\"}"
+      },
+      "role_match": false,
+      "ident_match": true,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 17,
+      "gt": {
+        "package": "org.apache.hadoop.hive.ql.metadata",
+        "class": "Hive",
+        "method": "copyFiles",
+        "signature": "copyFiles((HiveConf)",
+        "sink_args": [
+          "Path"
+        ],
+        "type": "sink"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "org.apache.hadoop.hive.ql.metadata",
+        "class": "Hive",
+        "method": "copyFiles",
+        "signature": "copyFiles((HiveConf)",
+        "raw": "{\"package\":\"org.apache.hadoop.hive.ql.metadata\",\"class\":\"Hive\",\"method\":\"copyFiles\",\"signature\":\"copyFiles((HiveConf)\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "role_match": false,
+      "ident_match": true,
+      "args_match": false,
+      "full_exact_match": false
+    },
+    {
+      "idx": 18,
+      "gt": {
+        "package": "android.widget",
+        "class": "EditText",
+        "method": "getText",
+        "signature": "getText()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "android.widget",
+        "class": "EditText",
+        "method": "getText",
+        "signature": "getText()",
+        "raw": "{\"package\":\"android.widget\",\"class\":\"EditText\",\"method\":\"getText\",\"signature\":\"getText()\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "role_match": true,
+      "ident_match": true,
+      "args_match": true,
+      "full_exact_match": true
+    },
+    {
+      "idx": 19,
+      "gt": {
+        "package": "android.widget",
+        "class": "EditText",
+        "method": "getText",
+        "signature": "getText()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "android.widget",
+        "class": "EditText",
+        "method": "getText",
+        "signature": "getText()",
+        "raw": "{\"package\":\"android.widget\",\"class\":\"EditText\",\"method\":\"getText\",\"signature\":\"getText()\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "role_match": true,
+      "ident_match": true,
+      "args_match": true,
+      "full_exact_match": true
+    },
+    {
+      "idx": 20,
+      "gt": {
+        "package": "android.widget",
+        "class": "EditText",
+        "method": "getText",
+        "signature": "getText()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "android.widget",
+        "class": "EditText",
+        "method": "getText",
+        "signature": "getText()",
+        "raw": "{\"package\":\"android.widget\",\"class\":\"EditText\",\"method\":\"getText\",\"signature\":\"getText()\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "role_match": true,
+      "ident_match": true,
+      "args_match": true,
+      "full_exact_match": true
+    },
+    {
+      "idx": 21,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeCount",
+        "signature": "getAttributeCount()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeCount",
+        "signature": "getAttributeCount()",
+        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getAttributeCount\",\"signature\":\"getAttributeCount()\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "role_match": true,
+      "ident_match": true,
+      "args_match": true,
+      "full_exact_match": true
+    },
+    {
+      "idx": 22,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeCount",
+        "signature": "getAttributeCount()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeCount",
+        "signature": "getAttributeCount()",
+        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getAttributeCount\",\"signature\":\"getAttributeCount()\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "role_match": true,
+      "ident_match": true,
+      "args_match": true,
+      "full_exact_match": true
+    },
+    {
+      "idx": 23,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeCount",
+        "signature": "getAttributeCount()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeCount",
+        "signature": "getAttributeCount()",
+        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getAttributeCount\",\"signature\":\"getAttributeCount()\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "role_match": true,
+      "ident_match": true,
+      "args_match": true,
+      "full_exact_match": true
+    },
+    {
+      "idx": 24,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeIntValue",
+        "signature": "getAttributeIntValue()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeIntValue",
+        "signature": "getAttributeIntValue()",
+        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getAttributeIntValue\",\"signature\":\"getAttributeIntValue()\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "role_match": true,
+      "ident_match": true,
+      "args_match": true,
+      "full_exact_match": true
+    },
+    {
+      "idx": 25,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeIntValue",
+        "signature": "getAttributeIntValue()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeIntValue",
+        "signature": "getAttributeIntValue()",
+        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getAttributeIntValue\",\"signature\":\"getAttributeIntValue()\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "role_match": true,
+      "ident_match": true,
+      "args_match": true,
+      "full_exact_match": true
+    },
+    {
+      "idx": 26,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeIntValue",
+        "signature": "getAttributeIntValue()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeIntValue",
+        "signature": "getAttributeIntValue()",
+        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getAttributeIntValue\",\"signature\":\"getAttributeIntValue()\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "role_match": true,
+      "ident_match": true,
+      "args_match": true,
+      "full_exact_match": true
+    },
+    {
+      "idx": 27,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeListValue",
+        "signature": "getAttributeListValue()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeListValue",
+        "signature": "getAttributeListValue()",
+        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getAttributeListValue\",\"signature\":\"getAttributeListValue()\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "role_match": true,
+      "ident_match": true,
+      "args_match": true,
+      "full_exact_match": true
+    },
+    {
+      "idx": 28,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeListValue",
+        "signature": "getAttributeListValue()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeListValue",
+        "signature": "getAttributeListValue()",
+        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getAttributeListValue\",\"signature\":\"getAttributeListValue()\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "role_match": true,
+      "ident_match": true,
+      "args_match": true,
+      "full_exact_match": true
+    },
+    {
+      "idx": 29,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeListValue",
+        "signature": "getAttributeListValue()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeListValue",
+        "signature": "getAttributeListValue()",
+        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getAttributeListValue\",\"signature\":\"getAttributeListValue()\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "role_match": true,
+      "ident_match": true,
+      "args_match": true,
+      "full_exact_match": true
+    },
+    {
+      "idx": 30,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeResourceValue",
+        "signature": "getAttributeResourceValue()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeResourceValue",
+        "signature": "getAttributeResourceValue()",
+        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getAttributeResourceValue\",\"signature\":\"getAttributeResourceValue()\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "role_match": true,
+      "ident_match": true,
+      "args_match": true,
+      "full_exact_match": true
+    },
+    {
+      "idx": 31,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeResourceValue",
+        "signature": "getAttributeResourceValue()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeResourceValue",
+        "signature": "getAttributeResourceValue()",
+        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getAttributeResourceValue\",\"signature\":\"getAttributeResourceValue()\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "role_match": true,
+      "ident_match": true,
+      "args_match": true,
+      "full_exact_match": true
+    },
+    {
+      "idx": 32,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeResourceValue",
+        "signature": "getAttributeResourceValue()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getAttributeResourceValue",
+        "signature": "getAttributeResourceValue()",
+        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getAttributeResourceValue\",\"signature\":\"getAttributeResourceValue()\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "role_match": true,
+      "ident_match": true,
+      "args_match": true,
+      "full_exact_match": true
+    },
+    {
+      "idx": 33,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getPositionDescription",
+        "signature": "getPositionDescription()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getPositionDescription",
+        "signature": "getPositionDescription()",
+        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getPositionDescription\",\"signature\":\"getPositionDescription()\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "role_match": true,
+      "ident_match": true,
+      "args_match": true,
+      "full_exact_match": true
+    },
+    {
+      "idx": 34,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getPositionDescription",
+        "signature": "getPositionDescription()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getPositionDescription",
+        "signature": "getPositionDescription()",
+        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getPositionDescription\",\"signature\":\"getPositionDescription()\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "role_match": true,
+      "ident_match": true,
+      "args_match": true,
+      "full_exact_match": true
+    },
+    {
+      "idx": 35,
+      "gt": {
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getPositionDescription",
+        "signature": "getPositionDescription()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "source",
+        "lenient_type": "source",
+        "sink_args": [],
+        "package": "android.util",
+        "class": "AttributeSet",
+        "method": "getPositionDescription",
+        "signature": "getPositionDescription()",
+        "raw": "{\"package\":\"android.util\",\"class\":\"AttributeSet\",\"method\":\"getPositionDescription\",\"signature\":\"getPositionDescription()\",\"sink_args\":[],\"type\":\"source\"}"
+      },
+      "role_match": true,
+      "ident_match": true,
+      "args_match": true,
+      "full_exact_match": true
+    },
+    {
+      "idx": 36,
+      "gt": {
+        "package": "hudson",
+        "class": "Plugin",
+        "method": "configure",
+        "signature": "configure()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "none",
+        "lenient_type": "none",
+        "sink_args": [],
+        "package": "hudson",
+        "class": "Plugin",
+        "method": "configure",
+        "signature": "configure()",
+        "raw": "{\"package\":\"hudson\",\"class\":\"Plugin\",\"method\":\"configure\",\"signature\":\"configure()\",\"sink_args\":[],\"type\":\"none\"}"
+      },
+      "role_match": false,
+      "ident_match": true,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 37,
+      "gt": {
+        "package": "hudson",
+        "class": "Plugin",
+        "method": "configure",
+        "signature": "configure()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "none",
+        "lenient_type": "none",
+        "sink_args": [],
+        "package": "hudson",
+        "class": "Plugin",
+        "method": "configure",
+        "signature": "configure()",
+        "raw": "{\"package\":\"hudson\",\"class\":\"Plugin\",\"method\":\"configure\",\"signature\":\"configure()\",\"sink_args\":[],\"type\":\"none\"}"
+      },
+      "role_match": false,
+      "ident_match": true,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 38,
+      "gt": {
+        "package": "hudson",
+        "class": "Plugin",
+        "method": "configure",
+        "signature": "configure()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "taint-propagator",
+        "lenient_type": "taint-propagator",
+        "sink_args": [],
+        "package": "hudson",
+        "class": "Plugin",
+        "method": "configure",
+        "signature": "configure()",
+        "raw": "{\"package\":\"hudson\",\"class\":\"Plugin\",\"method\":\"configure\",\"signature\":\"configure()\",\"sink_args\":[],\"type\":\"taint-propagator\"}"
+      },
+      "role_match": false,
+      "ident_match": true,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 39,
+      "gt": {
+        "package": "hudson.model",
+        "class": "Descriptor",
+        "method": "configure",
+        "signature": "configure()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "none",
+        "lenient_type": "none",
+        "sink_args": [],
+        "package": "hudson.model",
+        "class": "Descriptor",
+        "method": "configure",
+        "signature": "configure()",
+        "raw": "{\"package\":\"hudson.model\",\"class\":\"Descriptor\",\"method\":\"configure\",\"signature\":\"configure()\",\"sink_args\":[],\"type\":\"none\"}"
+      },
+      "role_match": false,
+      "ident_match": true,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 40,
+      "gt": {
+        "package": "hudson.model",
+        "class": "Descriptor",
+        "method": "configure",
+        "signature": "configure()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "none",
+        "lenient_type": "none",
+        "sink_args": [],
+        "package": "hudson.model",
+        "class": "Descriptor",
+        "method": "configure",
+        "signature": "configure()",
+        "raw": "{\"package\":\"hudson.model\",\"class\":\"Descriptor\",\"method\":\"configure\",\"signature\":\"configure()\",\"sink_args\":[],\"type\":\"none\"}"
+      },
+      "role_match": false,
+      "ident_match": true,
+      "args_match": true,
+      "full_exact_match": false
+    },
+    {
+      "idx": 41,
+      "gt": {
+        "package": "hudson.model",
+        "class": "Descriptor",
+        "method": "configure",
+        "signature": "configure()",
+        "sink_args": [],
+        "type": "source"
+      },
+      "parsed": {
+        "is_valid_json": true,
+        "full_schema_valid": true,
+        "strict_type": "taint-propagator",
+        "lenient_type": "taint-propagator",
+        "sink_args": [],
+        "package": "hudson.model",
+        "class": "Descriptor",
+        "method": "configure",
+        "signature": "configure()",
+        "raw": "{\"package\":\"hudson.model\",\"class\":\"Descriptor\",\"method\":\"configure\",\"signature\":\"configure()\",\"sink_args\":[],\"type\":\"taint-propagator\"}"
+      },
+      "role_match": false,
+      "ident_match": true,
+      "args_match": true,
+      "full_exact_match": false
+    }
+  ]
+}

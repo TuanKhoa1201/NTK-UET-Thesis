@@ -37,9 +37,9 @@ jobs:
           python -m py_compile simple_semgrepAI/semgrepai/html_dashboard.py
           python -m py_compile simple_semgrepAI/run_operation_pipeline.py
 
-      - name: Run SAST Scoring Safety Invariants Unit Tests
+      - name: Run Full SAST Scoring & Safety Invariants Test Suite (All 26 Tests)
         run: |
-          python tests/test_sast_scoring_safety.py
+          python -m unittest discover tests
 
       - name: Verify Local-Only Privacy Fail-Closed Guarantee
         run: |

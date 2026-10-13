@@ -7,6 +7,7 @@ import glob
 import random
 import hashlib
 from collections import defaultdict, Counter
+from typing import Optional, List, Tuple, Dict, Any
 
 sys.path.append('/home/tuankhoa/iris')
 from src.queries import QUERIES
@@ -108,39 +109,73 @@ def get_project_provenance(pkg: str, repo: str = None) -> str:
             return f"com-{parts[1]}"
     return parts[0]
 
+def parse_sig_params(sig: str) -> Optional[int]:
+    if not sig or '(' not in sig or ')' not in sig:
+        return None
+    inner = sig[sig.find('(')+1 : sig.rfind(')')].strip()
+    if not inner:
+        return 0
+    return len(re.split(r',(?![^<>]*>)', inner))
+
+def clean_single_arg(arg: Any) -> Optional[str]:
+    if arg is None:
+        return None
+    s = str(arg).strip()
+    if not s:
+        return None
+    if (s.startswith("'") and s.endswith("'")) or (s.startswith('"') and s.endswith('"')):
+        s = s[1:-1].strip()
+    if s.startswith('[') and s.endswith(']'):
+        inner = s[1:-1].strip()
+        if (inner.startswith("'") and inner.endswith("'")) or (inner.startswith('"') and inner.endswith('"')):
+            s = inner[1:-1].strip()
+        else:
+            s = inner.strip()
+    if s in ('ReturnValue', 'return', 'output'):
+        return None
+    if '.' in s or s in {'String', 'int', 'long', 'boolean', 'byte', 'char', 'short', 'float', 'double', 'Object'}:
+        return None
+    if s.isdigit():
+        return f"Argument[{s}]"
+    if s.startswith("Argument[") and s.endswith("]"):
+        return s
+    if s in ("this", "Argument[this]"):
+        return "Argument[this]"
+    if s.startswith("p") and s[1:].isdigit():
+        return f"Argument[{s[1:]}]"
+    if re.match(r'^[a-zA-Z_][a-zA-Z0-9_]*$', s):
+        return s
+    return None
+
 def validate_and_normalize_sink_args(sink_args, signature):
     """
-    Validates sink_args according to strict contract.
+    Validates sink_args according to strict scientific contract.
     Returns: (is_valid, clean_args)
     NEVER fabricates Argument[0] when evidence is missing.
+    Verifies that positional indices do not exceed parameter count in signature.
     """
     if not sink_args:
         return False, []
     
     clean_args = []
+    param_count = parse_sig_params(signature)
     for arg in sink_args:
-        arg_str = str(arg).strip()
-        if not arg_str:
+        norm = clean_single_arg(arg)
+        if not norm:
             continue
-        arg_str = arg_str.strip("[]'\"")
-        
-        # Disallow raw Java types masquerading as argument names
-        if '.' in arg_str or arg_str in {'String', 'int', 'long', 'boolean', 'byte', 'char', 'short', 'float', 'double', 'Object'}:
+        if norm.startswith("Argument[") and norm.endswith("]"):
+            inner = norm[9:-1]
+            if inner.isdigit():
+                idx = int(inner)
+                if param_count is not None and param_count == 0:
+                    continue
+                if param_count is not None and idx >= param_count:
+                    continue
+        elif norm == "Argument[this]":
+            pass
+        elif param_count is not None and param_count == 0:
             continue
-        
-        if arg_str.isdigit():
-            clean_args.append(f"Argument[{arg_str}]")
-        elif arg_str.startswith("Argument[") and arg_str.endswith("]"):
-            clean_args.append(arg_str)
-        elif arg_str in ("this", "Argument[this]"):
-            clean_args.append("Argument[this]")
-        elif arg_str.startswith("p") and arg_str[1:].isdigit():
-            idx = arg_str[1:]
-            clean_args.append(f"Argument[{idx}]")
-        elif re.match(r'^[a-zA-Z_][a-zA-Z0-9_]*$', arg_str):
-            clean_args.append(arg_str)
-        else:
-            continue
+        clean_args.append(norm)
             
     if not clean_args:
         return False, []
@@ -286,9 +321,13 @@ if os.path.exists(curated_csv):
 
 print(f"[+] Candidate pool size after Curated CVE: {len(raw_candidates)}")
 
-# 3. Ingest CodeQL Official Model Extensions (Tier 3: Verified SAST Model Metadata)
+# 3. Ingest CodeQL Official Model Extensions (Tier 3: Auxiliary Candidate Pool)
+# Note: Per Scientific Audit V4, Tier 3 candidates are unvetted heuristic models and
+# are strictly quarantined from the trusted training/validation/test splits.
 codeql_ext_dir = "/home/tuankhoa/migration/codeql-queries-v2.25.6/java/ql/lib/ext"
 model_files = glob.glob(f"{codeql_ext_dir}/**/*.model.yml", recursive=True)
+auxiliary_codeql_candidates = []
+
 for mf in model_files:
     curr_ext = None
     with open(mf, "r", encoding="utf-8", errors="replace") as f:
@@ -303,15 +342,19 @@ for mf in model_files:
                 
             if curr_ext and l.startswith("- ["):
                 try:
-                    content = l[3:-1]
-                    parts = [p.strip().strip('"').strip("'") for p in content.split(",")]
+                    import yaml
+                    parsed_entry = yaml.safe_load(l)
+                    if isinstance(parsed_entry, list) and len(parsed_entry) >= 1 and isinstance(parsed_entry[0], list):
+                        parts = parsed_entry[0]
+                    else:
+                        continue
                     if curr_ext == "source" and len(parts) >= 8:
                         pkg, cls, _, meth, params, _, output_kind, src_type = parts[:8]
                         sig = f"{meth}({params})"
                         # Map verified remote input sources explicitly
-                        if "remote" in src_type.lower():
+                        if "remote" in str(src_type).lower():
                             for q_cand in ["cwe-089wLLM", "cwe-022wLLM", "cwe-078wLLM"]:
-                                raw_candidates.append({
+                                auxiliary_codeql_candidates.append({
                                     'cwe_query': q_cand,
                                     'package': pkg,
                                     'class': cls,
@@ -320,7 +363,7 @@ for mf in model_files:
                                     'sink_args': [],
                                     'type': 'source',
                                     'provenance': 'CODEQL_MODEL_CANDIDATE',
-                                    'confidence': 'MEDIUM',
+                                    'confidence': 'UNVETTED_CANDIDATE',
                                     'tier': 3,
                                     'project': get_project_provenance(pkg)
                                 })
@@ -330,7 +373,7 @@ for mf in model_files:
                         valid_s, norm_args = validate_and_normalize_sink_args([arg_idx], sig)
                         if not valid_s:
                             continue
-                        s_lower = sink_kind.lower()
+                        s_lower = str(sink_kind).lower()
                         target_q = None
                         if "sql" in s_lower:
                             target_q = "cwe-089wLLM"
@@ -344,7 +387,7 @@ for mf in model_files:
                             target_q = "cwe-502wLLM"
                             
                         if target_q:
-                            raw_candidates.append({
+                            auxiliary_codeql_candidates.append({
                                 'cwe_query': target_q,
                                 'package': pkg,
                                 'class': cls,
@@ -353,17 +396,24 @@ for mf in model_files:
                                 'sink_args': norm_args,
                                 'type': 'sink',
                                 'provenance': 'CODEQL_MODEL_CANDIDATE',
-                                'confidence': 'MEDIUM',
+                                'confidence': 'UNVETTED_CANDIDATE',
                                 'tier': 3,
                                 'project': get_project_provenance(pkg)
                             })
                 except Exception:
                     continue
 
-print(f"[+] Candidate pool size after CodeQL Models: {len(raw_candidates)}")
+print(f"[+] Trusted Candidate pool size (Tier 1 & 2): {len(raw_candidates)}")
+print(f"[+] Auxiliary CodeQL Candidate pool size (Tier 3 Quarantined): {len(auxiliary_codeql_candidates)}")
 print(f"[!] Quarantined unverified sink records: {len(quarantined_candidates)}")
 
-# 4. Conflict Adjudication & Deterministic Deduplication
+# Save Auxiliary CodeQL Candidates
+aux_bank_path = os.path.join(OUTPUT_DIR, "auxiliary_codeql_candidates.jsonl")
+with open(aux_bank_path, "w", encoding="utf-8") as f:
+    for rec in auxiliary_codeql_candidates:
+        f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+
+# 4. Conflict Adjudication & Deterministic Deduplication for Trusted Pool
 candidates_by_key = defaultdict(list)
 for item in raw_candidates:
     api_key = (item['cwe_query'], item['package'], item['class'], item['method'], item['signature'])
@@ -409,11 +459,13 @@ print(f"    Conflicts Detected & Adjudicated: {len(conflict_ledger)}")
 print(f"    Disputed Quarantined: {disputed_count}")
 print(f"    Clean Evidence Bank Size: {len(evidence_bank)}")
 
-# Save Evidence Bank
+# Save Evidence Bank atomically with frozen protection
 bank_path = os.path.join(OUTPUT_DIR, "evidence_bank.jsonl")
-with open(bank_path, "w", encoding="utf-8") as f:
+temp_bank = bank_path + ".tmp"
+with open(temp_bank, "w", encoding="utf-8") as f:
     for rec in evidence_bank:
         f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+os.replace(temp_bank, bank_path)
 
 # 5. Group Splitting by Project Provenance
 project_groups = defaultdict(list)
@@ -559,24 +611,24 @@ gate_v3_overlap = (len(overlap_with_v3_train) == 0)
 assert gate_v3_overlap, f"FAIL: {len(overlap_with_v3_train)} records overlap with historical V3 train!"
 
 all_trusted_records = train_records + val_records + test_records_clean
-gate_no_heuristic = all(r.get('tier', 99) <= 3 and r.get('provenance') != 'HEURISTIC_CANDIDATE' for r in all_trusted_records)
-assert gate_no_heuristic, "FAIL: Heuristic candidate found in trusted splits!"
+gate_no_heuristic = all(r.get('tier', 99) <= 2 and r.get('provenance') not in ['HEURISTIC_CANDIDATE', 'CODEQL_MODEL_CANDIDATE'] for r in all_trusted_records)
+assert gate_no_heuristic, "FAIL: Unverified or heuristic candidate found in trusted splits!"
 
 trusted_sinks = [r for r in all_trusted_records if r['type'] == 'sink']
-gate_sink_args = all(r.get('sink_args') and len(r['sink_args']) > 0 for r in trusted_sinks)
-assert gate_sink_args, "FAIL: Trusted sink record with empty or invalid sink_args found!"
+gate_sink_args = all(r.get('sink_args') and len(r['sink_args']) > 0 and parse_sig_params(r.get('signature', '')) != 0 for r in trusted_sinks)
+assert gate_sink_args, "FAIL: Trusted sink record with empty, zero-param, or invalid sink_args found!"
 
 gate_cwe_mapping = all(r['cwe_query'] in QUERIES for r in all_trusted_records)
 assert gate_cwe_mapping, "FAIL: Unmapped CWE query found in trusted records!"
 
 manifest_repaired = {
-    "dataset_version": "NTK-IRIS-STAGE3-CANONICAL-V4.1-SCIENTIFIC-VERIFIED",
+    "dataset_version": "NTK-IRIS-STAGE3-CANONICAL-V4.2-SCIENTIFIC-GROUND-TRUTH",
     "total_training_view_records": train_len + val_len + test_clean_len,
     "split_strategy": "PROJECT_PROVENANCE_INDEPENDENT",
     "provenance_tiers": {
-        "tier_1": "CANONICAL_401_GT",
-        "tier_2": "CURATED_CVE_SOURCE_SINK",
-        "tier_3": "CODEQL_MODEL_CANDIDATE"
+        "tier_1": "CANONICAL_401_GT (Trusted Ground Truth)",
+        "tier_2": "CURATED_CVE_SOURCE_SINK (Trusted Ground Truth)",
+        "tier_3": "CODEQL_MODEL_CANDIDATE (Quarantined Auxiliary Pool)"
     },
     "splits": {
         "train": {"rows": train_len, "sha256": train_hash, "projects": len(train_projects)},

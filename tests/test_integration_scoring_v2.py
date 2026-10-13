@@ -72,7 +72,7 @@ class TestIntegrationScoringV2(unittest.TestCase):
         """
         Audit V4 Counterexample:
         A High severity finding with CWE-79, no dataflow, and AI role 'none'
-        must NEVER be demoted to Informational (was previously 18.4).
+        without sanitizer evidence must NEVER be demoted to Low or Informational (Floor >= 40.0 -> Medium).
         """
         finding = {
             "severity": "High",
@@ -82,9 +82,24 @@ class TestIntegrationScoringV2(unittest.TestCase):
         }
         res = self.engine.score(finding)
         self.assertNotEqual(res.risk_level, "Informational")
-        self.assertGreaterEqual(res.final_score, 30.0)
+        self.assertNotEqual(res.risk_level, "Low")
+        self.assertEqual(res.risk_level, "Medium")
+        self.assertGreaterEqual(res.final_score, 40.0)
         self.assertEqual(res.penalty_factor, 0.60)
         self.assertEqual(res.ai_verdict, "POTENTIAL_BENIGN_CONTEXT")
+
+    def test_high_with_sanitizer_allowed_demotion_to_low(self):
+        """High finding WITH explicit sanitizer evidence can be demoted to Low (Floor >= 30.0)"""
+        finding = {
+            "severity": "High",
+            "cwe": "CWE-79",
+            "path_count": 0,
+            "has_sanitizer": True,
+            "ai_validation": {"pred_type": "none"}
+        }
+        res = self.engine.score(finding)
+        self.assertEqual(res.risk_level, "Low")
+        self.assertEqual(res.final_score, 30.3)
 
     def test_high_malformed_json_neutral(self):
         """Invariant 2 & 3: Malformed JSON output must result in neutral scoring (penalty 1.0)"""
