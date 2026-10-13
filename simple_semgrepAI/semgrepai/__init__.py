@@ -1,4 +1,8 @@
-from .scanner import SemgrepScanner, OpengrepScanner
+try:
+    from .scanner import SemgrepScanner, OpengrepScanner
+except ImportError:
+    SemgrepScanner = None
+    OpengrepScanner = None
 
 try:
     from .cli import app

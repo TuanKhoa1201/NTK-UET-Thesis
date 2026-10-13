@@ -159,26 +159,36 @@ class SASTScoringEngineV2:
         if iris_confirmed is True or status == "IRIS Posthoc Positive":
             return 0.95, 1.00, "CONFIRMED_VULNERABLE"
         elif iris_confirmed is False or status == "IRIS Posthoc Negative":
-            # Demote conservatively
-            # Invariant 6: Critical safety floor protection
+            # Demote conservatively with multi-tier severity protection
             raw_sev = str(getattr(finding, "severity", "UNKNOWN") if not isinstance(finding, dict) else finding.get("severity", "UNKNOWN")).upper()
             if raw_sev in ["CRITICAL", "ERROR"] or effective_sev >= 0.85:
-                return 0.20, 0.70, "SUSPECTED_FP_HIGH_SEVERITY_PROTECTED"
-            return 0.15, 0.40, "SUSPECTED_FALSE_POSITIVE"
+                return 0.20, 0.70, "SUSPECTED_FP_CRITICAL_PROTECTED"
+            elif raw_sev in ["HIGH", "WARNING", "MEDIUM"] or effective_sev >= 0.70:
+                return 0.30, 0.60, "SUSPECTED_FP_HIGH_PROTECTED"
+            return 0.15, 0.35, "SUSPECTED_FALSE_POSITIVE"
 
         # Check AI validation dict
-        pred_type = ai_val.get("pred_type")
+        parse_status = ai_val.get("parse_status")
+        verdict_val = str(ai_val.get("verdict", "")).upper()
+        if parse_status == "PARSE_ERROR" or verdict_val in ["NEEDS_REVIEW", "UNKNOWN"]:
+            return 0.50, 1.00, "NEEDS_REVIEW"
+
+        pred_type = ai_val.get("pred_type") or ai_val.get("predicted_type") or ai_val.get("api_role")
         finding_status = ai_val.get("finding_status")
         
         if pred_type == "sink":
             return 0.85, 1.00, "LIKELY_VULNERABLE_SINK"
         elif pred_type == "source":
             return 0.75, 1.00, "INPUT_SOURCE_PRESENT"
+        elif pred_type in ["taint-propagator", "propagator"]:
+            return 0.70, 0.95, "PROPAGATION_DETECTED"
         elif pred_type == "none" or finding_status == "SUSPECTED_FALSE_POSITIVE":
             raw_sev = str(getattr(finding, "severity", "UNKNOWN") if not isinstance(finding, dict) else finding.get("severity", "UNKNOWN")).upper()
             if raw_sev in ["CRITICAL", "ERROR"] or effective_sev >= 0.85:
-                return 0.20, 0.70, "SUSPECTED_FP_HIGH_SEVERITY_PROTECTED"
-            return 0.15, 0.40, "SUSPECTED_FALSE_POSITIVE"
+                return 0.20, 0.70, "NEEDS_REVIEW_CRITICAL_PROTECTED"
+            elif raw_sev in ["HIGH", "WARNING", "MEDIUM"] or effective_sev >= 0.70:
+                return 0.30, 0.60, "POTENTIAL_BENIGN_CONTEXT"
+            return 0.20, 0.35, "SUSPECTED_FALSE_POSITIVE"
 
         # Invariant 3: Neutral Unknowns
         return 0.50, 1.00, "NEUTRAL_UNKNOWN"
@@ -199,11 +209,18 @@ class SASTScoringEngineV2:
         calculated_score = raw_score * penalty
         raw_sev = str(getattr(finding, "severity", "UNKNOWN") if not isinstance(finding, dict) else finding.get("severity", "UNKNOWN")).upper()
 
-        # Invariant 6: Critical Safety Floor (>= 40.0)
+        # Invariant 5 & 6: High/Critical Safety Floor & Demotion Protection
         safety_floor_applied = False
         if (raw_sev in ["CRITICAL", "ERROR"] or effective_s >= 0.85):
             if calculated_score < 40.0:
                 final_score = 40.0
+                safety_floor_applied = True
+            else:
+                final_score = round(max(0.0, min(100.0, calculated_score)), 1)
+        elif (raw_sev == "HIGH" or effective_s >= 0.70):
+            # High findings are protected by Safety Guard >= 30.0 (cannot drop to Informational)
+            if calculated_score < 30.0:
+                final_score = 30.0
                 safety_floor_applied = True
             else:
                 final_score = round(max(0.0, min(100.0, calculated_score)), 1)
@@ -218,10 +235,15 @@ class SASTScoringEngineV2:
                 risk_desc = desc
                 break
 
-        # Invariant 6: Critical finding can NEVER be demoted to Informational
-        if (raw_sev in ["CRITICAL", "ERROR"] or effective_s >= 0.85) and risk_level == "Informational":
+        # Invariant 6: Critical finding can NEVER be demoted to Informational or Low
+        if (raw_sev in ["CRITICAL", "ERROR"] or effective_s >= 0.85) and risk_level in ["Informational", "Low"]:
             risk_level = "Medium"
             risk_desc = "Critical severity protected by Safety Floor >= 40.0"
+
+        # Invariant 6: High finding can NEVER be demoted to Informational
+        if (raw_sev == "HIGH" or effective_s >= 0.70) and risk_level == "Informational":
+            risk_level = "Low"
+            risk_desc = "High severity protected from Informational demotion (Safety Guard >= 30.0)"
 
         return ScoreBreakdownV2(
             static_severity_score=round(base_s, 2),

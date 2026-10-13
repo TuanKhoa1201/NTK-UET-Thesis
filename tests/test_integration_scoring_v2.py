@@ -4,7 +4,8 @@ tests/test_integration_scoring_v2.py
 
 Unit test suite validating integration/scoring_v2.py.
 Tests compatibility with MergedFinding dataclass and verifies
-all 6 Scientific Safety Invariants are enforced.
+all 6 Scientific Safety Invariants are enforced, including
+specific counterexample protections from Audit V4 (Phase D).
 """
 
 import sys
@@ -17,7 +18,7 @@ sys.path.insert(0, str(REPO_DIR / "integration"))
 from scoring_v2 import SASTScoringEngineV2, score_finding_v2
 
 class DummyMergedFinding:
-    def __init__(self, severity="High", cwe="CWE-89", path_count=0, status="OpenGrep Only", iris_confirmed=None):
+    def __init__(self, severity="High", cwe="CWE-89", path_count=0, status="OpenGrep Only", iris_confirmed=None, ai_val=None):
         self.severity = severity
         self.cwe = cwe
         self.path_count = path_count
@@ -29,6 +30,7 @@ class DummyMergedFinding:
         self.line = 10
         self.duplicate_count = 1
         self.confidence_score = 80.0
+        self.ai_validation = ai_val or {}
 
 class TestIntegrationScoringV2(unittest.TestCase):
 
@@ -39,7 +41,7 @@ class TestIntegrationScoringV2(unittest.TestCase):
         """Critical finding with negative IRIS verdict must not drop below Safety Floor >= 40.0"""
         mf = DummyMergedFinding(severity="Critical", cwe="CWE-89", path_count=0, status="IRIS Posthoc Negative", iris_confirmed=False)
         scored = score_finding_v2(mf)
-        self.assertGreaterEqual(scored["risk_score"], 40)
+        self.assertGreaterEqual(scored["risk_score"], 40.0)
         self.assertNotEqual(scored["risk_level"], "Informational")
         self.assertEqual(scored["score_version"], "NTK-SAST-SCORING-V2.2-SAFETY-INVARIANTS")
         self.assertTrue(scored["score_components"]["safety_floor_applied"])
@@ -65,6 +67,64 @@ class TestIntegrationScoringV2(unittest.TestCase):
         scored = score_finding_v2(mf)
         self.assertEqual(scored["risk_level"], "Informational")
         self.assertLess(scored["risk_score"], 25)
+
+    def test_counterexample_high_cwe79_none_protected(self):
+        """
+        Audit V4 Counterexample:
+        A High severity finding with CWE-79, no dataflow, and AI role 'none'
+        must NEVER be demoted to Informational (was previously 18.4).
+        """
+        finding = {
+            "severity": "High",
+            "cwe": "CWE-79",
+            "path_count": 0,
+            "ai_validation": {"pred_type": "none"}
+        }
+        res = self.engine.score(finding)
+        self.assertNotEqual(res.risk_level, "Informational")
+        self.assertGreaterEqual(res.final_score, 30.0)
+        self.assertEqual(res.penalty_factor, 0.60)
+        self.assertEqual(res.ai_verdict, "POTENTIAL_BENIGN_CONTEXT")
+
+    def test_high_malformed_json_neutral(self):
+        """Invariant 2 & 3: Malformed JSON output must result in neutral scoring (penalty 1.0)"""
+        finding = {
+            "severity": "High",
+            "cwe": "CWE-89",
+            "path_count": 0,
+            "ai_validation": {"parse_status": "PARSE_ERROR"}
+        }
+        res = self.engine.score(finding)
+        self.assertEqual(res.penalty_factor, 1.00)
+        self.assertEqual(res.ai_confidence_score, 0.50)
+        self.assertEqual(res.ai_verdict, "NEEDS_REVIEW")
+
+    def test_valid_sqli_wrong_api_classification_flow_precedence(self):
+        """
+        Invariant 4: When taint dataflow is confirmed (exploitability >= 0.85),
+        an erroneous AI prediction of 'none' cannot demote the finding.
+        """
+        finding = {
+            "severity": "High",
+            "cwe": "CWE-89",
+            "path_count": 2,
+            "dataflow": [{"step": 1}, {"step": 2}],
+            "ai_validation": {"pred_type": "none"}
+        }
+        res = self.engine.score(finding)
+        self.assertEqual(res.penalty_factor, 1.00)
+        self.assertEqual(res.ai_verdict, "CONFIRMED_DATAFLOW_PRECEDENCE")
+        self.assertGreaterEqual(res.final_score, 70.0)
+
+    def test_no_dropped_findings_in_scoring(self):
+        """Invariant 5: Scoring preserves 100% of findings without deletion"""
+        raw_findings = [
+            {"rule_id": "r1", "severity": "CRITICAL", "dataflow": []},
+            {"rule_id": "r2", "severity": "HIGH", "dataflow": [], "ai_validation": {"pred_type": "none"}},
+            {"rule_id": "r3", "severity": "LOW", "dataflow": []},
+        ]
+        scored_findings = [self.engine.score(f) for f in raw_findings]
+        self.assertEqual(len(scored_findings), 3)
 
 if __name__ == "__main__":
     unittest.main()

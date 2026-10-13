@@ -28,7 +28,7 @@ jobs:
       - name: Install Lightweight Dependencies
         run: |
           pip install --upgrade pip
-          pip install pyyaml pydantic
+          pip install pyyaml pydantic rich
 
       - name: Syntax & Compilation Checks (Zero-Defect Guarantee)
         run: |
