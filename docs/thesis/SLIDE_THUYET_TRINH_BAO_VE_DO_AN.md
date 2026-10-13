@@ -44,7 +44,7 @@
 
 ## SLIDE 5: XÂY DỰNG DATASET V3 (GIAI ĐOẠN HUẤN LUYỆN)
 * **Quy mô:** 1,793 mẫu dữ liệu chuyên sâu cho mã nguồn Java.
-* **Cân bằng 4 nhãn:** Phân bổ đồng đều ~25% cho mỗi lớp (source: 485, sink: 348, taint-propagator: 460, none: 500) — Giải quyết triệt để sự thiên lệch của tập cũ.
+* **Cân bằng 4 nhãn:** Phân bổ đồng đều ~25% cho mỗi lớp (source: 485, sink: 348, taint-propagator: 460, none: 500)  -  Giải quyết triệt để sự thiên lệch của tập cũ.
 * **Zero Class Leakage:** Áp dụng giải thuật băm định danh lớp hash(package.class) % 10. 100% các lớp trong tập Test (330 mẫu) không xuất hiện trong tập Train.
 * **Bao phủ đa CWE:** CWE-089 (SQLi), CWE-078 (Command Injection), CWE-022 (Path Traversal), CWE-611 (XXE), CWE-798 (Credentials).
 
@@ -62,40 +62,46 @@
 * **Overall Accuracy:** 67.58% (trên bài toán 4 nhãn với dữ liệu hoàn toàn chưa từng thấy).
 * **Nhận diện Sink:** Precision = 0.86, Recall = 0.83, F1-Score = 0.84.
 * **Nhận diện Source:** Precision = 0.89, Recall = 0.66, F1-Score = 0.76.
-* **Lọc hàm vô hại (None/Benign):** Recall = 93.0% — Chìa khóa vàng giúp hệ thống tự tin loại bỏ cảnh báo giả.
+* **Lọc hàm vô hại (None/Benign):** Recall = 93.0%  -  Chìa khóa vàng giúp hệ thống tự tin loại bỏ cảnh báo giả.
 
 ---
 
-## SLIDE 8: THUẬT TOÁN CHẤM ĐIỂM TOÁN HỌC SAST COMPOSITE RISK SCORING
-* **Công thức tổng hợp:**
-  RawScore = 100 * (0.35 * S_eff + 0.10 * P + 0.30 * C_AI + 0.25 * E)
-  FinalScore = round(RawScore * gamma_FP, 1)
-* **Ý nghĩa các thành phần:**
-  - S_eff: Độ nghiêm trọng tĩnh kết hợp trọng số điều chỉnh CWE.
+## SLIDE 8: THUẬT TOÁN CHẤM ĐIỂM SAST OBSERVABLE EVIDENCE RISK SCORING (V2.1)
+* **Công thức tổng hợp 2 tầng:**
+  RawScore = 100 * (0.35 * S_eff + 0.10 * P + 0.30 * C_sem + 0.25 * E)
+  FinalScore = round(RawScore * gamma, 1)
+* **Ý nghĩa các thành phần dựa trên bằng chứng quan sát được:**
+  - S_eff: Độ nghiêm trọng tĩnh kết hợp trọng số điều chỉnh nội tại theo CWE (0.10 - 1.00).
   - P: Độ chính xác của Rule OpenGrep (0.40 - 1.00).
-  - C_AI: Độ tin cậy thẩm định ngữ nghĩa của mô hình LoRA.
-  - E: Độ phủ luồng truyền dữ liệu Taint Source -> Sink.
-  - gamma_FP: Hệ số phạt báo động giả (gamma_FP = 0.15 khi AI kết luận FALSE_POSITIVE, gamma_FP = 1.00 khi TRUE_POSITIVE).
+  - C_sem: Bằng chứng ngữ nghĩa vai trò hàm từ LoRA (Sink=0.90, Source=0.85, Propagator=0.70, None=0.20).
+  - E: Bằng chứng luồng truyền dữ liệu vết (Dataflow Taint Reachability: 0.30 - 1.00).
+* **Cơ chế hạ bậc bảo thủ (Conservative Demotion):**
+  - gamma = 1.00 khi AI xác nhận vai trò liên quan lỗ hổng (LIKELY_VULNERABLE / POTENTIAL_TAINT_ENTRY).
+  - gamma = 0.35 khi AI phân loại hàm vô hại (SUSPECTED_FALSE_POSITIVE).
+  - Khác biệt khoa học: Không ép về 0 hoặc xóa bỏ cảnh báo (tránh False Negative nghiêm trọng nếu AI nhầm lẫn); cảnh báo CRITICAL vẫn giữ điểm sàn an toàn (~26.1 - 33.4 điểm, nhóm LOW), giải phóng thời gian ưu tiên nhưng bảo toàn dấu vết kiểm toán.
 
 ---
 
-## SLIDE 9: KẾT QUẢ THỰC NGHIỆM ĐỐI CHỨNG (BENCHMARK)
-* So sánh OpenGrep Cơ sở vs Hệ thống Hybrid AI Đề xuất:
-  - **Số cảnh báo cần xử lý thủ công:** Giảm 45% công sức cho đội ngũ bảo mật.
-  - **Tỷ lệ giảm báo động giả (FPRR):** Đạt 100% (triệt tiêu 45/45 cảnh báo rác).
-  - **Độ chính xác (Precision):** Tăng từ 55.0% lên 100.0%.
-  - **Độ bao phủ (Recall):** Bảo toàn 100% lỗ hổng thật.
-  - **F1-Score tổng hợp:** Tăng từ 0.710 lên 1.000.
+## SLIDE 9: ĐÁNH GIÁ THỰC NGHIỆM ĐỘC LẬP & PHÂN TÍCH LỖI (ERROR ANALYSIS)
+* **Tập kiểm thử độc lập (Held-Out Test Set):** 330 mẫu hoàn toàn tách biệt khỏi tập Train (Zero Class Leakage).
+* **Độ chính xác nghiêm ngặt toàn cục (Strict Accuracy):** **67.58%** (223/330 mẫu phân loại chính xác tuyệt đối cả 4 nhãn).
+* **Hiệu năng trên các lớp an ninh cốt lõi:**
+  - **Nhận diện Sink:** Precision = 0.86, Recall = 0.83, **F1-Score = 0.84** (59 mẫu).
+  - **Nhận diện Source:** Precision = 0.89, Recall = 0.66, **F1-Score = 0.76** (109 mẫu).
+  - **Lọc hàm vô hại (None):** Precision = 0.50, **Recall = 0.93** (76 mẫu)  -  Chìa khóa lọc 93% hàm an toàn.
+* **Phân tích lỗi (Error Analysis) & Giải pháp kiến trúc:**
+  - Lớp `taint-propagator` đạt F1 = 0.46 (Recall 0.36) do tính đa dạng cao của các hàm truyền dữ liệu đối với mô hình 1.5B cục bộ.
+  - Cơ chế phòng thủ chiều sâu (Defense-in-Depth): Hệ thống bù đắp bằng thành phần Taint Reachability ($E$) của OpenGrep, đảm bảo an toàn đa tầng không bị phụ thuộc duy nhất vào LLM.
+  - Phân tích 1 mẫu ngoại lệ (idx 242) bị cắt cụt token JSON được xử lý an toàn (fail-safe fallback).
 
 ---
 
 ## SLIDE 10: DEMO TRỰC TIẾP TRÊN MÃ NGUỒN JAVA THỰC TẾ
-* **Mục tiêu 1:** mini_vulnerable_java_CVE-89_1.0
-  - SQL Injection (SqlInjection.java): RiskScore = 73.6 (HIGH - Phán quyết TRUE_POSITIVE).
-  - XXE Injection (XxeExample.java): RiskScore = 76.1 (HIGH - Phán quyết TRUE_POSITIVE).
-  - Weak Hash (WeakHash.java): Raw score 36.8 điểm bị hạ xuống 5.5 điểm (BENIGN/FP).
-* **Mục tiêu 2:** OWASP Benchmark v1.2 (BenchmarkTest00001.java)
-  - Phát hiện Path Traversal (CWE-22) tại FileInputStream -> Khớp 100% với ground truth của OWASP.
+* **Mục tiêu thực tế:** `mini_vulnerable_java_CVE-89_1.0/src` (quét với tập rules p-java OpenGrep)
+  - **XXE Injection (`XxeExample.java:28`):** Risk Score = **75.5** (Mức HIGH, AI phán quyết `LIKELY_VULNERABLE`, API role: `sink`).
+  - **SQL Injection (`SqlInjection.java:27`):** Risk Score = **73.0** (Mức HIGH, AI phán quyết `LIKELY_VULNERABLE`, API role: `sink`).
+  - **Weak Hash (`WeakHash.java:17`):** Raw Score = 41.2 điểm -> hạ bậc bảo thủ ($\gamma = 0.35$) xuống **14.4 điểm** (Mức BENIGN_OR_FP, AI phán quyết `SUSPECTED_FALSE_POSITIVE`, API role: `none`).
+* **Đặc tả kiểm chứng:** Bảo toàn 100% các lỗ hổng nguy cấp tại đỉnh bảng xếp hạng ưu tiên, đồng thời phân tầng rõ rệt các cảnh báo mã nguồn an toàn mà không làm mất dấu vết rà soát.
 
 ---
 
