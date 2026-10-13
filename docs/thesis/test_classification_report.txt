@@ -1,0 +1,26 @@
+======================================================================
+  NTK/IRIS STAGE 3 - HELD-OUT TEST EVALUATION REPORT
+======================================================================
+
+Total Test Samples: 330
+Overall Accuracy:   0.6758 (67.58%)
+
+Classification Report:
+                  precision    recall  f1-score   support
+
+          source       0.89      0.66      0.76       109
+            sink       0.86      0.83      0.84        59
+taint-propagator       0.62      0.36      0.46        86
+            none       0.50      0.93      0.65        76
+
+       micro avg       0.68      0.68      0.68       330
+       macro avg       0.72      0.70      0.68       330
+    weighted avg       0.72      0.68      0.67       330
+
+
+Confusion Matrix:
+Labels: ['source', 'sink', 'taint-propagator', 'none']
+source            : [72, 6, 16, 14]
+sink              : [4, 49, 0, 6]
+taint-propagator  : [3, 2, 31, 50]
+none              : [2, 0, 3, 71]
