@@ -1,17 +1,17 @@
 """
-SAST Scoring Engine - Composite Risk Scoring Framework (MITRE CWSS & CVSS Inspired)
-Đồ án Tốt nghiệp NTK / IRIS - Giai đoạn 2.
+SAST Observable Evidence Risk Prioritization Framework.
+Đồ án Tốt nghiệp NTK / IRIS - Phiên bản Chuẩn hóa Khoa học V2.1.
 
-Cơ chế tính điểm tổng hợp cho từng cảnh báo của OpenGrep kết hợp xác thực LLM:
-1. Static Base Severity (S): Mức độ nghiêm trọng tĩnh & CWE intrinsic impact.
-2. Rule Precision (P): Độ chính xác khai báo của rule OpenGrep.
-3. AI Confidence & Verification (C_AI): Độ tin cậy định lượng từ mô hình LLM fine-tuned.
-4. Exploitability & Dataflow Reachability (E): Sự hiện diện của luồng taint source -> sink.
-5. False Positive Penalty Factor (gamma_FP): Hệ số phạt hạ điểm mạnh khi AI phát hiện báo động giả.
+Mô hình chấm điểm và tái ưu tiên (re-ranking) cảnh báo dựa trên các bằng chứng quan sát được:
+1. Effective Static Base Severity (S_eff): Mức độ nghiêm trọng tĩnh & CWE intrinsic impact.
+2. Rule Precision (P): Độ tin cậy khai báo của rule phân tích tĩnh.
+3. Local Semantic Model Evidence (C_sem): Bằng chứng ngữ nghĩa từ mô hình LLM/LoRA cục bộ (Stage 3 API role).
+4. Exploitability & Dataflow Reachability (E): Dấu vết luồng truyền taint source -> sink.
+5. Conservative Demotion Factor (gamma): Hệ số hạ bậc bảo thủ cho các cảnh báo nghi ngờ báo động giả.
 
 Công thức:
-    RawScore = 100 * (w_s * S + w_p * P + w_a * C_AI + w_e * E)
-    FinalScore = round(RawScore * gamma_FP, 1)
+    RawScore = 100 * (w_s * S_eff + w_p * P + w_a * C_sem + w_e * E)
+    FinalScore = round(RawScore * gamma, 1)
 """
 
 from typing import Dict, Any, Optional, List
@@ -174,30 +174,31 @@ class SASTScoringEngine:
 
     def evaluate_ai_validation(self, finding: Dict[str, Any]) -> tuple[float, float, str]:
         """
-        Đánh giá kết quả từ mô hình LLM fine-tuned.
-        Trả về: (ai_confidence_score, penalty_factor, ai_verdict)
+        Đánh giá kết quả từ mô hình ngữ nghĩa cục bộ (Decoupled Evidence Model).
+        Trả về: (ai_semantic_score, demotion_factor, verdict_status)
         """
         ai_val = finding.get("ai_validation", {})
         if not ai_val:
-            # Chưa có AI validation -> Giữ nguyên trung tính không phạt
+            # Chưa có AI validation -> Mặc định trung tính, không hạ bậc
             return 0.50, 1.0, "NOT_EVALUATED"
 
         is_valid = ai_val.get("is_valid")
         verdict = str(ai_val.get("verdict", "")).upper()
-        confidence = float(ai_val.get("confidence", 0.50))
-        # Chuẩn hóa confidence trong [0.0, 1.0]
-        confidence = min(1.0, max(0.0, confidence))
+        api_role = str(ai_val.get("api_role", ai_val.get("predicted_type", ""))).lower()
 
-        if is_valid is False or verdict in ["FALSE_POSITIVE", "BENIGN", "SAFE", "FALSE"]:
-            # Phát hiện False Positive -> AI Confidence = 0.05, Áp dụng hệ số phạt cực mạnh 0.15
-            return 0.05, 0.15, "FALSE_POSITIVE"
-        elif is_valid is True or verdict in ["TRUE_POSITIVE", "VULNERABLE", "CONFIRMED", "TRUE"]:
-            # Xác nhận True Positive -> Tăng điểm theo độ tin cậy của AI
-            ai_score = max(0.70, confidence)
-            return ai_score, 1.0, "TRUE_POSITIVE"
+        # Ánh xạ theo đặc tả SAST_SCORING_SPEC_FINAL
+        if verdict in ["LIKELY_VULNERABLE", "TRUE_POSITIVE", "VULNERABLE", "CONFIRMED"] or api_role == "sink":
+            return 0.90, 1.00, "LIKELY_VULNERABLE"
+        elif verdict in ["POTENTIAL_TAINT_ENTRY"] or api_role == "source":
+            return 0.75, 0.90, "POTENTIAL_TAINT_ENTRY"
+        elif verdict in ["PROPAGATION_DETECTED"] or api_role == "taint-propagator":
+            return 0.70, 0.90, "PROPAGATION_DETECTED"
+        elif verdict in ["SUSPECTED_FALSE_POSITIVE", "FALSE_POSITIVE", "BENIGN", "SAFE"] or api_role == "none":
+            # Hạ bậc bảo thủ (Conservative Demotion factor = 0.35, semantic score = 0.20)
+            return 0.20, 0.35, "SUSPECTED_FALSE_POSITIVE"
         else:
-            # Nghi vấn hoặc chưa đủ dữ liệu kết luận
-            return confidence, 0.75, "SUSPICIOUS_UNVERIFIED"
+            # Lỗi phân tích hoặc cần chuyên viên rà soát thủ công
+            return 0.50, 0.75, "NEEDS_REVIEW"
 
     def score_finding(self, finding: Dict[str, Any]) -> ScoreBreakdown:
         """

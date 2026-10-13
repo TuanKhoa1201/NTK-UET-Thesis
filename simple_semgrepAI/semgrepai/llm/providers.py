@@ -1,13 +1,26 @@
+import os
 """LLM provider configuration and factory."""
 from typing import Optional, Dict, Any, Literal, Callable, List, Iterator
 from pydantic import BaseModel, Field
-from langchain_core.language_models.chat_models import BaseChatModel
-from langchain_core.runnables import Runnable, RunnableConfig
-from langchain_core.outputs import ChatGeneration, ChatGenerationChunk
-from langchain_core.messages import BaseMessage
-from langchain_openai import ChatOpenAI
-from langchain_anthropic import ChatAnthropic
-from langchain_ollama import ChatOllama
+try:
+    from langchain_core.language_models.chat_models import BaseChatModel
+    from langchain_core.runnables import Runnable, RunnableConfig
+    from langchain_core.outputs import ChatGeneration, ChatGenerationChunk
+    from langchain_core.messages import BaseMessage
+    from langchain_openai import ChatOpenAI
+    from langchain_anthropic import ChatAnthropic
+    from langchain_ollama import ChatOllama
+except ImportError:
+    # Graceful fallback when langchain is not installed in the local environment
+    class BaseChatModel: pass
+    class Runnable: pass
+    class RunnableConfig: pass
+    class ChatGeneration: pass
+    class ChatGenerationChunk: pass
+    class BaseMessage: pass
+    class ChatOpenAI: pass
+    class ChatAnthropic: pass
+    class ChatOllama: pass
 import time
 import logging
 from functools import wraps
@@ -303,6 +316,15 @@ class LLMFactory:
 
         if config.api_key:
             common_kwargs["api_key"] = config.api_key
+
+        # THESIS_LOCAL_ONLY_MODE check: Fail-closed guard against Cloud LLM leakage
+        thesis_local_only = os.environ.get("THESIS_LOCAL_ONLY_MODE", "true").lower() in ("true", "1", "yes")
+        if thesis_local_only and config.provider in ["openai", "anthropic", "openrouter"]:
+            raise PermissionError(
+                f"THESIS LOCAL-ONLY MODE VIOLATION: Cloud LLM provider '{config.provider}' is strictly forbidden "
+                "by thesis privacy requirements. Analyzed source code must never leave the local environment. "
+                "Please use local 'ollama' or Local LoRA."
+            )
 
         # Create base LLM
         if config.provider == "openai":

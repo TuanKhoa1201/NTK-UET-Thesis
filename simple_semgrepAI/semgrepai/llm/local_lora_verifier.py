@@ -15,8 +15,8 @@ from pathlib import Path
 from typing import Dict, Any, List, Optional
 import torch
 
-MODEL_DIR = "/home/tuankhoa/models/Qwen2.5-Coder-1.5B-Instruct"
-ADAPTER_DIR = "/home/tuankhoa/migration/qwen25_coder_15b_stage3_qlora_v3/best_adapter"
+MODEL_DIR = os.environ.get("NTK_BASE_MODEL_DIR", "/home/tuankhoa/models/Qwen2.5-Coder-1.5B-Instruct")
+ADAPTER_DIR = os.environ.get("NTK_ADAPTER_DIR", "/home/tuankhoa/migration/qwen25_coder_15b_stage3_qlora_v3/best_adapter")
 
 CWE_DESCRIPTIONS = {
     "CWE-089": (
@@ -220,39 +220,58 @@ class LocalLoRAVerifier:
         input_len = inputs["input_ids"].shape[1]
         completion = self.tokenizer.decode(out_ids[0][input_len:], skip_special_tokens=True).strip()
 
-        # Parse JSON output
-        pred_type = "none"
+        # Parse JSON output with strict tracking
+        pred_type = "unknown"
+        parse_status = "STRICT_JSON_VALID"
+        sink_args = []
         try:
             parsed = json.loads(completion)
-            pred_type = parsed.get("type", "none").lower()
+            pred_type = parsed.get("type", "unknown").lower()
+            sink_args = parsed.get("sink_args", [])
         except Exception:
+            parse_status = "LENIENT_REGEX_FALLBACK"
             for cand in ["sink", "source", "taint-propagator", "none"]:
                 if f'"{cand}"' in completion or f"'{cand}'" in completion:
                     pred_type = cand
                     break
+            if pred_type == "unknown":
+                parse_status = "PARSE_ERROR"
 
-        # Đánh giá True/False Positive
-        if pred_type in ["sink", "source"]:
+        # Scientific Remediation: Decouple API-role classification from Finding-level verdict
+        # An API being a sink/source does not prove vulnerability; none does not prove benignness.
+        if pred_type == "sink":
+            finding_status = "LIKELY_VULNERABLE"
+            evidence_weight = "HIGH"
             is_valid = True
-            verdict = "TRUE_POSITIVE"
-            confidence = 0.92
-            justification = f"Mô hình AI LoRA đã xác nhận phương thức đóng vai trò {pred_type.upper()} nhạy cảm trong luồng dữ liệu bảo mật."
+            justification = "Mô hình AI LoRA xác nhận lời gọi hàm đóng vai trò SINK nhạy cảm đối với CWE này."
+        elif pred_type == "source":
+            finding_status = "POTENTIAL_TAINT_ENTRY"
+            evidence_weight = "MEDIUM"
+            is_valid = True
+            justification = "Mô hình AI LoRA xác nhận lời gọi hàm là SOURCE nhập dữ liệu đầu vào người dùng."
         elif pred_type == "taint-propagator":
+            finding_status = "PROPAGATION_DETECTED"
+            evidence_weight = "MEDIUM"
             is_valid = True
-            verdict = "TRUE_POSITIVE"
-            confidence = 0.82
-            justification = f"Mô hình AI LoRA xác định phương thức đóng vai trò TAINT-PROPAGATOR truyền vết dữ liệu bẩn."
-        else:
+            justification = "Mô hình AI LoRA xác nhận lời gọi hàm là TAINT-PROPAGATOR truyền tiếp dữ liệu bẩn."
+        elif pred_type == "none":
+            finding_status = "SUSPECTED_FALSE_POSITIVE"
+            evidence_weight = "LOW"
             is_valid = False
-            verdict = "FALSE_POSITIVE"
-            confidence = 0.88
-            justification = "Mô hình AI LoRA phân loại phương thức là hàm vô hại (NONE) đối với lớp lỗ hổng này; xác định là báo động giả."
+            justification = "Mô hình AI LoRA phân loại phương thức là hàm vô hại (NONE) đối với CWE này; khuyến nghị giảm mức độ ưu tiên."
+        else:
+            finding_status = "NEEDS_REVIEW"
+            evidence_weight = "UNKNOWN"
+            is_valid = None
+            justification = "Mô hình trả về định dạng không chuẩn hoặc lỗi phân tích cú pháp; chuyển sang chuyên viên rà soát thủ công."
 
         ai_validation = {
             "is_valid": is_valid,
-            "verdict": verdict,
-            "confidence": confidence,
-            "predicted_type": pred_type,
+            "verdict": finding_status,
+            "evidence_weight": evidence_weight,
+            "api_role": pred_type,
+            "sink_args": sink_args,
+            "parse_status": parse_status,
             "raw_completion": completion,
             "justification": justification,
             "model_version": "Qwen2.5-Coder-1.5B-QLoRA-V3-Local"
@@ -297,27 +316,37 @@ class LocalLoRAVerifier:
                             pred_type = cand
                             break
 
-                if pred_type in ["sink", "source"]:
+                if pred_type == "sink":
+                    finding_status = "LIKELY_VULNERABLE"
+                    evidence_weight = "HIGH"
                     is_valid = True
-                    verdict = "TRUE_POSITIVE"
-                    confidence = 0.92
-                    justification = f"Mô hình AI LoRA đã xác nhận phương thức là {pred_type.upper()} nhạy cảm trong luồng dữ liệu bảo mật."
+                    justification = f"Mô hình AI LoRA xác nhận phương thức là SINK nhạy cảm đối với CWE này."
+                elif pred_type == "source":
+                    finding_status = "POTENTIAL_TAINT_ENTRY"
+                    evidence_weight = "MEDIUM"
+                    is_valid = True
+                    justification = f"Mô hình AI LoRA xác nhận phương thức là SOURCE."
                 elif pred_type == "taint-propagator":
+                    finding_status = "PROPAGATION_DETECTED"
+                    evidence_weight = "MEDIUM"
                     is_valid = True
-                    verdict = "TRUE_POSITIVE"
-                    confidence = 0.82
-                    justification = f"Mô hình AI LoRA xác định phương thức là TAINT-PROPAGATOR."
-                else:
+                    justification = f"Mô hình AI LoRA xác nhận phương thức là TAINT-PROPAGATOR."
+                elif pred_type == "none":
+                    finding_status = "SUSPECTED_FALSE_POSITIVE"
+                    evidence_weight = "LOW"
                     is_valid = False
-                    verdict = "FALSE_POSITIVE"
-                    confidence = 0.88
-                    justification = "Mô hình AI LoRA phân loại phương thức là hàm vô hại (NONE); xác định là báo động giả."
+                    justification = "Mô hình AI LoRA phân loại phương thức là hàm vô hại (NONE); khuyến nghị giảm ưu tiên."
+                else:
+                    finding_status = "NEEDS_REVIEW"
+                    evidence_weight = "UNKNOWN"
+                    is_valid = None
+                    justification = "Không xác định được nhãn API hoặc lỗi phân tích cú pháp."
 
                 f["ai_validation"] = {
                     "is_valid": is_valid,
-                    "verdict": verdict,
-                    "confidence": confidence,
-                    "predicted_type": pred_type,
+                    "verdict": finding_status,
+                    "evidence_weight": evidence_weight,
+                    "api_role": pred_type,
                     "raw_completion": completion,
                     "justification": justification,
                     "model_version": "Qwen2.5-Coder-1.5B-QLoRA-V3-Local"

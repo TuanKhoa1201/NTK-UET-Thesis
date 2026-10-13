@@ -1,0 +1,104 @@
+{
+  "evaluation_name": "Stage 3 QLoRA Held-Out Test Empirical Evaluation",
+  "total_samples": 330,
+  "strict_accuracy": 0.6758,
+  "ground_truth_distribution": {
+    "taint-propagator": 86,
+    "source": 109,
+    "none": 76,
+    "sink": 59
+  },
+  "prediction_distribution": {
+    "none": 141,
+    "source": 81,
+    "taint-propagator": 50,
+    "sink": 57,
+    "unknown": 1
+  },
+  "unknown_predictions_count": 1,
+  "unknown_samples_detail": [
+    {
+      "idx": 242,
+      "ground_truth": "source",
+      "prediction": "unknown",
+      "raw_output": "{\"package\":\"org.graylog2.rest.resources.users\",\"class\":\"UsersResource\",\"method\":\"generateNewToken\",\"signature\":\"generateNewToken(java.lang.String, java.lang.String, org.graylog2.rest.resources.users.UsersResource.GenerateTokenTTL)\",\"sink_args\":[],\"type\":\"taint-propagator"
+    }
+  ],
+  "labels": [
+    "source",
+    "sink",
+    "taint-propagator",
+    "none"
+  ],
+  "classification_report_text": "                  precision    recall  f1-score   support\n\n          source       0.89      0.66      0.76       109\n            sink       0.86      0.83      0.84        59\ntaint-propagator       0.62      0.36      0.46        86\n            none       0.50      0.93      0.65        76\n\n       micro avg       0.68      0.68      0.68       330\n       macro avg       0.72      0.70      0.68       330\n    weighted avg       0.72      0.68      0.67       330\n",
+  "confusion_matrix_4x4": [
+    [
+      72,
+      6,
+      16,
+      14
+    ],
+    [
+      4,
+      49,
+      0,
+      6
+    ],
+    [
+      3,
+      2,
+      31,
+      50
+    ],
+    [
+      2,
+      0,
+      3,
+      71
+    ]
+  ],
+  "confusion_matrix_all_labels": [
+    "source",
+    "sink",
+    "taint-propagator",
+    "none",
+    "unknown"
+  ],
+  "confusion_matrix_all": [
+    [
+      72,
+      6,
+      16,
+      14,
+      1
+    ],
+    [
+      4,
+      49,
+      0,
+      6,
+      0
+    ],
+    [
+      3,
+      2,
+      31,
+      50,
+      0
+    ],
+    [
+      2,
+      0,
+      3,
+      71,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  ]
+}

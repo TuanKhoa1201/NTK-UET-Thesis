@@ -1,3 +1,33 @@
+# NTK-IRIS: Công Cụ Phát Hiện Lỗ Hổng Mã Nguồn Kết Hợp Phân Tích Tĩnh Nguồn Mở và Mô Hình Ngôn Ngữ Lớn
+
+> **Đồ án Tốt nghiệp Đại học Công nghệ (VNU-UET)**  
+> **Sinh viên thực hiện:** Nguyễn Tuấn Khoa  
+> **Hệ thống kế thừa và phát triển:** Kế thừa kiến trúc phân tích bảo mật từ IRIS (`iris-sast/iris`) và `simple_semgrepAI` (`hardw00t/simple_semgrepAI`), thay thế toàn diện engine phân tích tĩnh bằng **OpenGrep OSS v1.25.0** và tích hợp mô hình ngôn ngữ lớn cục bộ **Qwen2.5-Coder-1.5B (QLoRA Adapter 73.9MB)**.
+
+---
+
+## 🚀 Đóng Góp Chính của Đồ Án (NTK Contributions)
+1. **Thay thế và chuẩn hóa OpenGrep 100%:** Sử dụng OpenGrep 1.25.0 làm SAST engine chính thức; loại bỏ hoàn toàn cơ chế fallback về Semgrep; bảo toàn tương thích định dạng chuẩn SARIF và JSON.
+2. **Quy trình Huấn luyện Mô hình Thực tế (Training Pipeline):** Xây dựng quy trình tinh chỉnh QLoRA 4-bit (NF4) cho bài toán phân loại ngữ nghĩa lời gọi hàm Java (Stage 3 API-role classification) đạt F1 = 0.84 trên lớp `sink` và F1 = 0.76 trên lớp `source` trên tập kiểm thử độc lập 330 mẫu.
+3. **Cưỡng chế Bảo mật Cục bộ (100% On-Premise Privacy):** Triển khai cơ chế `THESIS_LOCAL_ONLY_MODE` fail-closed, tuyệt đối không gửi mã nguồn hoặc ngữ cảnh phân tích ra các dịch vụ Cloud LLM (OpenAI, Anthropic, OpenRouter).
+4. **Mô hình Chấm điểm Ưu tiên Cảnh báo SAST Dựa trên Bằng chứng (SAST Observable Evidence Risk Scoring V2.1):** Khắc phục nhược điểm của các hệ thống heuristic cảm tính; thiết lập công thức chấm điểm 2 tầng có cơ sở khoa học, phân tích độ nhạy và cơ chế hạ bậc bảo thủ (conservative demotion) đối với các cảnh báo nghi ngờ báo động giả.
+5. **Quy trình Vận hành Hoàn chỉnh (Operation Pipeline):** Tích hợp từ khâu quét tĩnh OpenGrep, trích xuất ngữ cảnh, thẩm định ngữ nghĩa bằng mô hình LoRA, tính điểm rủi ro và xuất bản báo cáo đa định dạng (JSON, CSV, SARIF và Interactive Web Dashboard).
+
+## 🛠️ Hướng Dẫn Khởi Chạy Nhanh (Quickstart)
+
+```bash
+# 1. Chạy trọn vẹn Operation Pipeline trên dự án mẫu
+python simple_semgrepAI/run_operation_pipeline.py data/project-sources/mini_vulnerable_java_CVE-89_1.0/src
+
+# 2. Chạy bộ kiểm thử đơn vị và bảo mật
+python simple_semgrepAI/tests/unit/test_sast_scoring_engine.py
+
+# 3. Chạy báo cáo thực nghiệm độc lập
+python simple_semgrepAI/empirical_benchmark_evaluation.py
+```
+
+---
+
 <p align="center">
   <a href="http://iris-sast.github.io/iris">
     <img src="docs/assets/iris_logo.svg" style="height: 20em" alt="IRIS logo" />

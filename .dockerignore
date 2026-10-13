@@ -3,3 +3,8 @@ codeql*
 log
 *.zip
 codeql/
+
+data/
+output/
+migration/
+models/

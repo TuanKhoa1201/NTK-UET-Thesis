@@ -7,8 +7,8 @@ from .llm.providers import LLMProviderConfig
 class LLMConfig(BaseModel):
     provider: LLMProviderConfig = Field(
         default_factory=lambda: LLMProviderConfig(
-            provider="openai",
-            model="gpt-4.1-mini",
+            provider="ollama",
+            model="qwen2.5-coder:1.5b",
             temperature=0
         )
     )

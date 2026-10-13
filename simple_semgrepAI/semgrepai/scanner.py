@@ -17,11 +17,12 @@ class SemgrepScanner:
 
     def verify_installation(self):
         """Verify that opengrep or semgrep is installed and accessible."""
-        candidates = [self.requested_engine]
+        # Thesis requirement: OpenGrep is the official primary OSS SAST engine.
+        # Silent fallback to Semgrep is strictly prohibited in thesis production mode.
         if self.requested_engine == "opengrep":
-            candidates.append("semgrep")
-        elif self.requested_engine == "semgrep":
-            candidates.append("opengrep")
+            candidates = ["opengrep"]
+        else:
+            candidates = [self.requested_engine]
 
         found = None
         for cand in candidates:
