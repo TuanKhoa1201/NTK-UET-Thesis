@@ -310,6 +310,7 @@ class Finding:
     rule_name: Optional[str] = None
     tool: str = ""
     raw_count: int = 1
+    path_count: int = 0
 
 @dataclass
 class IrisVerdict:
@@ -814,6 +815,7 @@ class SarifLoader:
                 if key in dedup:
                     dedup[key].raw_count += 1
                     dedup[key].end_line = max(dedup[key].end_line, finding.end_line)
+                    dedup[key].path_count = max(dedup[key].path_count, finding.path_count)
                 else:
                     dedup[key] = finding
 
@@ -867,6 +869,12 @@ class SarifLoader:
             end_line=end_line,
             cwe=cwe,
             rule_name=str(rule_name) if rule_name else None,
+            path_count=(
+                sum(isinstance(flow, dict)
+                    for flow in result.get('codeFlows', []))
+                if isinstance(result.get('codeFlows'), list)
+                else 0
+            ),
         )
 
 class NormalizedFindingsLoader:
@@ -1497,7 +1505,12 @@ class FindingMerger:
             source="",
             confidence_score=verdict.confidence if verdict else None,
             confidence_label="",
-            path_count=verdict.path_count if verdict else 0,
+            path_count=max(
+                ir.path_count if ir else 0,
+                verdict.path_count
+                if verdict and verdict.confirmed is True
+                else 0,
+            ),
             duplicate_count=duplicate_count,
             reasoning=verdict.reasoning if verdict else None,
             risk_score=0,
