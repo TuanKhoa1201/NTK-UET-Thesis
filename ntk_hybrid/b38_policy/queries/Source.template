@@ -1,0 +1,24 @@
+/** @name NTK B38 exact JDK API calls
+ * @description Compiler identities from the current uploaded project.
+ * @kind table
+ * @id java/ntk-b38/sources-__CWE__
+ */
+import java
+import NtkScope
+from MethodCall call, Method m, string static_flag
+where m = call.getMethod() and ntkSource(call, "__CWE__") and
+ ((m.isStatic() and static_flag = "true") or (not m.isStatic() and static_flag = "false"))
+select
+  call.getLocation().getFile().getRelativePath() as uri,
+  call.getLocation().getStartLine() as start_line,
+  call.getLocation().getStartColumn() as start_column,
+  call.getLocation().getEndLine() as end_line,
+  call.getLocation().getEndColumn() as end_column,
+  m.getDeclaringType().getPackage().getName() as package,
+  m.getDeclaringType().getName() as clazz,
+  m.getName() as method,
+  m.getSignature() as compiler_signature,
+  m.getStringSignature() as short_signature,
+  m.getReturnType().getName() as return_type,
+  m.getNumberOfParameters() as arity,
+  static_flag as is_static

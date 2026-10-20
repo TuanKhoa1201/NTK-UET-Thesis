@@ -1,0 +1,34 @@
+[
+  {
+    "candidate": {
+      "package": "java.io",
+      "class": "OutputStream",
+      "method": "write",
+      "signature": "void write(byte[] p0)",
+      "cwe": "79",
+      "is_static": false,
+      "receiver_policy": "HOLD_THIS_UNTIL_SEMANTIC_REVIEW",
+      "compiler_signature": "write(byte[])",
+      "arity": 1,
+      "source_record_sha256": "df5fae012de3db958961e50e8306426a283fd53c0cd60872d2906b8d32636d51"
+    },
+    "label": {
+      "package": "java.io",
+      "class": "OutputStream",
+      "method": "write",
+      "signature": "void write(byte[] p0)",
+      "type": "sink",
+      "sink_args": [
+        "p0"
+      ]
+    },
+    "argument_indices": [
+      0
+    ],
+    "match": "EXACT_DECLARING_OWNER_AND_COMPILER_SIGNATURE_AND_ARGUMENT_POSITION",
+    "semantic_gold": false,
+    "cwe": "79",
+    "policy_sha256": "b86f692de9e8f491f6bf58b3a666faee7216dab7139fa8447440c22794c73225",
+    "label_origin": "MANUAL_DIAGNOSTIC_ONLY_NOT_LLM"
+  }
+]

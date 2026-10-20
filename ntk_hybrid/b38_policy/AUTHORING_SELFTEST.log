@@ -1,0 +1,47 @@
+test_actual_c3_escape_challenge_replay_proof (test_encoding_and_policy.CompilerTests.test_actual_c3_escape_challenge_replay_proof) ... ok
+test_byte_array_escape_to_mutator_not_protected (test_encoding_and_policy.CompilerTests.test_byte_array_escape_to_mutator_not_protected) ... ok
+test_byte_array_mutation_not_protected (test_encoding_and_policy.CompilerTests.test_byte_array_mutation_not_protected) ... ok
+test_compile_combined_24_files (test_encoding_and_policy.CompilerTests.test_compile_combined_24_files) ... ok
+test_conditional_header_or_write_not_certified (test_encoding_and_policy.CompilerTests.test_conditional_header_or_write_not_certified) ... ok
+test_decode_after_encode_not_protected (test_encoding_and_policy.CompilerTests.test_decode_after_encode_not_protected) ... ok
+test_encoded_then_append_raw_not_protected (test_encoding_and_policy.CompilerTests.test_encoded_then_append_raw_not_protected) ... ok
+test_helper_renaming_does_not_change_proof (test_encoding_and_policy.CompilerTests.test_helper_renaming_does_not_change_proof) ... ok
+test_misleading_name_single_identity_return_not_protected (test_encoding_and_policy.CompilerTests.test_misleading_name_single_identity_return_not_protected) ... ok
+test_missing_quote_not_certified_for_attribute (test_encoding_and_policy.CompilerTests.test_missing_quote_not_certified_for_attribute) ... ok
+test_real_12_compiler_classifications (test_encoding_and_policy.CompilerTests.test_real_12_compiler_classifications) ... ok
+test_reassignment_not_protected (test_encoding_and_policy.CompilerTests.test_reassignment_not_protected) ... ok
+test_same_encoder_sufficient_for_single_quoted_attribute (test_encoding_and_policy.CompilerTests.test_same_encoder_sufficient_for_single_quoted_attribute) ... ok
+test_script_is_not_html_text (test_encoding_and_policy.CompilerTests.test_script_is_not_html_text) ... ok
+test_unquoted_attribute_not_certified (test_encoding_and_policy.CompilerTests.test_unquoted_attribute_not_certified) ... ok
+test_wrong_ampersand_order_not_certified (test_encoding_and_policy.CompilerTests.test_wrong_ampersand_order_not_certified) ... ok
+test_fake_or_wrong_javac_input_rejected (test_encoding_and_policy.ContractTests.test_fake_or_wrong_javac_input_rejected) ... ok
+test_fixture_cross_cwe_extra_flow_fails (test_encoding_and_policy.ContractTests.test_fixture_cross_cwe_extra_flow_fails) ... ok
+test_java_wrapper_rejects_non_java_commands (test_encoding_and_policy.ContractTests.test_java_wrapper_rejects_non_java_commands) ... ok
+test_java_wrapper_strips_ambient_agents_and_options (test_encoding_and_policy.ContractTests.test_java_wrapper_strips_ambient_agents_and_options) ... ok
+test_metadata_scoped_without_changing_original (test_encoding_and_policy.ContractTests.test_metadata_scoped_without_changing_original) ... ok
+test_model_gate_different_path (test_encoding_and_policy.ContractTests.test_model_gate_different_path) ... ok
+test_original_engine_unchanged (test_encoding_and_policy.ContractTests.test_original_engine_unchanged) ... ok
+test_policy_never_requires_manufactured_ai_sink (test_encoding_and_policy.ContractTests.test_policy_never_requires_manufactured_ai_sink) ... ok
+test_query_logic_unchanged_from_b38r1 (test_encoding_and_policy.ContractTests.test_query_logic_unchanged_from_b38r1) ... ok
+test_receipt_verifies_artifact_not_just_status (test_encoding_and_policy.ContractTests.test_receipt_verifies_artifact_not_just_status) ... ok
+test_wrong_gate_kind_rejected (test_encoding_and_policy.ContractTests.test_wrong_gate_kind_rejected) ... ok
+test_mock_c4_then_d_policy_keeps_model_gate_closed (test_runner_and_web.MockPolicyRunnerTests.test_mock_c4_then_d_policy_keeps_model_gate_closed) ... ok
+test_mock_d_cannot_bypass_c4 (test_runner_and_web.MockPolicyRunnerTests.test_mock_d_cannot_bypass_c4) ... ok
+test_mock_encoder_check_mismatch_does_not_grant_c4 (test_runner_and_web.MockPolicyRunnerTests.test_mock_encoder_check_mismatch_does_not_grant_c4) ... ok
+test_mock_model_failure_does_not_fallback_other_cwes (test_runner_and_web.MockPolicyRunnerTests.test_mock_model_failure_does_not_fallback_other_cwes) ... ok
+test_mock_ql_error_before_gpu (test_runner_and_web.MockPolicyRunnerTests.test_mock_ql_error_before_gpu) ... ok
+test_client_cannot_override_cwe_mix (test_runner_and_web.PolicyWebTests.test_client_cannot_override_cwe_mix) ... ok
+test_download_combined_sample_exact_hash (test_runner_and_web.PolicyWebTests.test_download_combined_sample_exact_hash) ... 127.0.0.1 - - [19/Oct/2026 09:52:47] "GET /api/sample/DPA HTTP/1.1" 200 -
+ok
+test_health_explicit_policy_origin (test_runner_and_web.PolicyWebTests.test_health_explicit_policy_origin) ... 127.0.0.1 - - [19/Oct/2026 09:52:48] "GET /api/health HTTP/1.1" 200 -
+ok
+test_host_rebinding_denied (test_runner_and_web.PolicyWebTests.test_host_rebinding_denied) ... 127.0.0.1 - - [19/Oct/2026 09:52:48] "GET /api/health HTTP/1.1" 403 -
+ok
+test_new_web_assets_not_legacy_page (test_runner_and_web.PolicyWebTests.test_new_web_assets_not_legacy_page) ... 127.0.0.1 - - [19/Oct/2026 09:52:49] "GET / HTTP/1.1" 200 -
+ok
+test_no_legacy_gate_means_no_web_start (test_runner_and_web.PolicyWebTests.test_no_legacy_gate_means_no_web_start) ... ok
+
+----------------------------------------------------------------------
+Ran 38 tests in 24.870s
+
+OK

@@ -1,0 +1,317 @@
+{
+  "version": "1.25.0",
+  "results": [
+    {
+      "check_id": "ntk-b34-java-sql-call-review",
+      "path": "/home/tuankhoa/migration/ntk_stage3_verified_v5_work/batch37a_new_project_runs/batch37a_20261019T044338Z_5da7e4/uploaded_project/src/edu/ntk/audit/inventory/RiskyStockPrepare.java",
+      "start": {
+        "line": 11,
+        "col": 16,
+        "offset": 439
+      },
+      "end": {
+        "line": 11,
+        "col": 50,
+        "offset": 473
+      },
+      "extra": {
+        "metavars": {
+          "$C": {
+            "start": {
+              "line": 11,
+              "col": 16,
+              "offset": 439
+            },
+            "end": {
+              "line": 11,
+              "col": 24,
+              "offset": 447
+            },
+            "abstract_content": "database"
+          },
+          "$SQL": {
+            "start": {
+              "line": 11,
+              "col": 42,
+              "offset": 465
+            },
+            "end": {
+              "line": 11,
+              "col": 49,
+              "offset": 472
+            },
+            "abstract_content": "sqlText",
+            "propagated_value": {
+              "svalue_start": {
+                "line": 10,
+                "col": 26,
+                "offset": 346
+              },
+              "svalue_end": {
+                "line": 10,
+                "col": 102,
+                "offset": 422
+              },
+              "svalue_abstract_content": "\"SELECT item_id FROM inventory WHERE category = '\"+requestedCategory+\"'\""
+            }
+          }
+        },
+        "message": "SQL-text API call for integration review; call presence alone is not a confirmed vulnerability.",
+        "metadata": {
+          "cwe": [
+            "CWE-89"
+          ],
+          "confidence": "UNKNOWN",
+          "scope": "integration-demo-only-not-b29-benchmark-rules"
+        },
+        "severity": "ERROR",
+        "fingerprint": "4755d92e653bb23cef55ecf9ed4c68ea772120a7fad52180cfbdb3e8d0295760249f1ee1d3e772b84ab1b931be61e417ffbafde39ee45b641a3d6ebc99b41098_0",
+        "lines": "        return database.prepareStatement(sqlText);",
+        "is_ignored": false,
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      },
+      "scanner_check_id": "home.tuankhoa.migration.ntk_stage3_verified_v5_work.batch37b_tool_20261019_tXEtAO.ntk_batch37b_hybrid_web_20261019.hybrid_engine.ntk-b34-java-sql-call-review"
+    },
+    {
+      "check_id": "ntk-b34-java-sql-call-review",
+      "path": "/home/tuankhoa/migration/ntk_stage3_verified_v5_work/batch37a_new_project_runs/batch37a_20261019T044338Z_5da7e4/uploaded_project/src/edu/ntk/audit/inventory/RiskyStockQuery.java",
+      "start": {
+        "line": 13,
+        "col": 16,
+        "offset": 490
+      },
+      "end": {
+        "line": 13,
+        "col": 47,
+        "offset": 521
+      },
+      "extra": {
+        "metavars": {
+          "$S": {
+            "start": {
+              "line": 13,
+              "col": 16,
+              "offset": 490
+            },
+            "end": {
+              "line": 13,
+              "col": 25,
+              "offset": 499
+            },
+            "abstract_content": "statement",
+            "propagated_value": {
+              "svalue_start": {
+                "line": 12,
+                "col": 31,
+                "offset": 447
+              },
+              "svalue_end": {
+                "line": 12,
+                "col": 57,
+                "offset": 473
+              },
+              "svalue_abstract_content": "database.createStatement()"
+            }
+          },
+          "$SQL": {
+            "start": {
+              "line": 13,
+              "col": 39,
+              "offset": 513
+            },
+            "end": {
+              "line": 13,
+              "col": 46,
+              "offset": 520
+            },
+            "abstract_content": "sqlText",
+            "propagated_value": {
+              "svalue_start": {
+                "line": 11,
+                "col": 26,
+                "offset": 349
+              },
+              "svalue_end": {
+                "line": 11,
+                "col": 92,
+                "offset": 415
+              },
+              "svalue_abstract_content": "\"SELECT item_id FROM inventory WHERE sku = '\"+requestedSku+\"'\""
+            }
+          }
+        },
+        "message": "SQL-text API call for integration review; call presence alone is not a confirmed vulnerability.",
+        "metadata": {
+          "cwe": [
+            "CWE-89"
+          ],
+          "confidence": "UNKNOWN",
+          "scope": "integration-demo-only-not-b29-benchmark-rules"
+        },
+        "severity": "ERROR",
+        "fingerprint": "03684b6758cea45b16d238094d9cd78b33b911e2bb9a6832bac22546b1fe636d7356ab885f1e07ba35fd58ad0b6cbeb97e9f9938a0e2bd72a05eeefb756520d6_0",
+        "lines": "        return statement.executeQuery(sqlText);",
+        "is_ignored": false,
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      },
+      "scanner_check_id": "home.tuankhoa.migration.ntk_stage3_verified_v5_work.batch37b_tool_20261019_tXEtAO.ntk_batch37b_hybrid_web_20261019.hybrid_engine.ntk-b34-java-sql-call-review"
+    },
+    {
+      "check_id": "ntk-b34-java-sql-call-review",
+      "path": "/home/tuankhoa/migration/ntk_stage3_verified_v5_work/batch37a_new_project_runs/batch37a_20261019T044338Z_5da7e4/uploaded_project/src/edu/ntk/audit/inventory/SafeBoundLookup.java",
+      "start": {
+        "line": 11,
+        "col": 39,
+        "offset": 377
+      },
+      "end": {
+        "line": 12,
+        "col": 64,
+        "offset": 467
+      },
+      "extra": {
+        "metavars": {
+          "$C": {
+            "start": {
+              "line": 11,
+              "col": 39,
+              "offset": 377
+            },
+            "end": {
+              "line": 11,
+              "col": 47,
+              "offset": 385
+            },
+            "abstract_content": "database"
+          },
+          "$SQL": {
+            "start": {
+              "line": 12,
+              "col": 13,
+              "offset": 416
+            },
+            "end": {
+              "line": 12,
+              "col": 63,
+              "offset": 466
+            },
+            "abstract_content": "\"SELECT item_id FROM inventory WHERE category = ?\""
+          }
+        },
+        "message": "SQL-text API call for integration review; call presence alone is not a confirmed vulnerability.",
+        "metadata": {
+          "cwe": [
+            "CWE-89"
+          ],
+          "confidence": "UNKNOWN",
+          "scope": "integration-demo-only-not-b29-benchmark-rules"
+        },
+        "severity": "ERROR",
+        "fingerprint": "75fd90cc5f0d0f0b188329ba4d653ff3432b7acb54a71fa7f1238242ae82bba4865e2dccaa33da008336de40e343e5db2a092197f12e8cb2c745762cb26b0a3c_0",
+        "lines": "        PreparedStatement statement = database.prepareStatement(\n            \"SELECT item_id FROM inventory WHERE category = ?\");",
+        "is_ignored": false,
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      },
+      "scanner_check_id": "home.tuankhoa.migration.ntk_stage3_verified_v5_work.batch37b_tool_20261019_tXEtAO.ntk_batch37b_hybrid_web_20261019.hybrid_engine.ntk-b34-java-sql-call-review"
+    },
+    {
+      "check_id": "ntk-b34-java-sql-call-review",
+      "path": "/home/tuankhoa/migration/ntk_stage3_verified_v5_work/batch37a_new_project_runs/batch37a_20261019T044338Z_5da7e4/uploaded_project/src/edu/ntk/audit/inventory/SafeStaticLookup.java",
+      "start": {
+        "line": 11,
+        "col": 16,
+        "offset": 387
+      },
+      "end": {
+        "line": 11,
+        "col": 42,
+        "offset": 413
+      },
+      "extra": {
+        "metavars": {
+          "$S": {
+            "start": {
+              "line": 11,
+              "col": 16,
+              "offset": 387
+            },
+            "end": {
+              "line": 11,
+              "col": 25,
+              "offset": 396
+            },
+            "abstract_content": "statement",
+            "propagated_value": {
+              "svalue_start": {
+                "line": 9,
+                "col": 31,
+                "offset": 263
+              },
+              "svalue_end": {
+                "line": 9,
+                "col": 57,
+                "offset": 289
+              },
+              "svalue_abstract_content": "database.createStatement()"
+            }
+          },
+          "$SQL": {
+            "start": {
+              "line": 11,
+              "col": 34,
+              "offset": 405
+            },
+            "end": {
+              "line": 11,
+              "col": 41,
+              "offset": 412
+            },
+            "abstract_content": "sqlText",
+            "propagated_value": {
+              "svalue_start": {
+                "line": 10,
+                "col": 26,
+                "offset": 316
+              },
+              "svalue_end": {
+                "line": 10,
+                "col": 80,
+                "offset": 370
+              },
+              "svalue_abstract_content": "\"UPDATE inventory SET archived = 1 WHERE item_id = 42\""
+            }
+          }
+        },
+        "message": "SQL-text API call for integration review; call presence alone is not a confirmed vulnerability.",
+        "metadata": {
+          "cwe": [
+            "CWE-89"
+          ],
+          "confidence": "UNKNOWN",
+          "scope": "integration-demo-only-not-b29-benchmark-rules"
+        },
+        "severity": "ERROR",
+        "fingerprint": "32805861c3184d7897edef0200da966236da34d65ef9df20f90e9c4b3450db8e916cf16edce3520c7519f21371b930683ba6fdf6e54a1b36ec431f27155d3846_0",
+        "lines": "        return statement.execute(sqlText);",
+        "is_ignored": false,
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      },
+      "scanner_check_id": "home.tuankhoa.migration.ntk_stage3_verified_v5_work.batch37b_tool_20261019_tXEtAO.ntk_batch37b_hybrid_web_20261019.hybrid_engine.ntk-b34-java-sql-call-review"
+    }
+  ],
+  "errors": [],
+  "paths": {
+    "scanned": [
+      "/home/tuankhoa/migration/ntk_stage3_verified_v5_work/batch37a_new_project_runs/batch37a_20261019T044338Z_5da7e4/uploaded_project/src/edu/ntk/audit/inventory/RiskyStockPrepare.java",
+      "/home/tuankhoa/migration/ntk_stage3_verified_v5_work/batch37a_new_project_runs/batch37a_20261019T044338Z_5da7e4/uploaded_project/src/edu/ntk/audit/inventory/RiskyStockQuery.java",
+      "/home/tuankhoa/migration/ntk_stage3_verified_v5_work/batch37a_new_project_runs/batch37a_20261019T044338Z_5da7e4/uploaded_project/src/edu/ntk/audit/inventory/SafeBoundLookup.java",
+      "/home/tuankhoa/migration/ntk_stage3_verified_v5_work/batch37a_new_project_runs/batch37a_20261019T044338Z_5da7e4/uploaded_project/src/edu/ntk/audit/inventory/SafeStaticLookup.java"
+    ]
+  },
+  "interfile_languages_used": [],
+  "skipped_rules": []
+}

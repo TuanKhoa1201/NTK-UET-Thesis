@@ -1,0 +1,10 @@
+{
+  "sample_zip_sha256": "a14496dc8cc199dcf4d51e230de65b8bbe9ca73d8ccab778f7bf6722cce890cc",
+  "scope": "DEVELOPMENT_FIXTURE_NOT_INDEPENDENT_GOLD",
+  "cases": {
+    "src/demo/orders/UnsafeStatement.java": true,
+    "src/demo/orders/UnsafePreparedSql.java": true,
+    "src/demo/orders/SafeBoundValue.java": false,
+    "src/demo/orders/SafeConstantSql.java": false
+  }
+}

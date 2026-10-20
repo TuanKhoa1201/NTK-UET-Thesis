@@ -1,0 +1,20 @@
+{
+  "archive_sha256": "f7041366bcb8cc82660b6baaf3eae7e4fec1aa75db895d512bff2b0d11c620c8",
+  "java_files": 8,
+  "zip_entries": 8,
+  "compressed_bytes": 4608,
+  "unpacked_declared_bytes": 6941,
+  "extraction_policy": "ONLY_JAVA_NO_BUILD_OR_EXECUTION",
+  "java_source_hashes": {
+    "src/edu/ntk/b38/html/ChallengeEscapedHtml.java": "31268802e57f3cf822d9980daf9714bb963439e3ffd7cc388a4b772125153ae8",
+    "src/edu/ntk/b38/html/ControlBinaryHttp.java": "b21cf303fec43211539d6b614d5cbaec79f74e53696697845631dce068d70a20",
+    "src/edu/ntk/b38/html/ControlConstantHtml.java": "379d89bf75fa292cd3c2d320fc8df091f9fa9a24ce80f27dfb498d2c3462aa6f",
+    "src/edu/ntk/b38/html/ControlFileWrite.java": "f33678e3c9f70d45cd3aef3210eaed83e54c80a56581184f16465362f3db0b61",
+    "src/edu/ntk/b38/html/ControlPlainText.java": "062a002ebab91e8c011513bc98282fa223cdc1ba2d356caf388e7ebf7d992324",
+    "src/edu/ntk/b38/html/RiskyHtmlAttribute.java": "9b49235191d6e5ae7cb23e8dec2ef620c766023b27b7392dbe610bdec2122b90",
+    "src/edu/ntk/b38/html/RiskyHtmlBody.java": "af1d06dc931a2ad8632e54f71cb997a1942fd77fc61e2bcf128a78597b7f772b",
+    "src/edu/ntk/b38/html/RiskyOtherHtmlHandler.java": "4f223cb18980d80c6e73b25f84fde81f1ece0f372c5d4f70e081fe09adba47c9"
+  },
+  "project_origin": "THIS_RUN_OPERATOR_PROVIDED_ZIP_NOT_B34_B35_FIXTURE",
+  "input_scope": "TRUSTED_JDK_ONLY_NO_BUILD_SCRIPTS_NO_DEPENDENCY_RESOLUTION"
+}

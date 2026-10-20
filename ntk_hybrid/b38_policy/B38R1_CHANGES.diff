@@ -1,0 +1,245 @@
+--- B38/ntk_b38/scanner.py
++++ B38R1/ntk_b38/scanner.py
+@@ -10,6 +10,7 @@
+ from ntk_b34.core import normalized_uri
+ from b34_helpers import OPENGREP_SHA
+ from .profiles import RULE_IDS
++from .scanner_environment import prepare_environment
+ ROOT=Path(__file__).resolve().parents[1]
+ PATTERNS={
+  '22':['Files.readString(...)','Files.readAllBytes(...)','Files.newInputStream(...)'],
+@@ -61,17 +62,22 @@
+  output=work/'raw.json';proof=work/'isolation.json'
+  cmd=[str(mlpy),'-B',str(ROOT/'engine/offline_opengrep.py'),str(proof),str(binary.resolve()),
+       'scan','--config',str(config),'--json','--output',str(output),str(target)]
+- env={k:os.environ[k] for k in ('PATH','LD_LIBRARY_PATH') if k in os.environ}
+- env.update({'HOME':str(work),'TMPDIR':str(work),'XDG_CACHE_HOME':str(work/'.cache'),'XDG_CONFIG_HOME':str(work/'.config'),
+-  'LANG':'C.UTF-8','LC_ALL':'C.UTF-8','SEMGREP_SEND_METRICS':'off','OPENGREP_SEND_METRICS':'off',
+-  'SEMGREP_ENABLE_VERSION_CHECK':'0','OPENGREP_ENABLE_VERSION_CHECK':'0','PYTHONDONTWRITEBYTECODE':'1'})
++ env,environment=prepare_environment(work)
+  write_json(work/'command.json',cmd);start=time.monotonic()
+  with (work/'scanner.log').open('wb') as f:
+   p=subprocess.Popen(cmd,cwd=work,env=env,stdout=f,stderr=subprocess.STDOUT,start_new_session=True)
+   try:code=p.wait(timeout=300)
+   except subprocess.TimeoutExpired:
+    os.killpg(p.pid,signal.SIGKILL);p.wait();raise Blocker('OPENGREP_TIMEOUT')
+- if code!=0:raise Blocker('OPENGREP_FAILED: '+str(work/'scanner.log'))
++ write_json(work/'PROCESS_RESULT.json',{'returncode':code,'duration_s':time.monotonic()-start,
++  'environment_revision':environment['revision'],'rules_sha256':sha_file(config)})
++ if code!=0:
++  log_tail=(work/'scanner.log').read_text(encoding='utf-8',errors='replace')[-3500:]
++  write_json(work/'FAILURE_DIAGNOSTIC.json',{'returncode':code,'log_tail':log_tail,
++   'environment_proof':'ENVIRONMENT_PROOF.json','rules_sha256':sha_file(config)})
++  raise Blocker('OPENGREP_FAILED_'+str(code)+': '+str(work/'scanner.log')+'\n'+log_tail)
++ if not proof.is_file():raise Blocker('SCANNER_ISOLATION_PROOF_MISSING')
++ if not output.is_file():raise Blocker('SCANNER_OUTPUT_JSON_MISSING')
+  isolation=json.loads(proof.read_text())
+  if any(isolation.get('network',{}).get(k)!='DENIED_EPERM' for k in ('AF_INET','AF_INET6')):
+   raise Blocker('SCANNER_ISOLATION_UNPROVEN')
+@@ -79,5 +85,6 @@
+  write_json(work/'canonical_derived.json',validated)
+  write_json(work/'PROOF.json',{'binary_sha256':sha_file(binary),'rules_sha256':sha_file(config),
+   'raw_sha256':sha_file(output),'duration_s':time.monotonic()-start,'findings':len(validated['results']),
+-  'scope':'REAL_OPENGREP_CALL_PRESENCE_ONLY_NOT_B29_RULESET','isolation':isolation})
++  'scope':'REAL_OPENGREP_CALL_PRESENCE_ONLY_NOT_B29_RULESET','isolation':isolation,
++  'environment_revision':environment['revision'],'environment_proof_sha256':sha_file(work/'ENVIRONMENT_PROOF.json')})
+  return validated
+--- B38/run_batch38.py
++++ B38R1/run_batch38.py
+@@ -35,7 +35,7 @@
+ 
+ def implementation_sha():
+  paths=[p for p in ROOT.rglob('*') if p.is_file() and
+-        p.suffix in ('.py','.ql','.qll','.template','.yml','.sh','.js','.html','.css') and
++        (p.suffix in ('.py','.ql','.qll','.template','.yml','.sh','.js','.html','.css') or p==ROOT/'samples/MANIFEST.json') and
+         '__pycache__' not in p.parts]
+  return digest({str(p.relative_to(ROOT)):sha_file(p) for p in sorted(paths)})
+ 
+@@ -67,7 +67,13 @@
+   for row in og['results']:
+    if row['cwe']==c:
+     uri=normalized_uri(row['path'],target);counts[uri]=counts.get(uri,0)+1
+-  expected=set(fixture['expectations'][c])
++  # Scanner call presence is not the same contract as CWE-qualified dataflow.
++  # D evaluates every CWE on all 16 files, but each callsite rule is expected
++  # only on its own four API-using files (positive and control alike).
++  expected=set(fixture.get('scanner_expectations',{}).get(c,fixture['expectations'][c]))
++  positives={p for p,r in fixture['expectations'][c].items() if r['expected_flow']}
++  if not expected.issubset(fixture['expectations'][c]) or not positives.issubset(expected):
++   raise Blocker('SCANNER_COVERAGE_CONTRACT_INCONSISTENT_CWE_'+c)
+   proof[c]={'expected_files':sorted(expected),'observed_counts':counts,'match':set(counts)==expected}
+   if not proof[c]['match']:raise Blocker('OPENGREP_FIXTURE_COVERAGE_MISMATCH_CWE_'+c)
+  return proof
+@@ -102,7 +108,7 @@
+  for p in sorted(run.rglob('*')):
+   if not p.is_file() or p.is_symlink():continue
+   rel=p.relative_to(run)
+-  if (rel.parts[0] in excluded_roots or '.cache' in rel.parts or '.config' in rel.parts or
++  if (rel.parts[0] in excluded_roots or '.cache' in rel.parts or '.config' in rel.parts or '.tmp' in rel.parts or '.state' in rel.parts or '.semgrep' in rel.parts or
+       p.suffix in ('.so','.pyc') or p.stat().st_size>32*1024*1024):
+    excluded.append({'path':str(rel),'bytes':p.stat().st_size})
+   elif rel.name not in ('OUTPUT_MANIFEST.json','EXCLUDED_FILES.json'):included.append(p)
+@@ -146,7 +152,7 @@
+  run=args.work/'batch38_runs'/('batch38'+args.phase.lower()+'_'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'_'+uuid.uuid4().hex[:6])
+  run.mkdir(parents=True,exist_ok=False)
+  before=None;start=time.monotonic();impl=implementation_sha();fixture=None
+- s={'status':'RUNNING','phase':args.phase,'cwes':cw,'arms':{},'diagnostics':{},
++ s={'status':'RUNNING','revision':'B38R1_SCANNER_ENVIRONMENT','phase':args.phase,'cwes':cw,'arms':{},'diagnostics':{},
+     'implementation_sha256':impl,'policy_sha256':POLICY_SHA,'diagnostic_only':args.diagnostic_only,
+     'scope':'JDK21_ONLY_MAX24_JAVA_NOT_GENERAL_PROJECT_COVERAGE',
+     'codeql_dataflow':'NOT_EXECUTED','source_policies':{c:SOURCE_POLICY[c] for c in cw},
+--- B38/run_all.sh
++++ B38R1/run_all.sh
+@@ -2,10 +2,21 @@
+ set -euo pipefail
+ ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+ ARM="${1:-epoch_1}"
++W="${NTK_WORK:-$HOME/migration/ntk_stage3_verified_v5_work}"
++D="${NTK_DOWNLOADS:-/mnt/c/Users/HP/Downloads}"
++PY="$W/.ntk_v5_lora_venv/bin/python"
+ case "$ARM" in epoch_1|epoch_2) ;; *) echo "Use epoch_1 or epoch_2"; exit 2;; esac
++test -x "$PY" || { echo "BLOCKED: MLPY missing: $PY"; exit 2; }
++cd "$ROOT"
++printf '\n===== B38R1: VERIFY SOURCE PACKAGE =====\n'
++sha256sum -c SHA256SUMS
++printf '\n===== B38R1: CPU SAFETY AND REGRESSION TESTS =====\n'
++PYTHONDONTWRITEBYTECODE=1 "$PY" -B "$ROOT/run_selftests.py"
++printf '\n===== B38R1: REAL SCANNER PREFLIGHT ALL PROFILES BEFORE CODEQL/GPU =====\n'
++"$PY" -B -u "$ROOT/preflight_scanner.py" --work "$W" --downloads "$D"
+ for PHASE in A B C D; do
+   printf '\n===== RUN PHASE %s WITH %s =====\n' "$PHASE" "$ARM"
+-  bash "$ROOT/run.sh" --phase "$PHASE" --arm "$ARM"
++  bash "$ROOT/run.sh" --phase "$PHASE" --arm "$ARM" --work "$W" --downloads "$D"
+ done
+ printf '\nB38 A B C D gates completed. Web has NOT been auto-started.\n'
+ printf 'Run: bash "%s/serve.sh"\n' "$ROOT"
+--- B38/run.sh
++++ B38R1/run.sh
+@@ -8,6 +8,6 @@
+ printf '\n===== B38: VERIFY SOURCE PACKAGE =====\n'
+ sha256sum -c SHA256SUMS
+ printf '\n===== B38: CPU SAFETY AND REGRESSION TESTS =====\n'
+-PYTHONDONTWRITEBYTECODE=1 "$PY" -B -m unittest discover -s tests -v
++PYTHONDONTWRITEBYTECODE=1 "$PY" -B "$ROOT/run_selftests.py"
+ printf '\n===== B38: REAL RUNTIME START =====\n'
+ exec "$PY" -B -u "$ROOT/run_batch38.py" "$@"
+--- B38/samples/MANIFEST.json
++++ B38R1/samples/MANIFEST.json
+@@ -28,7 +28,16 @@
+         }
+       }
+     },
+-    "evaluation_scope": "DEVELOPMENT_INTEGRATION_FIXTURE_NOT_INDEPENDENT_GOLD"
++    "evaluation_scope": "DEVELOPMENT_INTEGRATION_FIXTURE_NOT_INDEPENDENT_GOLD",
++    "scanner_expectations": {
++      "22": [
++        "src/edu/ntk/b38/path/ControlAllowlistedPath.java",
++        "src/edu/ntk/b38/path/ControlFixedPath.java",
++        "src/edu/ntk/b38/path/RiskyNormalizedRead.java",
++        "src/edu/ntk/b38/path/RiskyRelativeRead.java"
++      ]
++    },
++    "scanner_expectations_scope": "RULE_CALLSITE_COVERAGE_INCLUDING_OWN_CONTROLS_SEPARATE_FROM_CROSS_CWE_DATAFLOW_EXPECTATIONS"
+   },
+   "B38B_JAVA.zip": {
+     "phase": "B",
+@@ -59,7 +68,16 @@
+         }
+       }
+     },
+-    "evaluation_scope": "DEVELOPMENT_INTEGRATION_FIXTURE_NOT_INDEPENDENT_GOLD"
++    "evaluation_scope": "DEVELOPMENT_INTEGRATION_FIXTURE_NOT_INDEPENDENT_GOLD",
++    "scanner_expectations": {
++      "78": [
++        "src/edu/ntk/b38/command/ControlAllowlistedCommand.java",
++        "src/edu/ntk/b38/command/ControlFixedCommand.java",
++        "src/edu/ntk/b38/command/RiskyCommandWithEnv.java",
++        "src/edu/ntk/b38/command/RiskyExecutable.java"
++      ]
++    },
++    "scanner_expectations_scope": "RULE_CALLSITE_COVERAGE_INCLUDING_OWN_CONTROLS_SEPARATE_FROM_CROSS_CWE_DATAFLOW_EXPECTATIONS"
+   },
+   "B38C_JAVA.zip": {
+     "phase": "C",
+@@ -90,7 +108,16 @@
+         }
+       }
+     },
+-    "evaluation_scope": "DEVELOPMENT_INTEGRATION_FIXTURE_NOT_INDEPENDENT_GOLD"
++    "evaluation_scope": "DEVELOPMENT_INTEGRATION_FIXTURE_NOT_INDEPENDENT_GOLD",
++    "scanner_expectations": {
++      "79": [
++        "src/edu/ntk/b38/html/ControlConstantHtml.java",
++        "src/edu/ntk/b38/html/ControlPlainText.java",
++        "src/edu/ntk/b38/html/RiskyHtmlAttribute.java",
++        "src/edu/ntk/b38/html/RiskyHtmlBody.java"
++      ]
++    },
++    "scanner_expectations_scope": "RULE_CALLSITE_COVERAGE_INCLUDING_OWN_CONTROLS_SEPARATE_FROM_CROSS_CWE_DATAFLOW_EXPECTATIONS"
+   },
+   "B38SQL_JAVA.zip": {
+     "phase": "SQL",
+@@ -121,7 +148,16 @@
+         }
+       }
+     },
+-    "evaluation_scope": "DEVELOPMENT_INTEGRATION_FIXTURE_NOT_INDEPENDENT_GOLD"
++    "evaluation_scope": "DEVELOPMENT_INTEGRATION_FIXTURE_NOT_INDEPENDENT_GOLD",
++    "scanner_expectations": {
++      "89": [
++        "src/demo/orders/SafeBoundValue.java",
++        "src/demo/orders/SafeConstantSql.java",
++        "src/demo/orders/UnsafePreparedSql.java",
++        "src/demo/orders/UnsafeStatement.java"
++      ]
++    },
++    "scanner_expectations_scope": "RULE_CALLSITE_COVERAGE_INCLUDING_OWN_CONTROLS_SEPARATE_FROM_CROSS_CWE_DATAFLOW_EXPECTATIONS"
+   },
+   "B38D_JAVA.zip": {
+     "phase": "D",
+@@ -410,6 +446,33 @@
+         }
+       }
+     },
+-    "evaluation_scope": "DEVELOPMENT_INTEGRATION_FIXTURE_NOT_INDEPENDENT_GOLD"
++    "evaluation_scope": "DEVELOPMENT_INTEGRATION_FIXTURE_NOT_INDEPENDENT_GOLD",
++    "scanner_expectations": {
++      "22": [
++        "src/edu/ntk/b38/path/ControlAllowlistedPath.java",
++        "src/edu/ntk/b38/path/ControlFixedPath.java",
++        "src/edu/ntk/b38/path/RiskyNormalizedRead.java",
++        "src/edu/ntk/b38/path/RiskyRelativeRead.java"
++      ],
++      "78": [
++        "src/edu/ntk/b38/command/ControlAllowlistedCommand.java",
++        "src/edu/ntk/b38/command/ControlFixedCommand.java",
++        "src/edu/ntk/b38/command/RiskyCommandWithEnv.java",
++        "src/edu/ntk/b38/command/RiskyExecutable.java"
++      ],
++      "79": [
++        "src/edu/ntk/b38/html/ControlConstantHtml.java",
++        "src/edu/ntk/b38/html/ControlPlainText.java",
++        "src/edu/ntk/b38/html/RiskyHtmlAttribute.java",
++        "src/edu/ntk/b38/html/RiskyHtmlBody.java"
++      ],
++      "89": [
++        "src/demo/orders/SafeBoundValue.java",
++        "src/demo/orders/SafeConstantSql.java",
++        "src/demo/orders/UnsafePreparedSql.java",
++        "src/demo/orders/UnsafeStatement.java"
++      ]
++    },
++    "scanner_expectations_scope": "RULE_CALLSITE_COVERAGE_INCLUDING_OWN_CONTROLS_SEPARATE_FROM_CROSS_CWE_DATAFLOW_EXPECTATIONS"
+   }
+ }
+--- B38/tests/test_runner_orchestration.py
++++ B38R1/tests/test_runner_orchestration.py
+@@ -39,7 +39,7 @@
+   def fake_scan(run,target,cwes,mlpy):
+    current['run']=run
+    fixture=json.loads((ROOT/'samples/MANIFEST.json').read_text())['B38'+current['phase']+'_JAVA.zip']
+-   return {'results':[{'cwe':c,'path':str(target/p)} for c in cwes for p in fixture['expectations'][c]]}
++   return {'results':[{'cwe':c,'path':str(target/p)} for c in cwes for p in fixture['scanner_expectations'][c]]}
+   def fake_command(argv,log,**kwargs):
+    args=list(map(str,argv));current['events'].append(args);log=Path(log);log.parent.mkdir(parents=True,exist_ok=True)
+    log.write_text('SIMULATED_TOOL_PROCESS_NOT_CODEQL_OR_GPU\n')

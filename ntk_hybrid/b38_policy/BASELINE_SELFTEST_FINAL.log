@@ -1,0 +1,136 @@
+
+===== SELFTEST MODULE: test_profiles_and_evidence.py =====
+test_code_fingerprint_is_deterministic (test_profiles_and_evidence.GateTests.test_code_fingerprint_is_deterministic) ... ok
+test_expected_control_false_does_not_mean_remove_finding (test_profiles_and_evidence.GateTests.test_expected_control_false_does_not_mean_remove_finding) ... ok
+test_manifest_gate_tamper_and_diagnostic_rejected (test_profiles_and_evidence.GateTests.test_manifest_gate_tamper_and_diagnostic_rejected) ... ok
+test_missing_gate_rejected (test_profiles_and_evidence.GateTests.test_missing_gate_rejected) ... ok
+test_missing_scanner_signal_blocks_known_fixture (test_profiles_and_evidence.GateTests.test_missing_scanner_signal_blocks_known_fixture) ... ok
+test_pack_excludes_binary_cache_and_uploaded_source (test_profiles_and_evidence.GateTests.test_pack_excludes_binary_cache_and_uploaded_source) ... ok
+test_sample_manifest_hashes (test_profiles_and_evidence.GateTests.test_sample_manifest_hashes) ... ok
+test_scanner_fixture_control_must_also_be_covered (test_profiles_and_evidence.GateTests.test_scanner_fixture_control_must_also_be_covered) ... ok
+test_unexpected_path_fails_fixture (test_profiles_and_evidence.GateTests.test_unexpected_path_fails_fixture) ... ok
+test_unknown_input_not_a_fixture (test_profiles_and_evidence.GateTests.test_unknown_input_not_a_fixture) ... ok
+test_all_cwe_allowlists_exact_arguments (test_profiles_and_evidence.ProfileTests.test_all_cwe_allowlists_exact_arguments) ... ok
+test_candidate_cwe_and_provenance_separate (test_profiles_and_evidence.ProfileTests.test_candidate_cwe_and_provenance_separate) ... ok
+test_cross_cwe_label_rejected (test_profiles_and_evidence.ProfileTests.test_cross_cwe_label_rejected) ... ok
+test_duplicate_label_rejected (test_profiles_and_evidence.ProfileTests.test_duplicate_label_rejected) ... ok
+test_dynamic_prepare_is_not_blanket_excluded (test_profiles_and_evidence.ProfileTests.test_dynamic_prepare_is_not_blanket_excluded) ... ok
+test_empty_list_is_not_none (test_profiles_and_evidence.ProfileTests.test_empty_list_is_not_none) ... ok
+test_empty_sinks_remain_empty (test_profiles_and_evidence.ProfileTests.test_empty_sinks_remain_empty) ... ok
+test_generated_ql_exact_owner_and_profile (test_profiles_and_evidence.ProfileTests.test_generated_ql_exact_owner_and_profile) ... ok
+test_http_context_not_generic_string_sink (test_profiles_and_evidence.ProfileTests.test_http_context_not_generic_string_sink) ... ok
+test_invalid_index_rejected (test_profiles_and_evidence.ProfileTests.test_invalid_index_rejected) ... ok
+test_manual_is_diagnostic_only (test_profiles_and_evidence.ProfileTests.test_manual_is_diagnostic_only) ... ok
+test_no_old_fixture_names_in_new_queries (test_profiles_and_evidence.ProfileTests.test_no_old_fixture_names_in_new_queries) ... ok
+test_offset_and_count_not_xss_sinks (test_profiles_and_evidence.ProfileTests.test_offset_and_count_not_xss_sinks) ... ok
+test_raw_labels_immutable (test_profiles_and_evidence.ProfileTests.test_raw_labels_immutable) ... ok
+test_receiver_not_silently_guessed (test_profiles_and_evidence.ProfileTests.test_receiver_not_silently_guessed) ... ok
+test_runtime_environment_is_not_command_sink (test_profiles_and_evidence.ProfileTests.test_runtime_environment_is_not_command_sink) ... ok
+test_setstring_value_is_not_sql_grammar (test_profiles_and_evidence.ProfileTests.test_setstring_value_is_not_sql_grammar) ... ok
+test_unknown_method_not_auto_added (test_profiles_and_evidence.ProfileTests.test_unknown_method_not_auto_added) ... ok
+test_wrong_owner_fails_semantics (test_profiles_and_evidence.ProfileTests.test_wrong_owner_fails_semantics) ... ok
+test_zero_sources_is_not_safe (test_profiles_and_evidence.ProfileTests.test_zero_sources_is_not_safe) ... ok
+test_fabricated_or_absent_source_rejected (test_profiles_and_evidence.SQLReplayTests.test_fabricated_or_absent_source_rejected) ... ok
+test_flow_without_live_accepted_label_rejected (test_profiles_and_evidence.SQLReplayTests.test_flow_without_live_accepted_label_rejected) ... ok
+test_flow_without_semantic_acceptance_rejected (test_profiles_and_evidence.SQLReplayTests.test_flow_without_semantic_acceptance_rejected) ... ok
+test_no_flow_never_upgrades_api_alone (test_profiles_and_evidence.SQLReplayTests.test_no_flow_never_upgrades_api_alone) ... ok
+test_parse_real_paths_uses_current_source_inventory (test_profiles_and_evidence.SQLReplayTests.test_parse_real_paths_uses_current_source_inventory) ... ok
+test_sarif_cwe_is_not_always_89 (test_profiles_and_evidence.SQLReplayTests.test_sarif_cwe_is_not_always_89) ... ok
+test_saved_evidence_hashes (test_profiles_and_evidence.SQLReplayTests.test_saved_evidence_hashes) ... ok
+test_sql_scores_unchanged_on_real_37c_replay (test_profiles_and_evidence.SQLReplayTests.test_sql_scores_unchanged_on_real_37c_replay) ... ok
+test_deceptive_rule_ids (test_profiles_and_evidence.ScannerTests.test_deceptive_rule_ids) ... ok
+test_empty_real_result_valid (test_profiles_and_evidence.ScannerTests.test_empty_real_result_valid) ... ok
+test_errors_fail_closed (test_profiles_and_evidence.ScannerTests.test_errors_fail_closed) ... ok
+test_metadata_mismatch (test_profiles_and_evidence.ScannerTests.test_metadata_mismatch) ... ok
+test_multi_rules_distinct_cwes (test_profiles_and_evidence.ScannerTests.test_multi_rules_distinct_cwes) ... ok
+test_namespaced_ids (test_profiles_and_evidence.ScannerTests.test_namespaced_ids) ... ok
+test_outside_file_rejected (test_profiles_and_evidence.ScannerTests.test_outside_file_rejected) ... ok
+test_sql_pattern_invariant (test_profiles_and_evidence.ScannerTests.test_sql_pattern_invariant) ... ok
+test_unselected_cwe_rejected (test_profiles_and_evidence.ScannerTests.test_unselected_cwe_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 47 tests in 0.069s
+
+OK
+
+===== SELFTEST MODULE: test_runner_orchestration.py =====
+test_mock_diagnostics_only_never_writes_model_gate (test_runner_orchestration.MockRunnerTests.test_mock_diagnostics_only_never_writes_model_gate) ... ok
+test_mock_empty_live_sink_is_review_not_manual_fallback (test_runner_orchestration.MockRunnerTests.test_mock_empty_live_sink_is_review_not_manual_fallback) ... ok
+test_mock_missing_earlier_gates_blocks_d (test_runner_orchestration.MockRunnerTests.test_mock_missing_earlier_gates_blocks_d) ... ok
+test_mock_orchestration_abcd_with_separate_diagnostics_and_reports (test_runner_orchestration.MockRunnerTests.test_mock_orchestration_abcd_with_separate_diagnostics_and_reports) ... ok
+test_mock_ql_error_does_not_run_model (test_runner_orchestration.MockRunnerTests.test_mock_ql_error_does_not_run_model) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.581s
+
+OK
+
+===== SELFTEST MODULE: test_scanner_environment.py =====
+test_archive_excludes_private_runtime_directories (test_scanner_environment.ChildScannerTests.test_archive_excludes_private_runtime_directories) ... ok
+test_missing_raw_output_rejected (test_scanner_environment.ChildScannerTests.test_missing_raw_output_rejected) ... ok
+test_old_missing_xdg_directory_reproduced_by_fake_child (test_scanner_environment.ChildScannerTests.test_old_missing_xdg_directory_reproduced_by_fake_child) ... ok
+test_original_binary_pin_not_bypassed (test_scanner_environment.ChildScannerTests.test_original_binary_pin_not_bypassed) ... ok
+test_real_child_environment_and_inherited_seccomp_with_fake_scanner (test_scanner_environment.ChildScannerTests.test_real_child_environment_and_inherited_seccomp_with_fake_scanner) ... ok
+test_subprocess_failure_preserves_error_tail (test_scanner_environment.ChildScannerTests.test_subprocess_failure_preserves_error_tail) ... ok
+test_zero_findings_scanner_result_not_fabricated (test_scanner_environment.ChildScannerTests.test_zero_findings_scanner_result_not_fabricated) ... ok
+test_D_coverage_comes_from_each_original_profile_including_controls (test_scanner_environment.CoverageContractTests.test_D_coverage_comes_from_each_original_profile_including_controls) ... ok
+test_D_scanner_four_per_cwe_while_dataflow_checks_all_sixteen (test_scanner_environment.CoverageContractTests.test_D_scanner_four_per_cwe_while_dataflow_checks_all_sixteen) ... ok
+test_cross_cwe_false_dataflow_still_fails_detection_contract (test_scanner_environment.CoverageContractTests.test_cross_cwe_false_dataflow_still_fails_detection_contract) ... ok
+test_missing_control_callsite_still_blocks (test_scanner_environment.CoverageContractTests.test_missing_control_callsite_still_blocks) ... ok
+test_unexpected_cross_cwe_callsite_still_blocks (test_scanner_environment.CoverageContractTests.test_unexpected_cross_cwe_callsite_still_blocks) ... ok
+test_all_directories_created_before_exec (test_scanner_environment.EnvironmentTests.test_all_directories_created_before_exec) ... ok
+test_existing_regular_directories_supported (test_scanner_environment.EnvironmentTests.test_existing_regular_directories_supported) ... ok
+test_missing_or_symlink_work_rejected (test_scanner_environment.EnvironmentTests.test_missing_or_symlink_work_rejected) ... ok
+test_modes_private_and_parent_config_untouched (test_scanner_environment.EnvironmentTests.test_modes_private_and_parent_config_untouched) ... ok
+test_nested_semgrep_symlink_rejected (test_scanner_environment.EnvironmentTests.test_nested_semgrep_symlink_rejected) ... ok
+test_regular_file_config_rejected (test_scanner_environment.EnvironmentTests.test_regular_file_config_rejected) ... ok
+test_secrets_and_proxy_not_inherited (test_scanner_environment.EnvironmentTests.test_secrets_and_proxy_not_inherited) ... ok
+test_symlink_config_rejected_without_external_write (test_scanner_environment.EnvironmentTests.test_symlink_config_rejected_without_external_write) ... ok
+test_tmp_symlink_rejected (test_scanner_environment.EnvironmentTests.test_tmp_symlink_rejected) ... ok
+test_write_failure_does_not_fallback_to_real_home (test_scanner_environment.EnvironmentTests.test_write_failure_does_not_fallback_to_real_home) ... ok
+test_all_five_profiles_use_subprocess_scanner_mock_only (test_scanner_environment.PreflightTests.test_all_five_profiles_use_subprocess_scanner_mock_only) ... ok
+test_all_profiles_report_failures_without_model_fallback (test_scanner_environment.PreflightTests.test_all_profiles_report_failures_without_model_fallback) ... ok
+test_missing_fixture_coverage_never_a_pass (test_scanner_environment.PreflightTests.test_missing_fixture_coverage_never_a_pass) ... ok
+test_scanner_preflight_before_abcd_loop (test_scanner_environment.PreflightTests.test_scanner_preflight_before_abcd_loop) ... ok
+
+----------------------------------------------------------------------
+Ran 26 tests in 26.489s
+
+OK
+
+===== SELFTEST MODULE: test_web_and_intake.py =====
+test_csrf_rejected (test_web_and_intake.HTTPTests.test_csrf_rejected) ... 127.0.0.1 - - [19/Oct/2026 09:48:55] "POST /api/jobs HTTP/1.1" 403 -
+ok
+test_health_requires_gate_but_not_gold (test_web_and_intake.HTTPTests.test_health_requires_gate_but_not_gold) ... 127.0.0.1 - - [19/Oct/2026 09:48:56] "GET /api/health HTTP/1.1" 200 -
+ok
+test_host_rebinding_denied (test_web_and_intake.HTTPTests.test_host_rebinding_denied) ... 127.0.0.1 - - [19/Oct/2026 09:48:56] "GET / HTTP/1.1" 403 -
+ok
+test_html_local_assets_and_security_headers (test_web_and_intake.HTTPTests.test_html_local_assets_and_security_headers) ... 127.0.0.1 - - [19/Oct/2026 09:48:57] "GET / HTTP/1.1" 200 -
+ok
+test_http_upload_hash_and_job_scope (test_web_and_intake.HTTPTests.test_http_upload_hash_and_job_scope) ... 127.0.0.1 - - [19/Oct/2026 09:48:57] "POST /api/jobs HTTP/1.1" 202 -
+127.0.0.1 - - [19/Oct/2026 09:48:57] "GET /api/jobs/d674c763d327ac63044f HTTP/1.1" 200 -
+127.0.0.1 - - [19/Oct/2026 09:48:57] "GET /api/jobs/d674c763d327ac63044f/report.sarif HTTP/1.1" 409 -
+ok
+test_missing_gate_blocks_web_start (test_web_and_intake.HTTPTests.test_missing_gate_blocks_web_start) ... ok
+test_nonzip_rejected (test_web_and_intake.HTTPTests.test_nonzip_rejected) ... 127.0.0.1 - - [19/Oct/2026 09:48:58] "POST /api/jobs HTTP/1.1" 415 -
+ok
+test_one_job_at_a_time (test_web_and_intake.HTTPTests.test_one_job_at_a_time) ... ok
+test_origin_rejected (test_web_and_intake.HTTPTests.test_origin_rejected) ... 127.0.0.1 - - [19/Oct/2026 09:48:59] "POST /api/jobs HTTP/1.1" 403 -
+ok
+test_sample_download_hash (test_web_and_intake.HTTPTests.test_sample_download_hash) ... 127.0.0.1 - - [19/Oct/2026 09:49:00] "GET /api/sample/C HTTP/1.1" 200 -
+ok
+test_upload_unknown_arm_rejected (test_web_and_intake.HTTPTests.test_upload_unknown_arm_rejected) ... 127.0.0.1 - - [19/Oct/2026 09:49:00] "POST /api/jobs HTTP/1.1" 400 -
+ok
+test_all_sample_inputs_pass_existing_intake (test_web_and_intake.IntakeTests.test_all_sample_inputs_pass_existing_intake) ... ok
+test_real_child_socket_denial (test_web_and_intake.IntakeTests.test_real_child_socket_denial) ... ok
+test_symlink_rejected (test_web_and_intake.IntakeTests.test_symlink_rejected) ... ok
+test_zip_traversal_rejected (test_web_and_intake.IntakeTests.test_zip_traversal_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 6.632s
+
+OK
+
+SELFTESTS_PASSED=93
+SELFTEST_MODULES=4
+SELFTESTS_SKIPPED=0

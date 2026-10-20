@@ -1,0 +1,440 @@
+{
+  "results": [
+    {
+      "check_id": "ntk-b38-cwe79-output-call-review",
+      "path": "/home/tuankhoa/migration/ntk_stage3_verified_v5_work/batch38_runs/batch38c_20261019T091032Z_460ea6/uploaded_project/src/edu/ntk/b38/html/ChallengeEscapedHtml.java",
+      "start": {
+        "line": 20,
+        "col": 9,
+        "offset": 903
+      },
+      "end": {
+        "line": 20,
+        "col": 80,
+        "offset": 974
+      },
+      "extra": {
+        "metavars": {
+          "$STREAM": {
+            "start": {
+              "line": 20,
+              "col": 9,
+              "offset": 903
+            },
+            "end": {
+              "line": 20,
+              "col": 35,
+              "offset": 929
+            },
+            "abstract_content": "exchange.getResponseBody()"
+          }
+        },
+        "message": "CWE-79 API call for integration review; not by itself a vulnerability.",
+        "metadata": {
+          "cwe": [
+            "CWE-79"
+          ],
+          "confidence": "UNKNOWN",
+          "scope": "integration-demo-only-not-b29-benchmark-rules"
+        },
+        "severity": "ERROR",
+        "fingerprint": "dc7565f51e95bd6fd7857dcdd3ba1888d903b49a347dcb68b81a7d9463094ca1b0b78865275d13ae59269e6dcef20b57799733940626f59c1bc0b1121b1865b4_0",
+        "lines": "        exchange.getResponseBody().write(body.getBytes(StandardCharsets.UTF_8));",
+        "is_ignored": false,
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      },
+      "scanner_check_id": "ntk-b38-cwe79-output-call-review",
+      "cwe": "79"
+    },
+    {
+      "check_id": "ntk-b38-cwe79-output-call-review",
+      "path": "/home/tuankhoa/migration/ntk_stage3_verified_v5_work/batch38_runs/batch38c_20261019T091032Z_460ea6/uploaded_project/src/edu/ntk/b38/html/ControlBinaryHttp.java",
+      "start": {
+        "line": 15,
+        "col": 9,
+        "offset": 679
+      },
+      "end": {
+        "line": 15,
+        "col": 81,
+        "offset": 751
+      },
+      "extra": {
+        "metavars": {
+          "$STREAM": {
+            "start": {
+              "line": 15,
+              "col": 9,
+              "offset": 679
+            },
+            "end": {
+              "line": 15,
+              "col": 35,
+              "offset": 705
+            },
+            "abstract_content": "exchange.getResponseBody()"
+          }
+        },
+        "message": "CWE-79 API call for integration review; not by itself a vulnerability.",
+        "metadata": {
+          "cwe": [
+            "CWE-79"
+          ],
+          "confidence": "UNKNOWN",
+          "scope": "integration-demo-only-not-b29-benchmark-rules"
+        },
+        "severity": "ERROR",
+        "fingerprint": "97b7e221743ae671a5a098a6eb0798b774bc02a5a77ab6ee852d45c3aebaedc9df96a5ee317593b849e270029deabd288890f685a510c2e5c5dbbe55383ffad3_0",
+        "lines": "        exchange.getResponseBody().write(input.getBytes(StandardCharsets.UTF_8));",
+        "is_ignored": false,
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      },
+      "scanner_check_id": "ntk-b38-cwe79-output-call-review",
+      "cwe": "79"
+    },
+    {
+      "check_id": "ntk-b38-cwe79-output-call-review",
+      "path": "/home/tuankhoa/migration/ntk_stage3_verified_v5_work/batch38_runs/batch38c_20261019T091032Z_460ea6/uploaded_project/src/edu/ntk/b38/html/ControlConstantHtml.java",
+      "start": {
+        "line": 15,
+        "col": 9,
+        "offset": 729
+      },
+      "end": {
+        "line": 15,
+        "col": 80,
+        "offset": 800
+      },
+      "extra": {
+        "metavars": {
+          "$STREAM": {
+            "start": {
+              "line": 15,
+              "col": 9,
+              "offset": 729
+            },
+            "end": {
+              "line": 15,
+              "col": 35,
+              "offset": 755
+            },
+            "abstract_content": "exchange.getResponseBody()"
+          }
+        },
+        "message": "CWE-79 API call for integration review; not by itself a vulnerability.",
+        "metadata": {
+          "cwe": [
+            "CWE-79"
+          ],
+          "confidence": "UNKNOWN",
+          "scope": "integration-demo-only-not-b29-benchmark-rules"
+        },
+        "severity": "ERROR",
+        "fingerprint": "fb743740649ff09b3102fdaa964c828e78a700490567b823ad619c54576478be400c80338789faa22513df93f6ce3f42868fd0130faef1460ed0fb5d2813d976_0",
+        "lines": "        exchange.getResponseBody().write(body.getBytes(StandardCharsets.UTF_8));",
+        "is_ignored": false,
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      },
+      "scanner_check_id": "ntk-b38-cwe79-output-call-review",
+      "cwe": "79"
+    },
+    {
+      "check_id": "ntk-b38-cwe79-output-call-review",
+      "path": "/home/tuankhoa/migration/ntk_stage3_verified_v5_work/batch38_runs/batch38c_20261019T091032Z_460ea6/uploaded_project/src/edu/ntk/b38/html/ControlFileWrite.java",
+      "start": {
+        "line": 17,
+        "col": 13,
+        "offset": 720
+      },
+      "end": {
+        "line": 17,
+        "col": 63,
+        "offset": 770
+      },
+      "extra": {
+        "metavars": {
+          "$STREAM": {
+            "start": {
+              "line": 17,
+              "col": 13,
+              "offset": 720
+            },
+            "end": {
+              "line": 17,
+              "col": 17,
+              "offset": 724
+            },
+            "abstract_content": "file",
+            "propagated_value": {
+              "svalue_start": {
+                "line": 16,
+                "col": 34,
+                "offset": 647
+              },
+              "svalue_end": {
+                "line": 16,
+                "col": 91,
+                "offset": 704
+              },
+              "svalue_abstract_content": "Files.newOutputStream(Path.of(\"ntk-c3-not-executed.txt\"))"
+            }
+          }
+        },
+        "message": "CWE-79 API call for integration review; not by itself a vulnerability.",
+        "metadata": {
+          "cwe": [
+            "CWE-79"
+          ],
+          "confidence": "UNKNOWN",
+          "scope": "integration-demo-only-not-b29-benchmark-rules"
+        },
+        "severity": "ERROR",
+        "fingerprint": "12ccd61b6d66d565118513ead5f18f7cb54dbf6bbe5bdff3d85e28c12c982e62197bd32bc1ab768a5ddc810c270e11ccc223d23f1d631e320b43a4365c87dc86_0",
+        "lines": "            file.write(input.getBytes(StandardCharsets.UTF_8));",
+        "is_ignored": false,
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      },
+      "scanner_check_id": "ntk-b38-cwe79-output-call-review",
+      "cwe": "79"
+    },
+    {
+      "check_id": "ntk-b38-cwe79-output-call-review",
+      "path": "/home/tuankhoa/migration/ntk_stage3_verified_v5_work/batch38_runs/batch38c_20261019T091032Z_460ea6/uploaded_project/src/edu/ntk/b38/html/ControlFileWrite.java",
+      "start": {
+        "line": 21,
+        "col": 9,
+        "offset": 923
+      },
+      "end": {
+        "line": 21,
+        "col": 92,
+        "offset": 1006
+      },
+      "extra": {
+        "metavars": {
+          "$STREAM": {
+            "start": {
+              "line": 21,
+              "col": 9,
+              "offset": 923
+            },
+            "end": {
+              "line": 21,
+              "col": 35,
+              "offset": 949
+            },
+            "abstract_content": "exchange.getResponseBody()"
+          }
+        },
+        "message": "CWE-79 API call for integration review; not by itself a vulnerability.",
+        "metadata": {
+          "cwe": [
+            "CWE-79"
+          ],
+          "confidence": "UNKNOWN",
+          "scope": "integration-demo-only-not-b29-benchmark-rules"
+        },
+        "severity": "ERROR",
+        "fingerprint": "ab2a303059c1dfb67644995f580bbafdead3fed8582489d3c6dbbef22259d8449e394074302162524780ee4507f5b2a6f489b87e23adf5d969206419b7e1e2fe_0",
+        "lines": "        exchange.getResponseBody().write(\"<h1>Fixed</h1>\".getBytes(StandardCharsets.UTF_8));",
+        "is_ignored": false,
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      },
+      "scanner_check_id": "ntk-b38-cwe79-output-call-review",
+      "cwe": "79"
+    },
+    {
+      "check_id": "ntk-b38-cwe79-output-call-review",
+      "path": "/home/tuankhoa/migration/ntk_stage3_verified_v5_work/batch38_runs/batch38c_20261019T091032Z_460ea6/uploaded_project/src/edu/ntk/b38/html/ControlPlainText.java",
+      "start": {
+        "line": 15,
+        "col": 9,
+        "offset": 707
+      },
+      "end": {
+        "line": 15,
+        "col": 80,
+        "offset": 778
+      },
+      "extra": {
+        "metavars": {
+          "$STREAM": {
+            "start": {
+              "line": 15,
+              "col": 9,
+              "offset": 707
+            },
+            "end": {
+              "line": 15,
+              "col": 35,
+              "offset": 733
+            },
+            "abstract_content": "exchange.getResponseBody()"
+          }
+        },
+        "message": "CWE-79 API call for integration review; not by itself a vulnerability.",
+        "metadata": {
+          "cwe": [
+            "CWE-79"
+          ],
+          "confidence": "UNKNOWN",
+          "scope": "integration-demo-only-not-b29-benchmark-rules"
+        },
+        "severity": "ERROR",
+        "fingerprint": "f394a795a3164d22fbc73a72718f92d2b8c00de0d9bb185e964aed8fb7f68424408ca37c56cac681e7fea6a3e0bbedbc8eb404b46f076f37355dc714a1a8a150_0",
+        "lines": "        exchange.getResponseBody().write(body.getBytes(StandardCharsets.UTF_8));",
+        "is_ignored": false,
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      },
+      "scanner_check_id": "ntk-b38-cwe79-output-call-review",
+      "cwe": "79"
+    },
+    {
+      "check_id": "ntk-b38-cwe79-output-call-review",
+      "path": "/home/tuankhoa/migration/ntk_stage3_verified_v5_work/batch38_runs/batch38c_20261019T091032Z_460ea6/uploaded_project/src/edu/ntk/b38/html/RiskyHtmlAttribute.java",
+      "start": {
+        "line": 15,
+        "col": 9,
+        "offset": 736
+      },
+      "end": {
+        "line": 15,
+        "col": 80,
+        "offset": 807
+      },
+      "extra": {
+        "metavars": {
+          "$STREAM": {
+            "start": {
+              "line": 15,
+              "col": 9,
+              "offset": 736
+            },
+            "end": {
+              "line": 15,
+              "col": 35,
+              "offset": 762
+            },
+            "abstract_content": "exchange.getResponseBody()"
+          }
+        },
+        "message": "CWE-79 API call for integration review; not by itself a vulnerability.",
+        "metadata": {
+          "cwe": [
+            "CWE-79"
+          ],
+          "confidence": "UNKNOWN",
+          "scope": "integration-demo-only-not-b29-benchmark-rules"
+        },
+        "severity": "ERROR",
+        "fingerprint": "87e6b057c9523445c7557da25f277e0cec867dfe3068fa21c3c8a5d6765170ba83ae4bd30097e86e4bd35b5d8427809175bd9e22cbc73a876be6a67e42ed24d3_0",
+        "lines": "        exchange.getResponseBody().write(body.getBytes(StandardCharsets.UTF_8));",
+        "is_ignored": false,
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      },
+      "scanner_check_id": "ntk-b38-cwe79-output-call-review",
+      "cwe": "79"
+    },
+    {
+      "check_id": "ntk-b38-cwe79-output-call-review",
+      "path": "/home/tuankhoa/migration/ntk_stage3_verified_v5_work/batch38_runs/batch38c_20261019T091032Z_460ea6/uploaded_project/src/edu/ntk/b38/html/RiskyHtmlBody.java",
+      "start": {
+        "line": 15,
+        "col": 9,
+        "offset": 730
+      },
+      "end": {
+        "line": 15,
+        "col": 80,
+        "offset": 801
+      },
+      "extra": {
+        "metavars": {
+          "$STREAM": {
+            "start": {
+              "line": 15,
+              "col": 9,
+              "offset": 730
+            },
+            "end": {
+              "line": 15,
+              "col": 35,
+              "offset": 756
+            },
+            "abstract_content": "exchange.getResponseBody()"
+          }
+        },
+        "message": "CWE-79 API call for integration review; not by itself a vulnerability.",
+        "metadata": {
+          "cwe": [
+            "CWE-79"
+          ],
+          "confidence": "UNKNOWN",
+          "scope": "integration-demo-only-not-b29-benchmark-rules"
+        },
+        "severity": "ERROR",
+        "fingerprint": "af242da9a5af8171cf6fd3302373830852ee42b66d41c0489dbc6cd3e66a386245f9beadfaf4c839428d9f8d849cc5857f8b5e183e3b9a43f8e14257af8f68f4_0",
+        "lines": "        exchange.getResponseBody().write(body.getBytes(StandardCharsets.UTF_8));",
+        "is_ignored": false,
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      },
+      "scanner_check_id": "ntk-b38-cwe79-output-call-review",
+      "cwe": "79"
+    },
+    {
+      "check_id": "ntk-b38-cwe79-output-call-review",
+      "path": "/home/tuankhoa/migration/ntk_stage3_verified_v5_work/batch38_runs/batch38c_20261019T091032Z_460ea6/uploaded_project/src/edu/ntk/b38/html/RiskyOtherHtmlHandler.java",
+      "start": {
+        "line": 15,
+        "col": 9,
+        "offset": 657
+      },
+      "end": {
+        "line": 15,
+        "col": 88,
+        "offset": 736
+      },
+      "extra": {
+        "metavars": {
+          "$STREAM": {
+            "start": {
+              "line": 15,
+              "col": 9,
+              "offset": 657
+            },
+            "end": {
+              "line": 15,
+              "col": 35,
+              "offset": 683
+            },
+            "abstract_content": "exchange.getResponseBody()"
+          }
+        },
+        "message": "CWE-79 API call for integration review; not by itself a vulnerability.",
+        "metadata": {
+          "cwe": [
+            "CWE-79"
+          ],
+          "confidence": "UNKNOWN",
+          "scope": "integration-demo-only-not-b29-benchmark-rules"
+        },
+        "severity": "ERROR",
+        "fingerprint": "6d8dd1f4d2ec83cbf326d862d44ac778d5dc2894f5236135c6e7cb2ca026a90f57c157f8a4b1b16080ff432d99e2a2aa84394d0807af268b465b433b463e27e5_0",
+        "lines": "        exchange.getResponseBody().write(responseText.getBytes(StandardCharsets.UTF_8));",
+        "is_ignored": false,
+        "validation_state": "NO_VALIDATOR",
+        "engine_kind": "OSS"
+      },
+      "scanner_check_id": "ntk-b38-cwe79-output-call-review",
+      "cwe": "79"
+    }
+  ]
+}

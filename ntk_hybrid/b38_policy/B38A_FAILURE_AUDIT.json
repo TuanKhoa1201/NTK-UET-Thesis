@@ -1,0 +1,69 @@
+{
+  "source_archive": "batch38a_20261019T071407Z_bf317b_result.zip",
+  "source_archive_sha256": "a00a11dd9a727f0456c7c70d275654d24990f06105efdfdbbd6b7d52ee627fda",
+  "terminal_sha_matches": true,
+  "archive_crc_bad_member": null,
+  "manifest_checks": {
+    "00_SUMMARY.json": true,
+    "FAILURE.txt": true,
+    "FROZEN_AFTER.json": true,
+    "FROZEN_BEFORE.json": true,
+    "PROGRESS.json": true,
+    "STORAGE_PREFLIGHT.json": true,
+    "UPLOADED_INPUT_PROVENANCE.json": true,
+    "opengrep/command.json": true,
+    "opengrep/isolation.json": true,
+    "opengrep/rules.json": true,
+    "opengrep/scanner.log": true,
+    "EXCLUDED_FILES.json": true
+  },
+  "manifest_passed": 12,
+  "manifest_total": 12,
+  "frozen_before_equals_after": true,
+  "reported_status": "B38_BLOCKED",
+  "reported_codeql_dataflow": "NOT_EXECUTED",
+  "arm_results": {},
+  "diagnostic_results": {},
+  "scanner_log": "Fatal error: exception Sys_error(\"/home/tuankhoa/migration/ntk_stage3_verified_v5_work/batch38_runs/batch38a_20261019T071407Z_bf317b/opengrep/.config: No such file or directory\")\nRaised by primitive operation at Semgrep_envvars.of_current_sys_env in file \"src/osemgrep/configuring/Semgrep_envvars.ml\", line 116, characters 18-36\nCalled from Semgrep_envvars.v in file \"src/osemgrep/configuring/Semgrep_envvars.ml\", line 159, characters 20-43\n",
+  "isolation": {
+    "status": "INHERITED_SECCOMP_INSTALLED_BEFORE_EXEC",
+    "network": {
+      "AF_INET": "DENIED_EPERM",
+      "AF_INET6": "DENIED_EPERM",
+      "scope": "CURRENT_PROCESS_AND_DESCENDANTS",
+      "AF_UNIX": "ALLOWED"
+    },
+    "binary": "/home/tuankhoa/.opengrep/cli/v1.25.0/opengrep",
+    "argv": [
+      "/home/tuankhoa/.opengrep/cli/v1.25.0/opengrep",
+      "scan",
+      "--config",
+      "/home/tuankhoa/migration/ntk_stage3_verified_v5_work/batch38_runs/batch38a_20261019T071407Z_bf317b/opengrep/rules.json",
+      "--json",
+      "--output",
+      "/home/tuankhoa/migration/ntk_stage3_verified_v5_work/batch38_runs/batch38a_20261019T071407Z_bf317b/opengrep/raw.json",
+      "/home/tuankhoa/migration/ntk_stage3_verified_v5_work/batch38_runs/batch38a_20261019T071407Z_bf317b/uploaded_project"
+    ]
+  },
+  "diagnosis": "B38 sets XDG_CONFIG_HOME to a missing opengrep/.config directory. The pinned OpenGrep source invokes Sys.is_directory on it during startup. It is not a rule/LoRA/CodeQL runtime failure.",
+  "upstream_reference": {
+    "repository": "opengrep/opengrep",
+    "ref": "v1.25.0",
+    "path": "src/osemgrep/configuring/Semgrep_envvars.ml",
+    "blob_sha": "29c9544ea254c7bc92d8a1931fa4a68e9a7a8ccd",
+    "relevant_line": 116,
+    "read_using": "GitHub connector fetch_file"
+  },
+  "historical_regression": "B37 scanner creates .cache before using it for XDG_CONFIG_HOME; the B38 replacement omitted directory creation.",
+  "not_run_in_submitted_attempt": [
+    "CodeQL",
+    "new model inference",
+    "semantic scoring",
+    "phases B,C,D"
+  ],
+  "additional_static_finding": "Combined fixture D has 16 dataflow test cases per CWE; original scanner coverage erroneously also required each callsite rule to match all 16 files.",
+  "correction": "Separate scanner_expectations: 4 files per CWE including its 2 controls. All 16 per-CWE dataflow expectations and every expected_flow value are unchanged.",
+  "authoring_new_real_opengrep_executed": false,
+  "authoring_new_real_codeql_executed": false,
+  "authoring_new_gpu_executed": false
+}

@@ -1,0 +1,13 @@
+rules:
+  - id: ntk-b34-java-sql-call-review
+    languages: [java]
+    severity: ERROR
+    message: SQL-text API call for integration review; call presence alone is not a confirmed vulnerability.
+    metadata:
+      cwe: [CWE-89]
+      confidence: UNKNOWN
+      scope: integration-demo-only-not-b29-benchmark-rules
+    pattern-either:
+      - pattern: $S.executeQuery($SQL)
+      - pattern: $S.execute($SQL)
+      - pattern: $C.prepareStatement($SQL)

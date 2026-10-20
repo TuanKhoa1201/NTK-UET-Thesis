@@ -1,0 +1,378 @@
+[
+  {
+    "id": "35532806d4d5c5ebffc95e803ceef04a9276371175e8c0a87d59cd7d886f8719",
+    "cwe": "89",
+    "location": {
+      "uri": "src/edu/ntk/audit/inventory/RiskyStockPrepare.java",
+      "start_line": 11,
+      "start_column": 42,
+      "end_line": 11,
+      "end_column": 49
+    },
+    "callsite": {
+      "package": "java.sql",
+      "class": "Connection",
+      "method": "prepareStatement",
+      "signature": "PreparedStatement prepareStatement(String p0)",
+      "cwe": "89",
+      "is_static": false,
+      "receiver_policy": "HOLD_THIS_UNTIL_SEMANTIC_REVIEW",
+      "compiler_signature": "prepareStatement(java.lang.String)",
+      "arity": 1,
+      "source_record_sha256": "81013ed724c0143e7c1fa8a07ffe5ae21c42b44af245a2b4892b4d4b19188d14",
+      "uri": "src/edu/ntk/audit/inventory/RiskyStockPrepare.java",
+      "case_key": "6665917a377004dafecfe55326ec96e5323096cc7067fc1209f5f333491a4965",
+      "start_line": 11,
+      "start_column": 16,
+      "end_line": 11,
+      "end_column": 49
+    },
+    "argument_index": 0,
+    "paths": [
+      [
+        {
+          "uri": "src/edu/ntk/audit/inventory/RiskyStockPrepare.java",
+          "start_line": 9,
+          "start_column": 36,
+          "end_line": 9,
+          "end_column": 69
+        },
+        {
+          "uri": "src/edu/ntk/audit/inventory/RiskyStockPrepare.java",
+          "start_line": 11,
+          "start_column": 42,
+          "end_line": 11,
+          "end_column": 49
+        }
+      ]
+    ],
+    "raw_result": {
+      "ruleId": "ntk/b37a/cwe89-epoch_1",
+      "ruleIndex": 0,
+      "rule": {
+        "id": "ntk/b37a/cwe89-epoch_1",
+        "index": 0
+      },
+      "message": {
+        "text": "Environment value (declared untrusted for this scoped demo) reaches IRIS-labelled SQL text argument from [declared environment source](1)."
+      },
+      "locations": [
+        {
+          "physicalLocation": {
+            "artifactLocation": {
+              "uri": "src/edu/ntk/audit/inventory/RiskyStockPrepare.java",
+              "uriBaseId": "%SRCROOT%",
+              "index": 0
+            },
+            "region": {
+              "startLine": 11,
+              "startColumn": 42,
+              "endColumn": 49
+            }
+          }
+        }
+      ],
+      "partialFingerprints": {
+        "primaryLocationLineHash": "20f38f7f3fe941fb:1",
+        "primaryLocationStartColumnFingerprint": "33"
+      },
+      "codeFlows": [
+        {
+          "threadFlows": [
+            {
+              "locations": [
+                {
+                  "location": {
+                    "physicalLocation": {
+                      "artifactLocation": {
+                        "uri": "src/edu/ntk/audit/inventory/RiskyStockPrepare.java",
+                        "uriBaseId": "%SRCROOT%",
+                        "index": 0
+                      },
+                      "region": {
+                        "startLine": 9,
+                        "startColumn": 36,
+                        "endColumn": 69
+                      }
+                    },
+                    "message": {
+                      "text": "getenv(...) : String"
+                    }
+                  },
+                  "taxa": [
+                    {
+                      "index": 0,
+                      "toolComponent": {
+                        "index": 1
+                      },
+                      "properties": {
+                        "CodeQL/DataflowRole": "source"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "location": {
+                    "physicalLocation": {
+                      "artifactLocation": {
+                        "uri": "src/edu/ntk/audit/inventory/RiskyStockPrepare.java",
+                        "uriBaseId": "%SRCROOT%",
+                        "index": 0
+                      },
+                      "region": {
+                        "startLine": 11,
+                        "startColumn": 42,
+                        "endColumn": 49
+                      }
+                    },
+                    "message": {
+                      "text": "sqlText"
+                    }
+                  },
+                  "taxa": [
+                    {
+                      "index": 1,
+                      "toolComponent": {
+                        "index": 1
+                      },
+                      "properties": {
+                        "CodeQL/DataflowRole": "sink"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "relatedLocations": [
+        {
+          "id": 1,
+          "physicalLocation": {
+            "artifactLocation": {
+              "uri": "src/edu/ntk/audit/inventory/RiskyStockPrepare.java",
+              "uriBaseId": "%SRCROOT%",
+              "index": 0
+            },
+            "region": {
+              "startLine": 9,
+              "startColumn": 36,
+              "endColumn": 69
+            }
+          },
+          "message": {
+            "text": "declared environment source"
+          }
+        },
+        {
+          "physicalLocation": {
+            "artifactLocation": {
+              "uri": "src/edu/ntk/audit/inventory/RiskyStockPrepare.java",
+              "uriBaseId": "%SRCROOT%",
+              "index": 0
+            },
+            "region": {
+              "startLine": 9,
+              "startColumn": 36,
+              "endColumn": 69
+            }
+          }
+        }
+      ]
+    },
+    "source_policy": "CODEQL_DISCOVERED_LOCAL_GETENV_CALL_UNTRUSTED_BY_EXPLICIT_DEMO_POLICY_NOT_LLM",
+    "source_discovered_by_llm": false,
+    "origin": "REAL_CODEQL_PATH_QUERY",
+    "database_created_in_this_run": true,
+    "input_project_sha256": "1e7c26b9a869f88e169aca1c4fc45f95e614bd8b96fccbda3fc697b2d7316d94"
+  },
+  {
+    "id": "453e5baa5b5fff92a712214b03f3c95a08e68cce52f3500671c916f2b41e7701",
+    "cwe": "89",
+    "location": {
+      "uri": "src/edu/ntk/audit/inventory/RiskyStockQuery.java",
+      "start_line": 13,
+      "start_column": 39,
+      "end_line": 13,
+      "end_column": 46
+    },
+    "callsite": {
+      "package": "java.sql",
+      "class": "Statement",
+      "method": "executeQuery",
+      "signature": "ResultSet executeQuery(String p0)",
+      "cwe": "89",
+      "is_static": false,
+      "receiver_policy": "HOLD_THIS_UNTIL_SEMANTIC_REVIEW",
+      "compiler_signature": "executeQuery(java.lang.String)",
+      "arity": 1,
+      "source_record_sha256": "829864cf98990ffb82e707ea4aaadc7b5d39f2f36fe34c783ff3cb1b3fe98cc2",
+      "uri": "src/edu/ntk/audit/inventory/RiskyStockQuery.java",
+      "case_key": "d260df67e2c439b33055a927847731cb2a6ea302e936af92c58ced919bdcaf62",
+      "start_line": 13,
+      "start_column": 16,
+      "end_line": 13,
+      "end_column": 46
+    },
+    "argument_index": 0,
+    "paths": [
+      [
+        {
+          "uri": "src/edu/ntk/audit/inventory/RiskyStockQuery.java",
+          "start_line": 10,
+          "start_column": 37,
+          "end_line": 10,
+          "end_column": 65
+        },
+        {
+          "uri": "src/edu/ntk/audit/inventory/RiskyStockQuery.java",
+          "start_line": 13,
+          "start_column": 39,
+          "end_line": 13,
+          "end_column": 46
+        }
+      ]
+    ],
+    "raw_result": {
+      "ruleId": "ntk/b37a/cwe89-epoch_1",
+      "ruleIndex": 0,
+      "rule": {
+        "id": "ntk/b37a/cwe89-epoch_1",
+        "index": 0
+      },
+      "message": {
+        "text": "Environment value (declared untrusted for this scoped demo) reaches IRIS-labelled SQL text argument from [declared environment source](1)."
+      },
+      "locations": [
+        {
+          "physicalLocation": {
+            "artifactLocation": {
+              "uri": "src/edu/ntk/audit/inventory/RiskyStockQuery.java",
+              "uriBaseId": "%SRCROOT%",
+              "index": 1
+            },
+            "region": {
+              "startLine": 13,
+              "startColumn": 39,
+              "endColumn": 46
+            }
+          }
+        }
+      ],
+      "partialFingerprints": {
+        "primaryLocationLineHash": "214e897f64d5b078:1",
+        "primaryLocationStartColumnFingerprint": "30"
+      },
+      "codeFlows": [
+        {
+          "threadFlows": [
+            {
+              "locations": [
+                {
+                  "location": {
+                    "physicalLocation": {
+                      "artifactLocation": {
+                        "uri": "src/edu/ntk/audit/inventory/RiskyStockQuery.java",
+                        "uriBaseId": "%SRCROOT%",
+                        "index": 1
+                      },
+                      "region": {
+                        "startLine": 10,
+                        "startColumn": 37,
+                        "endColumn": 65
+                      }
+                    },
+                    "message": {
+                      "text": "getenv(...) : String"
+                    }
+                  },
+                  "taxa": [
+                    {
+                      "index": 0,
+                      "toolComponent": {
+                        "index": 1
+                      },
+                      "properties": {
+                        "CodeQL/DataflowRole": "source"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "location": {
+                    "physicalLocation": {
+                      "artifactLocation": {
+                        "uri": "src/edu/ntk/audit/inventory/RiskyStockQuery.java",
+                        "uriBaseId": "%SRCROOT%",
+                        "index": 1
+                      },
+                      "region": {
+                        "startLine": 13,
+                        "startColumn": 39,
+                        "endColumn": 46
+                      }
+                    },
+                    "message": {
+                      "text": "sqlText"
+                    }
+                  },
+                  "taxa": [
+                    {
+                      "index": 2,
+                      "toolComponent": {
+                        "index": 1
+                      },
+                      "properties": {
+                        "CodeQL/DataflowRole": "sink"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "relatedLocations": [
+        {
+          "id": 1,
+          "physicalLocation": {
+            "artifactLocation": {
+              "uri": "src/edu/ntk/audit/inventory/RiskyStockQuery.java",
+              "uriBaseId": "%SRCROOT%",
+              "index": 1
+            },
+            "region": {
+              "startLine": 10,
+              "startColumn": 37,
+              "endColumn": 65
+            }
+          },
+          "message": {
+            "text": "declared environment source"
+          }
+        },
+        {
+          "physicalLocation": {
+            "artifactLocation": {
+              "uri": "src/edu/ntk/audit/inventory/RiskyStockQuery.java",
+              "uriBaseId": "%SRCROOT%",
+              "index": 1
+            },
+            "region": {
+              "startLine": 10,
+              "startColumn": 37,
+              "endColumn": 65
+            }
+          }
+        }
+      ]
+    },
+    "source_policy": "CODEQL_DISCOVERED_LOCAL_GETENV_CALL_UNTRUSTED_BY_EXPLICIT_DEMO_POLICY_NOT_LLM",
+    "source_discovered_by_llm": false,
+    "origin": "REAL_CODEQL_PATH_QUERY",
+    "database_created_in_this_run": true,
+    "input_project_sha256": "1e7c26b9a869f88e169aca1c4fc45f95e614bd8b96fccbda3fc697b2d7316d94"
+  }
+]

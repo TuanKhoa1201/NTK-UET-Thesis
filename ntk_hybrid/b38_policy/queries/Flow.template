@@ -1,0 +1,33 @@
+/**
+ * @name NTK B38 CWE-__CWE__ declared source to exact accepted sink
+ * @description Narrow JDK profile with a declared source model and semantic constraints.
+ * @kind path-problem
+ * @problem.severity error
+ * @precision medium
+ * @id java/ntk-b38/cwe__CWE__-__KIND__-__ARM__
+ * @tags security
+ *       external/cwe/cwe-__PADDED__
+ */
+import java
+import NtkScope
+import semmle.code.java.dataflow.DataFlow
+import semmle.code.java.dataflow.TaintTracking
+module Configuration implements DataFlow::ConfigSig {
+  predicate isSource(DataFlow::Node source) {
+    exists(MethodCall call | ntkSource(call, "__CWE__") and source.asExpr() = call)
+  }
+  predicate isSink(DataFlow::Node sink) {
+    __SINK_BODY__
+  }
+  predicate isAdditionalFlowStep(DataFlow::Node a, DataFlow::Node b) {
+    ntkAdditionalTransfer(a, b, "__CWE__")
+  }
+}
+module Flow = TaintTracking::Global<Configuration>;
+import Flow::PathGraph
+from Flow::PathNode source, Flow::PathNode sink
+where Flow::flowPath(source, sink) and
+  ("__CWE__" != "79" or ntkSameHttpExchange(source.getNode().asExpr(), sink.getNode().asExpr()))
+select sink.getNode(), source, sink,
+  "Declared source reaches the scoped CWE-__CWE__ argument from $@.",
+  source.getNode(), "declared source (not LLM discovered)"

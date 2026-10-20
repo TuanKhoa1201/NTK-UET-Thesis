@@ -1,0 +1,56 @@
+{
+  "release": "NTK_B38R1_SCANNER_ENVIRONMENT_AND_COVERAGE",
+  "date": "2026-10-19",
+  "source_B38_zip_sha256": "b91a493df0d4d4098f3bd38781d9a5496d063743bef49898235e63f460198ea0",
+  "audited_failed_run_zip_sha256": "a00a11dd9a727f0456c7c70d275654d24990f06105efdfdbbd6b7d52ee627fda",
+  "audited_failed_run_manifest": {
+    "passed": 12,
+    "total": 12,
+    "crc": "PASS"
+  },
+  "unit_tests": {
+    "ran": 93,
+    "passed": 93,
+    "skipped": 0,
+    "includes": [
+      "67 inherited CPU/HTTP and mock CodeQL/GPU orchestration tests",
+      "26 new environment/subprocess/mock scanner/preflight/coverage-contract tests",
+      "Actual filesystem write probes and actual INET socket denial in child processes",
+      "Fake scanner outputs are TEST ONLY, not measured OpenGrep results"
+    ]
+  },
+  "selftest_execution": "All test modules run in fresh subprocesses, no skips, 120s per module",
+  "harness_note": "Combined-process discovery exhibited intermittent hangs after HTTP/mock subprocess tests during authoring; per-module execution isolates state without bypassing any test.",
+  "syntax": "Python AST, bash -n and node --check PASS",
+  "java": {
+    "compiler": "javac 21.0.12.1",
+    "sources_by_phase": {
+      "A": 4,
+      "B": 4,
+      "C": 4,
+      "SQL": 4,
+      "D": 16
+    },
+    "all_compile_pass": true,
+    "proc_none": true,
+    "application_executed": false
+  },
+  "real_new_opengrep_executed_here": false,
+  "real_new_codeql_executed_here": false,
+  "new_gpu_inference_here": false,
+  "wsl_runtime_acceptance": "PENDING",
+  "no_train_or_model_changes": true,
+  "vendor_B37_engine_files_unchanged": 38,
+  "protected_files_unchanged": 58,
+  "all_five_Java_ZIPs_byte_identical": true,
+  "all_five_emitted_rule_sets_identical": true,
+  "all_original_dataflow_expected_flow_values_unchanged": true,
+  "scanner_coverage_contract_corrected_explicitly": "D: 4 required callsite files per CWE, versus 16 dataflow test cases per CWE, both positive and own-control coverage mandatory",
+  "new_real_WSL_step": "preflight_scanner.py checks A B C SQL D before CodeQL/GPU and never writes semantic receipts",
+  "codeql_queries_semantic_guard_scorer_and_adapters_changed": false,
+  "logs": {
+    "AUTHORING_SELFTEST.log": "10d0b3328133f4e1f0a12994f4e218380f8dba19f2c7e2d06a13167bc7d7d381",
+    "AUTHORING_JAVA_COMPILE.log": "30629f7cbdf6b5d610816a22ad25e8333661a169d9ab4b74f83322c39954ca28",
+    "AUTHORING_SYNTAX.log": "e218640785ec11a8342808f1a15b89884f6dd16afad98404a451159f11ae38c9"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "batch": "37A",
+  "package_scope": "NEW_JDK_ONLY_JAVA_ZIP_TO_REAL_LOCAL_CWE89_HYBRID_CLI_GATE",
+  "authoring_date": "2026-10-19",
+  "cpu_unit_tests": {"passed": 22, "failed": 0, "skipped": 0},
+  "java_compiler": "javac 21.0.12.1",
+  "java_sample": {"source_files": 4, "compiled_classes": 4, "annotation_processors": "DISABLED_USING_-proc:none"},
+  "semantic_parity_check": "PASS_USING_USER_OBSERVED_B34R5_LABELS_EPOCH_1_AND_EPOCH_2",
+  "real_input_codeql_api_query_on_wsl": "NOT_EXECUTED_HERE",
+  "real_gpu_lora_on_wsl": "NOT_EXECUTED_HERE",
+  "real_opengrep_on_wsl": "NOT_EXECUTED_HERE",
+  "safe_failure_smoke": "PASS_RETURNCODE_2_B37A_BLOCKED_AND_ZIP_REPORT",
+  "source_model": "DECLARED_GETENV_THREAT_MODEL_DISCOVERED_NEW_CODEQL_CALLSITE_NOT_LLM_SOURCE",
+  "independent_gold_evaluation": false,
+  "web_integration": "NOT_IN_BATCH_37A_BATCH37B_PLANNED"
+}

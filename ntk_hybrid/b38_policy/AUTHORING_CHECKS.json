@@ -1,0 +1,27 @@
+{
+  "new_tests": {
+    "count": 38,
+    "passed": 38,
+    "skipped": 0,
+    "mock_codeql_gpu_orchestration": 5,
+    "http_tests": 6,
+    "real_javac_compiler_and_mutation_tests": 16,
+    "other_contract_tests": 11
+  },
+  "inherited_tests": {
+    "passed": 93,
+    "skipped": 0
+  },
+  "total_passed": 131,
+  "java_version": "javac 21.0.12.1 (authoring)",
+  "new_codeql_execution": false,
+  "new_gpu_execution": false,
+  "original_query_logic_unchanged": true,
+  "old_model_c_d_gates_granted": false,
+  "new_gate_family": "batch38_policy_gates",
+  "source_note": "Includes replay on archived real C3, not new CodeQL evidence.",
+  "baseline_log": "BASELINE_SELFTEST_FINAL.log",
+  "tests_use_mock_codeql_gpu": true,
+  "new_tests_log_sha256": "d9181454c8f9fdbfb84fcecdda0537efa2a024e40b7522315462d98f00c1f3ed",
+  "baseline_tests_log_sha256": "7125b5c3bc1c6f29cb5ed0ebf7af74488dae2190ed72272b51bfd74bd811117d"
+}

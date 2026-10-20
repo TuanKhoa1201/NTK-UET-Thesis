@@ -1,0 +1,74 @@
+[
+  {
+    "package": "java.sql",
+    "class": "Statement",
+    "method": "execute",
+    "signature": "boolean execute(String p0)",
+    "cwe": "89",
+    "is_static": false,
+    "receiver_policy": "HOLD_THIS_UNTIL_SEMANTIC_REVIEW",
+    "compiler_signature": "execute(java.lang.String)",
+    "arity": 1,
+    "source_record_sha256": "a00eb5efbd3544a33045020f7376cea38659c466e06a47ea82a0b2667f467925"
+  },
+  {
+    "package": "java.lang",
+    "class": "System",
+    "method": "getenv",
+    "signature": "String getenv(String p0)",
+    "cwe": "89",
+    "is_static": true,
+    "receiver_policy": "HOLD_THIS_UNTIL_SEMANTIC_REVIEW",
+    "compiler_signature": "getenv(java.lang.String)",
+    "arity": 1,
+    "source_record_sha256": "ab970dc02a0fb8965de011223f387fe3f084ebdc7ccc0c6dea9ac40854a4c0cc"
+  },
+  {
+    "package": "java.sql",
+    "class": "Connection",
+    "method": "prepareStatement",
+    "signature": "PreparedStatement prepareStatement(String p0)",
+    "cwe": "89",
+    "is_static": false,
+    "receiver_policy": "HOLD_THIS_UNTIL_SEMANTIC_REVIEW",
+    "compiler_signature": "prepareStatement(java.lang.String)",
+    "arity": 1,
+    "source_record_sha256": "81013ed724c0143e7c1fa8a07ffe5ae21c42b44af245a2b4892b4d4b19188d14"
+  },
+  {
+    "package": "java.sql",
+    "class": "PreparedStatement",
+    "method": "executeQuery",
+    "signature": "ResultSet executeQuery()",
+    "cwe": "89",
+    "is_static": false,
+    "receiver_policy": "HOLD_THIS_UNTIL_SEMANTIC_REVIEW",
+    "compiler_signature": "executeQuery()",
+    "arity": 0,
+    "source_record_sha256": "27c6ade6ac74ad37b2da321f49ed9c8e41167836d0eb4ea1f8c311a16794c3bb"
+  },
+  {
+    "package": "java.sql",
+    "class": "PreparedStatement",
+    "method": "setString",
+    "signature": "void setString(int p0, String p1)",
+    "cwe": "89",
+    "is_static": false,
+    "receiver_policy": "HOLD_THIS_UNTIL_SEMANTIC_REVIEW",
+    "compiler_signature": "setString(int,java.lang.String)",
+    "arity": 2,
+    "source_record_sha256": "eae404c106789ba4a1e07707e9933144f5b046e4814e1c312038f87976a30e5c"
+  },
+  {
+    "package": "java.sql",
+    "class": "Statement",
+    "method": "executeQuery",
+    "signature": "ResultSet executeQuery(String p0)",
+    "cwe": "89",
+    "is_static": false,
+    "receiver_policy": "HOLD_THIS_UNTIL_SEMANTIC_REVIEW",
+    "compiler_signature": "executeQuery(java.lang.String)",
+    "arity": 1,
+    "source_record_sha256": "829864cf98990ffb82e707ea4aaadc7b5d39f2f36fe34c783ff3cb1b3fe98cc2"
+  }
+]

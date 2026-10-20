@@ -1,0 +1,33 @@
+/**
+ * @name NTK B37A uploaded Java local IRIS sink flow for CWE-89
+ * @description Explicit JDK getenv threat model located in uploaded Java; Stage 3 local LoRA supplies sink roles.
+ * @kind path-problem
+ * @problem.severity error
+ * @precision medium
+ * @id ntk/b37a/cwe89-__ARM__
+ * @tags security
+ *       external/cwe/cwe-089
+ */
+import java
+import semmle.code.java.dataflow.DataFlow
+import semmle.code.java.dataflow.TaintTracking
+
+module Configuration implements DataFlow::ConfigSig {
+  predicate isSource(DataFlow::Node source) {
+    exists(MethodCall call |
+      call.getMethod().getDeclaringType().hasQualifiedName("java.lang", "System") and
+      call.getMethod().getSignature() = "getenv(java.lang.String)" and
+      source.asExpr() = call
+    )
+  }
+  predicate isSink(DataFlow::Node sink) {
+    __SINK_BODY__
+  }
+}
+module Flow = TaintTracking::Global<Configuration>;
+import Flow::PathGraph
+from Flow::PathNode source, Flow::PathNode sink
+where Flow::flowPath(source, sink)
+select sink.getNode(), source, sink,
+  "Environment value (declared untrusted for this scoped demo) reaches IRIS-labelled SQL text argument from $@.",
+  source.getNode(), "declared environment source"

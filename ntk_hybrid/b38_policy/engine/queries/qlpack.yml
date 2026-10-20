@@ -1,0 +1,5 @@
+name: ntk/b37a-cwe89-local-project
+version: 0.0.1
+dependencies:
+  codeql/java-all: "9.1.2"
+  codeql/java-queries: "1.11.4"

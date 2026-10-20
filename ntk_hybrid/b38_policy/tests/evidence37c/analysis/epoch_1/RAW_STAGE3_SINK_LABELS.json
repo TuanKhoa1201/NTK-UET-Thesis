@@ -1,0 +1,42 @@
+[
+  {
+    "package": "java.sql",
+    "class": "Statement",
+    "method": "execute",
+    "signature": "boolean execute(String p0)",
+    "sink_args": [
+      "p0"
+    ],
+    "type": "sink"
+  },
+  {
+    "package": "java.sql",
+    "class": "Connection",
+    "method": "prepareStatement",
+    "signature": "PreparedStatement prepareStatement(String p0)",
+    "sink_args": [
+      "p0"
+    ],
+    "type": "sink"
+  },
+  {
+    "package": "java.sql",
+    "class": "PreparedStatement",
+    "method": "setString",
+    "signature": "void setString(int p0, String p1)",
+    "sink_args": [
+      "p1"
+    ],
+    "type": "sink"
+  },
+  {
+    "package": "java.sql",
+    "class": "Statement",
+    "method": "executeQuery",
+    "signature": "ResultSet executeQuery(String p0)",
+    "sink_args": [
+      "p0"
+    ],
+    "type": "sink"
+  }
+]

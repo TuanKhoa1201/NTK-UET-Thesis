@@ -1,0 +1,20 @@
+javac 21.0.12.1
+A files=4 returncode=0
+
+
+B files=4 returncode=0
+
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+
+C files=4 returncode=0
+
+
+SQL files=4 returncode=0
+
+
+D files=16 returncode=0
+
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+

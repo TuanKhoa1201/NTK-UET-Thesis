@@ -1,0 +1,14 @@
+
+===== BATCH 37A RESULT =====
+STATUS=B37A_BLOCKED
+MODE=NEW_JAVA_ZIP_REAL_HYBRID_SCOPED
+CODEQL_DATAFLOW=NOT_EXECUTED
+SOURCE_MODEL=CODEQL_DISCOVERED_LOCAL_GETENV_CALL_UNTRUSTED_BY_EXPLICIT_DEMO_POLICY_NOT_LLM
+FROZEN_REPO_UNCHANGED=False
+RUN_DIR=/tmp/ntk-b37-smoke-gXOa1G/work/batch37a_new_project_runs/batch37a_20261019T032544Z_647dd9
+OUTPUT_ZIP=/tmp/ntk-b37-smoke-gXOa1G/downloads/batch37a_20261019T032544Z_647dd9_result.zip
+OUTPUT_SHA256=e0305bfee8e4908db7e334a7042d4846e75ec0980b84c4c8b51366a40b95f261
+BLOCKER=FROZEN_CHECK_FAILED: COMMAND_FAILED: ['git', '-C', PosixPath('/tmp/ntk-b37-smoke-gXOa1G/nonexistent_frozen_iris'), 'rev-parse', 'HEAD']
+
+fatal: cannot change to '/tmp/ntk-b37-smoke-gXOa1G/nonexistent_frozen_iris': No such file or directory
+

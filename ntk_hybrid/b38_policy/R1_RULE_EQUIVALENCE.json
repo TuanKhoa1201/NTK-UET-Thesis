@@ -1,0 +1,210 @@
+{
+  "all_five_rule_sets_identical": true,
+  "serialized_sha256": "cc7f50cb599b7727dd180d9cb364e105565b5ac1c593a515d58ecdf2adea774e",
+  "sets": {
+    "['22', '78', '79', '89']": {
+      "rules": [
+        {
+          "id": "ntk-b38-cwe22-path-call-review",
+          "languages": [
+            "java"
+          ],
+          "message": "CWE-22 API call for integration review; not by itself a vulnerability.",
+          "metadata": {
+            "confidence": "UNKNOWN",
+            "cwe": [
+              "CWE-22"
+            ],
+            "scope": "integration-demo-only-not-b29-benchmark-rules"
+          },
+          "pattern-either": [
+            {
+              "pattern": "Files.readString(...)"
+            },
+            {
+              "pattern": "Files.readAllBytes(...)"
+            },
+            {
+              "pattern": "Files.newInputStream(...)"
+            }
+          ],
+          "severity": "ERROR"
+        },
+        {
+          "id": "ntk-b38-cwe78-command-call-review",
+          "languages": [
+            "java"
+          ],
+          "message": "CWE-78 API call for integration review; not by itself a vulnerability.",
+          "metadata": {
+            "confidence": "UNKNOWN",
+            "cwe": [
+              "CWE-78"
+            ],
+            "scope": "integration-demo-only-not-b29-benchmark-rules"
+          },
+          "pattern-either": [
+            {
+              "pattern": "$R.exec(...)"
+            }
+          ],
+          "severity": "ERROR"
+        },
+        {
+          "id": "ntk-b38-cwe79-output-call-review",
+          "languages": [
+            "java"
+          ],
+          "message": "CWE-79 API call for integration review; not by itself a vulnerability.",
+          "metadata": {
+            "confidence": "UNKNOWN",
+            "cwe": [
+              "CWE-79"
+            ],
+            "scope": "integration-demo-only-not-b29-benchmark-rules"
+          },
+          "pattern-either": [
+            {
+              "pattern": "$STREAM.write(...)"
+            }
+          ],
+          "severity": "ERROR"
+        },
+        {
+          "id": "ntk-b34-java-sql-call-review",
+          "languages": [
+            "java"
+          ],
+          "message": "SQL-text API call for integration review; call presence alone is not a confirmed vulnerability.",
+          "metadata": {
+            "confidence": "UNKNOWN",
+            "cwe": [
+              "CWE-89"
+            ],
+            "scope": "integration-demo-only-not-b29-benchmark-rules"
+          },
+          "pattern-either": [
+            {
+              "pattern": "$S.executeQuery($SQL)"
+            },
+            {
+              "pattern": "$S.execute($SQL)"
+            },
+            {
+              "pattern": "$C.prepareStatement($SQL)"
+            }
+          ],
+          "severity": "ERROR"
+        }
+      ]
+    },
+    "['22']": {
+      "rules": [
+        {
+          "id": "ntk-b38-cwe22-path-call-review",
+          "languages": [
+            "java"
+          ],
+          "message": "CWE-22 API call for integration review; not by itself a vulnerability.",
+          "metadata": {
+            "confidence": "UNKNOWN",
+            "cwe": [
+              "CWE-22"
+            ],
+            "scope": "integration-demo-only-not-b29-benchmark-rules"
+          },
+          "pattern-either": [
+            {
+              "pattern": "Files.readString(...)"
+            },
+            {
+              "pattern": "Files.readAllBytes(...)"
+            },
+            {
+              "pattern": "Files.newInputStream(...)"
+            }
+          ],
+          "severity": "ERROR"
+        }
+      ]
+    },
+    "['78']": {
+      "rules": [
+        {
+          "id": "ntk-b38-cwe78-command-call-review",
+          "languages": [
+            "java"
+          ],
+          "message": "CWE-78 API call for integration review; not by itself a vulnerability.",
+          "metadata": {
+            "confidence": "UNKNOWN",
+            "cwe": [
+              "CWE-78"
+            ],
+            "scope": "integration-demo-only-not-b29-benchmark-rules"
+          },
+          "pattern-either": [
+            {
+              "pattern": "$R.exec(...)"
+            }
+          ],
+          "severity": "ERROR"
+        }
+      ]
+    },
+    "['79']": {
+      "rules": [
+        {
+          "id": "ntk-b38-cwe79-output-call-review",
+          "languages": [
+            "java"
+          ],
+          "message": "CWE-79 API call for integration review; not by itself a vulnerability.",
+          "metadata": {
+            "confidence": "UNKNOWN",
+            "cwe": [
+              "CWE-79"
+            ],
+            "scope": "integration-demo-only-not-b29-benchmark-rules"
+          },
+          "pattern-either": [
+            {
+              "pattern": "$STREAM.write(...)"
+            }
+          ],
+          "severity": "ERROR"
+        }
+      ]
+    },
+    "['89']": {
+      "rules": [
+        {
+          "id": "ntk-b34-java-sql-call-review",
+          "languages": [
+            "java"
+          ],
+          "message": "SQL-text API call for integration review; call presence alone is not a confirmed vulnerability.",
+          "metadata": {
+            "confidence": "UNKNOWN",
+            "cwe": [
+              "CWE-89"
+            ],
+            "scope": "integration-demo-only-not-b29-benchmark-rules"
+          },
+          "pattern-either": [
+            {
+              "pattern": "$S.executeQuery($SQL)"
+            },
+            {
+              "pattern": "$S.execute($SQL)"
+            },
+            {
+              "pattern": "$C.prepareStatement($SQL)"
+            }
+          ],
+          "severity": "ERROR"
+        }
+      ]
+    }
+  }
+}

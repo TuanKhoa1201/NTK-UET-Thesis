@@ -1,0 +1,232 @@
+{
+  "C4": {
+    "archive": "samples/C4_CONTEXT_JAVA.zip",
+    "expectations79": {
+      "src/edu/ntk/context/HtmlBody.java": {
+        "raw_policy_flow": true,
+        "qualified_policy_flow": true,
+        "ast_assessment": "UNENCODED_SUPPORTED_CONTEXT"
+      },
+      "src/edu/ntk/context/HtmlAttribute.java": {
+        "raw_policy_flow": true,
+        "qualified_policy_flow": true,
+        "ast_assessment": "UNENCODED_SUPPORTED_CONTEXT"
+      },
+      "src/edu/ntk/context/EncodedBody.java": {
+        "raw_policy_flow": true,
+        "qualified_policy_flow": false,
+        "ast_assessment": "ENCODING_VERIFIED_SCOPED"
+      },
+      "src/edu/ntk/context/EncodedAttribute.java": {
+        "raw_policy_flow": true,
+        "qualified_policy_flow": false,
+        "ast_assessment": "ENCODING_VERIFIED_SCOPED"
+      },
+      "src/edu/ntk/context/PartialEncoder.java": {
+        "raw_policy_flow": true,
+        "qualified_policy_flow": false,
+        "ast_assessment": "REVIEW_REQUIRED_ENCODER"
+      },
+      "src/edu/ntk/context/MisleadingEncoder.java": {
+        "raw_policy_flow": true,
+        "qualified_policy_flow": false,
+        "ast_assessment": "REVIEW_REQUIRED_ENCODER"
+      },
+      "src/edu/ntk/context/ScriptAfterEncoding.java": {
+        "raw_policy_flow": true,
+        "qualified_policy_flow": false,
+        "ast_assessment": "REVIEW_REQUIRED_OUTPUT_CONTEXT"
+      },
+      "src/edu/ntk/context/PlainText.java": {
+        "raw_policy_flow": false,
+        "qualified_policy_flow": false,
+        "ast_assessment": "REVIEW_REQUIRED_OUTPUT_CONTEXT"
+      },
+      "src/edu/ntk/context/BinaryResponse.java": {
+        "raw_policy_flow": false,
+        "qualified_policy_flow": false,
+        "ast_assessment": "REVIEW_REQUIRED_OUTPUT_CONTEXT"
+      },
+      "src/edu/ntk/context/ConstantHtml.java": {
+        "raw_policy_flow": false,
+        "qualified_policy_flow": false,
+        "ast_assessment": "CONSTANT_BODY_NO_SAFETY_VERDICT"
+      },
+      "src/edu/ntk/context/FileOutput.java": {
+        "raw_policy_flow": false,
+        "qualified_policy_flow": false,
+        "ast_assessment": "REVIEW_REQUIRED_NON_DIRECT_HTTP_STREAM"
+      },
+      "src/edu/ntk/context/ResponseAlias.java": {
+        "raw_policy_flow": false,
+        "qualified_policy_flow": false,
+        "ast_assessment": "REVIEW_REQUIRED_NON_DIRECT_HTTP_STREAM"
+      }
+    },
+    "not_independent_gold": true,
+    "sha256": "7e6b07168a6899d99136c9670c675aaff863053b332b49dbe0c286424602be25",
+    "java_hashes": {
+      "src/edu/ntk/context/BinaryResponse.java": "585ce8d19ddf20188bd4ba97f7fe9f8761630c813b33c5e4cf95ddf45e0abee4",
+      "src/edu/ntk/context/ConstantHtml.java": "c9242904da9fbf0de8b7fb07f1ea4c36a41b547148614782255797cce3bc86fb",
+      "src/edu/ntk/context/EncodedAttribute.java": "4b5cc6411b014bf85175ef0e58740e51f59cbacdeba5262cf5dfb1aefa4d5273",
+      "src/edu/ntk/context/EncodedBody.java": "99109445526d513ab811833bc414a1e6e57b99023b07f108bc4ddd3e426a4491",
+      "src/edu/ntk/context/FileOutput.java": "b730e2db047ec23e42334a06cd71bb4f83b6e1c040f9757b8577b016c9146551",
+      "src/edu/ntk/context/HtmlAttribute.java": "4c80488f03efb3990c24574d346cee987b244f78859d2bb04f05bbf27d9461d9",
+      "src/edu/ntk/context/HtmlBody.java": "ad93bd035926bf2db6ff6ce89698c11118b5e6371512886274e8ee5b746e8d28",
+      "src/edu/ntk/context/MisleadingEncoder.java": "0ab3e60ae946fc7d71977959a1cf04a90f0706b9fd3a90617737c3d5f0976af3",
+      "src/edu/ntk/context/PartialEncoder.java": "59578d96196ad63644eb002fdc01d5644fcfaf2dfd735fcaca9f41e5289a1ed4",
+      "src/edu/ntk/context/PlainText.java": "4f94f15efb630b107a1ee2c0b272f4c224d9a1ceda19f91946eefde9cd0614ee",
+      "src/edu/ntk/context/ResponseAlias.java": "fa4ddd3f75c151b0cb612e376c5cb5c9f28d7c86ad378959c6be2067c5d2f4fe",
+      "src/edu/ntk/context/ScriptAfterEncoding.java": "a6e118c210aa1866eefd33def07eb88d54da5c55ecfa1097ab84afb6212419ba"
+    }
+  },
+  "DPA": {
+    "archive": "samples/D_POLICY_JAVA.zip",
+    "expectations79": {
+      "src/edu/ntk/context/HtmlBody.java": {
+        "raw_policy_flow": true,
+        "qualified_policy_flow": true,
+        "ast_assessment": "UNENCODED_SUPPORTED_CONTEXT"
+      },
+      "src/edu/ntk/context/HtmlAttribute.java": {
+        "raw_policy_flow": true,
+        "qualified_policy_flow": true,
+        "ast_assessment": "UNENCODED_SUPPORTED_CONTEXT"
+      },
+      "src/edu/ntk/context/EncodedBody.java": {
+        "raw_policy_flow": true,
+        "qualified_policy_flow": false,
+        "ast_assessment": "ENCODING_VERIFIED_SCOPED"
+      },
+      "src/edu/ntk/context/EncodedAttribute.java": {
+        "raw_policy_flow": true,
+        "qualified_policy_flow": false,
+        "ast_assessment": "ENCODING_VERIFIED_SCOPED"
+      },
+      "src/edu/ntk/context/PartialEncoder.java": {
+        "raw_policy_flow": true,
+        "qualified_policy_flow": false,
+        "ast_assessment": "REVIEW_REQUIRED_ENCODER"
+      },
+      "src/edu/ntk/context/MisleadingEncoder.java": {
+        "raw_policy_flow": true,
+        "qualified_policy_flow": false,
+        "ast_assessment": "REVIEW_REQUIRED_ENCODER"
+      },
+      "src/edu/ntk/context/ScriptAfterEncoding.java": {
+        "raw_policy_flow": true,
+        "qualified_policy_flow": false,
+        "ast_assessment": "REVIEW_REQUIRED_OUTPUT_CONTEXT"
+      },
+      "src/edu/ntk/context/PlainText.java": {
+        "raw_policy_flow": false,
+        "qualified_policy_flow": false,
+        "ast_assessment": "REVIEW_REQUIRED_OUTPUT_CONTEXT"
+      },
+      "src/edu/ntk/context/BinaryResponse.java": {
+        "raw_policy_flow": false,
+        "qualified_policy_flow": false,
+        "ast_assessment": "REVIEW_REQUIRED_OUTPUT_CONTEXT"
+      },
+      "src/edu/ntk/context/ConstantHtml.java": {
+        "raw_policy_flow": false,
+        "qualified_policy_flow": false,
+        "ast_assessment": "CONSTANT_BODY_NO_SAFETY_VERDICT"
+      },
+      "src/edu/ntk/context/FileOutput.java": {
+        "raw_policy_flow": false,
+        "qualified_policy_flow": false,
+        "ast_assessment": "REVIEW_REQUIRED_NON_DIRECT_HTTP_STREAM"
+      },
+      "src/edu/ntk/context/ResponseAlias.java": {
+        "raw_policy_flow": false,
+        "qualified_policy_flow": false,
+        "ast_assessment": "REVIEW_REQUIRED_NON_DIRECT_HTTP_STREAM"
+      }
+    },
+    "model_expectations": {
+      "22": {
+        "src/edu/ntk/b38/path/RiskyRelativeRead.java": {
+          "expected_flow": true,
+          "reason": "Untrusted relative path may escape base; no filesystem access is executed."
+        },
+        "src/edu/ntk/b38/path/RiskyNormalizedRead.java": {
+          "expected_flow": true,
+          "reason": "Normalization alone does not enforce containment beneath base directory."
+        },
+        "src/edu/ntk/b38/path/ControlFixedPath.java": {
+          "expected_flow": false,
+          "reason": "Fixed path, no declared taint source."
+        },
+        "src/edu/ntk/b38/path/ControlAllowlistedPath.java": {
+          "expected_flow": false,
+          "reason": "Mapping selects constants; implicit flows are not tracked."
+        }
+      },
+      "78": {
+        "src/edu/ntk/b38/command/RiskyExecutable.java": {
+          "expected_flow": true,
+          "reason": "Declared attacker controls whole command/executable. Runtime.exec is NOT an implicit shell."
+        },
+        "src/edu/ntk/b38/command/RiskyCommandWithEnv.java": {
+          "expected_flow": true,
+          "reason": "Whole command string remains attacker controlled; second parameter is not a command sink."
+        },
+        "src/edu/ntk/b38/command/ControlFixedCommand.java": {
+          "expected_flow": false,
+          "reason": "Constant executable; Java fixture is never executed."
+        },
+        "src/edu/ntk/b38/command/ControlAllowlistedCommand.java": {
+          "expected_flow": false,
+          "reason": "Data influences a branch but not executable text; no implicit taint."
+        }
+      },
+      "89": {
+        "src/demo/orders/SafeBoundValue.java": {
+          "expected_flow": false,
+          "reason": "Unchanged B37 SQL regression fixture."
+        },
+        "src/demo/orders/SafeConstantSql.java": {
+          "expected_flow": false,
+          "reason": "Unchanged B37 SQL regression fixture."
+        },
+        "src/demo/orders/UnsafePreparedSql.java": {
+          "expected_flow": true,
+          "reason": "Unchanged B37 SQL regression fixture."
+        },
+        "src/demo/orders/UnsafeStatement.java": {
+          "expected_flow": true,
+          "reason": "Unchanged B37 SQL regression fixture."
+        }
+      }
+    },
+    "not_independent_gold": true,
+    "sha256": "cca80f316fcb373a705e1f72cbcba731d9de6af686f7ea8519fb9b3ea98f14cf",
+    "java_hashes": {
+      "src/demo/orders/SafeBoundValue.java": "3b7781fc67c8e6009f52542b1d88f6520d9c6afa4e63d8e91f60e83d17e93aac",
+      "src/demo/orders/SafeConstantSql.java": "09d09aeb79ebd72a71bbf8084b78cd400d747e0f20d5240f4137ce7286af4c7f",
+      "src/demo/orders/UnsafePreparedSql.java": "54237e9c5c733f8ca3cfe01fb5139261addf4a5af81c6e82fd74227f36820328",
+      "src/demo/orders/UnsafeStatement.java": "8bbd9bc607147c4e41abc42401ed03460a9e576f87082678d9a93b9780e58aae",
+      "src/edu/ntk/b38/command/ControlAllowlistedCommand.java": "dc3bfd1f8d64fdfddad6bb14a162d53559fdc8e91c563422214af961607eaa94",
+      "src/edu/ntk/b38/command/ControlFixedCommand.java": "f0c58a6e9097689c0940b796a7342ed018780ab60e42cff764a020666917979c",
+      "src/edu/ntk/b38/command/RiskyCommandWithEnv.java": "5c0e86739600605c26f900a10f74a7af5521bb3aab96e9387c6cedb2784f625e",
+      "src/edu/ntk/b38/command/RiskyExecutable.java": "a4bc58d1a35e57563a4b16ec1a43751d0e8a1be38ddb4c472af04a997e60bcd4",
+      "src/edu/ntk/b38/path/ControlAllowlistedPath.java": "6ac27e250b67eb2d74f61fc39bed6aa4ec98016fd413b8c0bc468b5a5ae269b1",
+      "src/edu/ntk/b38/path/ControlFixedPath.java": "13896bbfbf715091c3986f9f253d2b28514b4e9d2854ce7386400636a19004e6",
+      "src/edu/ntk/b38/path/RiskyNormalizedRead.java": "194fb93fd5ecf4d7841fac197096a411480a1b165b85398be0afcbd52fd03a5f",
+      "src/edu/ntk/b38/path/RiskyRelativeRead.java": "16567f9238c8a05027e1df5b61fdda3690d579d7ce19201f1d079461ff8e417f",
+      "src/edu/ntk/context/BinaryResponse.java": "585ce8d19ddf20188bd4ba97f7fe9f8761630c813b33c5e4cf95ddf45e0abee4",
+      "src/edu/ntk/context/ConstantHtml.java": "c9242904da9fbf0de8b7fb07f1ea4c36a41b547148614782255797cce3bc86fb",
+      "src/edu/ntk/context/EncodedAttribute.java": "4b5cc6411b014bf85175ef0e58740e51f59cbacdeba5262cf5dfb1aefa4d5273",
+      "src/edu/ntk/context/EncodedBody.java": "99109445526d513ab811833bc414a1e6e57b99023b07f108bc4ddd3e426a4491",
+      "src/edu/ntk/context/FileOutput.java": "b730e2db047ec23e42334a06cd71bb4f83b6e1c040f9757b8577b016c9146551",
+      "src/edu/ntk/context/HtmlAttribute.java": "4c80488f03efb3990c24574d346cee987b244f78859d2bb04f05bbf27d9461d9",
+      "src/edu/ntk/context/HtmlBody.java": "ad93bd035926bf2db6ff6ce89698c11118b5e6371512886274e8ee5b746e8d28",
+      "src/edu/ntk/context/MisleadingEncoder.java": "0ab3e60ae946fc7d71977959a1cf04a90f0706b9fd3a90617737c3d5f0976af3",
+      "src/edu/ntk/context/PartialEncoder.java": "59578d96196ad63644eb002fdc01d5644fcfaf2dfd735fcaca9f41e5289a1ed4",
+      "src/edu/ntk/context/PlainText.java": "4f94f15efb630b107a1ee2c0b272f4c224d9a1ceda19f91946eefde9cd0614ee",
+      "src/edu/ntk/context/ResponseAlias.java": "fa4ddd3f75c151b0cb612e376c5cb5c9f28d7c86ad378959c6be2067c5d2f4fe",
+      "src/edu/ntk/context/ScriptAfterEncoding.java": "a6e118c210aa1866eefd33def07eb88d54da5c55ecfa1097ab84afb6212419ba"
+    }
+  }
+}

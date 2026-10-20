@@ -1,0 +1,10 @@
+javac 21.0.12.1
+B38A: 4 Java sources -> 4 compiled classes; application NOT executed.
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+B38B: 4 Java sources -> 4 compiled classes; application NOT executed.
+B38C: 4 Java sources -> 4 compiled classes; application NOT executed.
+B38SQL: 4 Java sources -> 4 compiled classes; application NOT executed.
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+B38D: 16 Java sources -> 16 compiled classes; application NOT executed.

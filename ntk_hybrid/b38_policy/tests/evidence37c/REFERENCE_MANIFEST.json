@@ -1,0 +1,18 @@
+{
+  "origin_evidence_zip": "ntk-b37b-1870ce7ef2a5deb589e3-evidence.zip",
+  "origin_sha256": "08c332bfa7862f954ef0918e0bc7afad508ea0e98f7ffd3e3e1a354bff089904",
+  "usage": "CPU_REPLAY_REGRESSION_ONLY_NOT_B38_RUNTIME_OR_GOLD",
+  "files": {
+    "SCORER_FROZEN.py": "c1b9cbf071739ca6d96062032867835dbf4db185f4e0ac1e2d609bd319e0de7e",
+    "CANDIDATES_FROM_NEW_CODEQL_DB.json": "cadbb02ce258ee5b828a9f09f1a733b790182085c3b2f7bf42dab5e5783f248e",
+    "CALLS_FROM_NEW_CODEQL_DB.json": "90c74c4909f2bd33a665214449a913a1af3a8a6e5671bbf79eeaa369c650ca89",
+    "ARGUMENTS_FROM_NEW_CODEQL_DB.json": "0523adc03afc2031325cea80cf5f8ca5ca21becd461189fc2af8c5fa5e9081d8",
+    "CODEQL_DISCOVERED_SOURCE_CALLS.json": "df63983968e7939c8374ca1eda0d4c6c074f2c6ac34c545bc02f04989ac15b53",
+    "OPENGREP_CANONICAL_DERIVED.json": "eabca6c99e6dabeb69ba99560f02f83a687dd69247c35ee065b730959b78ed78",
+    "analysis/epoch_1/RAW_STAGE3_SINK_LABELS.json": "23cb70d61fae778bd46b6d576349b79b1fbb1aa55aa4e3614ed34309ba38f880",
+    "analysis/epoch_1/CODEQL_VERIFIED_PATHS.json": "ab6bfce6f6dbaaf7011844fe2be91a2c09144d1a8bb973289c63c3f6619336d5",
+    "analysis/epoch_1/FUSED_FINDINGS.json": "188747542f5e106d2e8c4c63994841d9452499986b26b63979a8dc5fa788d7bf",
+    "analysis/epoch_1/codeql.sarif": "7e06cc615d6ac418d53a5cfe7f5b80928abe0584fc8db9465a0f247fe913a4f5",
+    "live/epoch_1/native_trace.jsonl": "364c2fce0b368e537ad8918ccc8557be1f1b9c00f81eec0867ee07ed9dc4feca"
+  }
+}

@@ -1,0 +1,5 @@
+name: ntk/b38-four-cwe
+version: 0.0.1
+dependencies:
+  codeql/java-all: "9.1.2"
+  codeql/java-queries: "1.11.4"

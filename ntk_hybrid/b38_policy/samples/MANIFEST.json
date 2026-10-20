@@ -1,0 +1,478 @@
+{
+  "B38A_JAVA.zip": {
+    "phase": "A",
+    "archive_sha256": "a1435721b91eae1ab7701db34989ad3c0bc83855eef835769387d2d6df18b21e",
+    "files": {
+      "src/edu/ntk/b38/path/RiskyRelativeRead.java": "16567f9238c8a05027e1df5b61fdda3690d579d7ce19201f1d079461ff8e417f",
+      "src/edu/ntk/b38/path/RiskyNormalizedRead.java": "194fb93fd5ecf4d7841fac197096a411480a1b165b85398be0afcbd52fd03a5f",
+      "src/edu/ntk/b38/path/ControlFixedPath.java": "13896bbfbf715091c3986f9f253d2b28514b4e9d2854ce7386400636a19004e6",
+      "src/edu/ntk/b38/path/ControlAllowlistedPath.java": "6ac27e250b67eb2d74f61fc39bed6aa4ec98016fd413b8c0bc468b5a5ae269b1"
+    },
+    "expectations": {
+      "22": {
+        "src/edu/ntk/b38/path/RiskyRelativeRead.java": {
+          "expected_flow": true,
+          "reason": "Untrusted relative path may escape base; no filesystem access is executed."
+        },
+        "src/edu/ntk/b38/path/RiskyNormalizedRead.java": {
+          "expected_flow": true,
+          "reason": "Normalization alone does not enforce containment beneath base directory."
+        },
+        "src/edu/ntk/b38/path/ControlFixedPath.java": {
+          "expected_flow": false,
+          "reason": "Fixed path, no declared taint source."
+        },
+        "src/edu/ntk/b38/path/ControlAllowlistedPath.java": {
+          "expected_flow": false,
+          "reason": "Mapping selects constants; implicit flows are not tracked."
+        }
+      }
+    },
+    "evaluation_scope": "DEVELOPMENT_INTEGRATION_FIXTURE_NOT_INDEPENDENT_GOLD",
+    "scanner_expectations": {
+      "22": [
+        "src/edu/ntk/b38/path/ControlAllowlistedPath.java",
+        "src/edu/ntk/b38/path/ControlFixedPath.java",
+        "src/edu/ntk/b38/path/RiskyNormalizedRead.java",
+        "src/edu/ntk/b38/path/RiskyRelativeRead.java"
+      ]
+    },
+    "scanner_expectations_scope": "RULE_CALLSITE_COVERAGE_INCLUDING_OWN_CONTROLS_SEPARATE_FROM_CROSS_CWE_DATAFLOW_EXPECTATIONS"
+  },
+  "B38B_JAVA.zip": {
+    "phase": "B",
+    "archive_sha256": "a8e0de4772e73093c0192a2f67c65a9ef2469fe99af7e10cefc0c69a5b1cbcb7",
+    "files": {
+      "src/edu/ntk/b38/command/RiskyExecutable.java": "a4bc58d1a35e57563a4b16ec1a43751d0e8a1be38ddb4c472af04a997e60bcd4",
+      "src/edu/ntk/b38/command/RiskyCommandWithEnv.java": "5c0e86739600605c26f900a10f74a7af5521bb3aab96e9387c6cedb2784f625e",
+      "src/edu/ntk/b38/command/ControlFixedCommand.java": "f0c58a6e9097689c0940b796a7342ed018780ab60e42cff764a020666917979c",
+      "src/edu/ntk/b38/command/ControlAllowlistedCommand.java": "dc3bfd1f8d64fdfddad6bb14a162d53559fdc8e91c563422214af961607eaa94"
+    },
+    "expectations": {
+      "78": {
+        "src/edu/ntk/b38/command/RiskyExecutable.java": {
+          "expected_flow": true,
+          "reason": "Declared attacker controls whole command/executable. Runtime.exec is NOT an implicit shell."
+        },
+        "src/edu/ntk/b38/command/RiskyCommandWithEnv.java": {
+          "expected_flow": true,
+          "reason": "Whole command string remains attacker controlled; second parameter is not a command sink."
+        },
+        "src/edu/ntk/b38/command/ControlFixedCommand.java": {
+          "expected_flow": false,
+          "reason": "Constant executable; Java fixture is never executed."
+        },
+        "src/edu/ntk/b38/command/ControlAllowlistedCommand.java": {
+          "expected_flow": false,
+          "reason": "Data influences a branch but not executable text; no implicit taint."
+        }
+      }
+    },
+    "evaluation_scope": "DEVELOPMENT_INTEGRATION_FIXTURE_NOT_INDEPENDENT_GOLD",
+    "scanner_expectations": {
+      "78": [
+        "src/edu/ntk/b38/command/ControlAllowlistedCommand.java",
+        "src/edu/ntk/b38/command/ControlFixedCommand.java",
+        "src/edu/ntk/b38/command/RiskyCommandWithEnv.java",
+        "src/edu/ntk/b38/command/RiskyExecutable.java"
+      ]
+    },
+    "scanner_expectations_scope": "RULE_CALLSITE_COVERAGE_INCLUDING_OWN_CONTROLS_SEPARATE_FROM_CROSS_CWE_DATAFLOW_EXPECTATIONS"
+  },
+  "B38C_JAVA.zip": {
+    "phase": "C",
+    "archive_sha256": "f6f20f128b5e7a3e1d18dab137dc32d5567b52c9415fe1a2a8851743d16d5a4e",
+    "files": {
+      "src/edu/ntk/b38/html/RiskyHtmlBody.java": "af1d06dc931a2ad8632e54f71cb997a1942fd77fc61e2bcf128a78597b7f772b",
+      "src/edu/ntk/b38/html/RiskyHtmlAttribute.java": "9b49235191d6e5ae7cb23e8dec2ef620c766023b27b7392dbe610bdec2122b90",
+      "src/edu/ntk/b38/html/ControlConstantHtml.java": "379d89bf75fa292cd3c2d320fc8df091f9fa9a24ce80f27dfb498d2c3462aa6f",
+      "src/edu/ntk/b38/html/ControlPlainText.java": "062a002ebab91e8c011513bc98282fa223cdc1ba2d356caf388e7ebf7d992324"
+    },
+    "expectations": {
+      "79": {
+        "src/edu/ntk/b38/html/RiskyHtmlBody.java": {
+          "expected_flow": true,
+          "reason": "Unencoded decoded HTTP query inserted into HTML text."
+        },
+        "src/edu/ntk/b38/html/RiskyHtmlAttribute.java": {
+          "expected_flow": true,
+          "reason": "Unencoded HTTP query inserted into quoted HTML attribute."
+        },
+        "src/edu/ntk/b38/html/ControlConstantHtml.java": {
+          "expected_flow": false,
+          "reason": "No tainted bytes are written."
+        },
+        "src/edu/ntk/b38/html/ControlPlainText.java": {
+          "expected_flow": false,
+          "reason": "Not an HTML response under this narrow declared context; not a universal safety claim."
+        }
+      }
+    },
+    "evaluation_scope": "DEVELOPMENT_INTEGRATION_FIXTURE_NOT_INDEPENDENT_GOLD",
+    "scanner_expectations": {
+      "79": [
+        "src/edu/ntk/b38/html/ControlConstantHtml.java",
+        "src/edu/ntk/b38/html/ControlPlainText.java",
+        "src/edu/ntk/b38/html/RiskyHtmlAttribute.java",
+        "src/edu/ntk/b38/html/RiskyHtmlBody.java"
+      ]
+    },
+    "scanner_expectations_scope": "RULE_CALLSITE_COVERAGE_INCLUDING_OWN_CONTROLS_SEPARATE_FROM_CROSS_CWE_DATAFLOW_EXPECTATIONS"
+  },
+  "B38SQL_JAVA.zip": {
+    "phase": "SQL",
+    "archive_sha256": "5d96e746889b11f5244e59677c41d382e6f88fe9e3014af5dcf3e9df7299bfb1",
+    "files": {
+      "src/demo/orders/SafeBoundValue.java": "3b7781fc67c8e6009f52542b1d88f6520d9c6afa4e63d8e91f60e83d17e93aac",
+      "src/demo/orders/SafeConstantSql.java": "09d09aeb79ebd72a71bbf8084b78cd400d747e0f20d5240f4137ce7286af4c7f",
+      "src/demo/orders/UnsafePreparedSql.java": "54237e9c5c733f8ca3cfe01fb5139261addf4a5af81c6e82fd74227f36820328",
+      "src/demo/orders/UnsafeStatement.java": "8bbd9bc607147c4e41abc42401ed03460a9e576f87082678d9a93b9780e58aae"
+    },
+    "expectations": {
+      "89": {
+        "src/demo/orders/SafeBoundValue.java": {
+          "expected_flow": false,
+          "reason": "Unchanged B37 SQL regression fixture."
+        },
+        "src/demo/orders/SafeConstantSql.java": {
+          "expected_flow": false,
+          "reason": "Unchanged B37 SQL regression fixture."
+        },
+        "src/demo/orders/UnsafePreparedSql.java": {
+          "expected_flow": true,
+          "reason": "Unchanged B37 SQL regression fixture."
+        },
+        "src/demo/orders/UnsafeStatement.java": {
+          "expected_flow": true,
+          "reason": "Unchanged B37 SQL regression fixture."
+        }
+      }
+    },
+    "evaluation_scope": "DEVELOPMENT_INTEGRATION_FIXTURE_NOT_INDEPENDENT_GOLD",
+    "scanner_expectations": {
+      "89": [
+        "src/demo/orders/SafeBoundValue.java",
+        "src/demo/orders/SafeConstantSql.java",
+        "src/demo/orders/UnsafePreparedSql.java",
+        "src/demo/orders/UnsafeStatement.java"
+      ]
+    },
+    "scanner_expectations_scope": "RULE_CALLSITE_COVERAGE_INCLUDING_OWN_CONTROLS_SEPARATE_FROM_CROSS_CWE_DATAFLOW_EXPECTATIONS"
+  },
+  "B38D_JAVA.zip": {
+    "phase": "D",
+    "archive_sha256": "e067e6fab85f272136bd477f1832db3cd226d7406a29d65996f3bcebe5f9dc79",
+    "files": {
+      "src/edu/ntk/b38/path/RiskyRelativeRead.java": "16567f9238c8a05027e1df5b61fdda3690d579d7ce19201f1d079461ff8e417f",
+      "src/edu/ntk/b38/path/RiskyNormalizedRead.java": "194fb93fd5ecf4d7841fac197096a411480a1b165b85398be0afcbd52fd03a5f",
+      "src/edu/ntk/b38/path/ControlFixedPath.java": "13896bbfbf715091c3986f9f253d2b28514b4e9d2854ce7386400636a19004e6",
+      "src/edu/ntk/b38/path/ControlAllowlistedPath.java": "6ac27e250b67eb2d74f61fc39bed6aa4ec98016fd413b8c0bc468b5a5ae269b1",
+      "src/edu/ntk/b38/command/RiskyExecutable.java": "a4bc58d1a35e57563a4b16ec1a43751d0e8a1be38ddb4c472af04a997e60bcd4",
+      "src/edu/ntk/b38/command/RiskyCommandWithEnv.java": "5c0e86739600605c26f900a10f74a7af5521bb3aab96e9387c6cedb2784f625e",
+      "src/edu/ntk/b38/command/ControlFixedCommand.java": "f0c58a6e9097689c0940b796a7342ed018780ab60e42cff764a020666917979c",
+      "src/edu/ntk/b38/command/ControlAllowlistedCommand.java": "dc3bfd1f8d64fdfddad6bb14a162d53559fdc8e91c563422214af961607eaa94",
+      "src/edu/ntk/b38/html/RiskyHtmlBody.java": "af1d06dc931a2ad8632e54f71cb997a1942fd77fc61e2bcf128a78597b7f772b",
+      "src/edu/ntk/b38/html/RiskyHtmlAttribute.java": "9b49235191d6e5ae7cb23e8dec2ef620c766023b27b7392dbe610bdec2122b90",
+      "src/edu/ntk/b38/html/ControlConstantHtml.java": "379d89bf75fa292cd3c2d320fc8df091f9fa9a24ce80f27dfb498d2c3462aa6f",
+      "src/edu/ntk/b38/html/ControlPlainText.java": "062a002ebab91e8c011513bc98282fa223cdc1ba2d356caf388e7ebf7d992324",
+      "src/demo/orders/SafeBoundValue.java": "3b7781fc67c8e6009f52542b1d88f6520d9c6afa4e63d8e91f60e83d17e93aac",
+      "src/demo/orders/SafeConstantSql.java": "09d09aeb79ebd72a71bbf8084b78cd400d747e0f20d5240f4137ce7286af4c7f",
+      "src/demo/orders/UnsafePreparedSql.java": "54237e9c5c733f8ca3cfe01fb5139261addf4a5af81c6e82fd74227f36820328",
+      "src/demo/orders/UnsafeStatement.java": "8bbd9bc607147c4e41abc42401ed03460a9e576f87082678d9a93b9780e58aae"
+    },
+    "expectations": {
+      "22": {
+        "src/edu/ntk/b38/path/RiskyRelativeRead.java": {
+          "expected_flow": true,
+          "reason": "Untrusted relative path may escape base; no filesystem access is executed."
+        },
+        "src/edu/ntk/b38/path/RiskyNormalizedRead.java": {
+          "expected_flow": true,
+          "reason": "Normalization alone does not enforce containment beneath base directory."
+        },
+        "src/edu/ntk/b38/path/ControlFixedPath.java": {
+          "expected_flow": false,
+          "reason": "Fixed path, no declared taint source."
+        },
+        "src/edu/ntk/b38/path/ControlAllowlistedPath.java": {
+          "expected_flow": false,
+          "reason": "Mapping selects constants; implicit flows are not tracked."
+        },
+        "src/edu/ntk/b38/command/RiskyExecutable.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/edu/ntk/b38/command/RiskyCommandWithEnv.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/edu/ntk/b38/command/ControlFixedCommand.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/edu/ntk/b38/command/ControlAllowlistedCommand.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/edu/ntk/b38/html/RiskyHtmlBody.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/edu/ntk/b38/html/RiskyHtmlAttribute.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/edu/ntk/b38/html/ControlConstantHtml.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/edu/ntk/b38/html/ControlPlainText.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/demo/orders/SafeBoundValue.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/demo/orders/SafeConstantSql.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/demo/orders/UnsafePreparedSql.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/demo/orders/UnsafeStatement.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        }
+      },
+      "78": {
+        "src/edu/ntk/b38/path/RiskyRelativeRead.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/edu/ntk/b38/path/RiskyNormalizedRead.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/edu/ntk/b38/path/ControlFixedPath.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/edu/ntk/b38/path/ControlAllowlistedPath.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/edu/ntk/b38/command/RiskyExecutable.java": {
+          "expected_flow": true,
+          "reason": "Declared attacker controls whole command/executable. Runtime.exec is NOT an implicit shell."
+        },
+        "src/edu/ntk/b38/command/RiskyCommandWithEnv.java": {
+          "expected_flow": true,
+          "reason": "Whole command string remains attacker controlled; second parameter is not a command sink."
+        },
+        "src/edu/ntk/b38/command/ControlFixedCommand.java": {
+          "expected_flow": false,
+          "reason": "Constant executable; Java fixture is never executed."
+        },
+        "src/edu/ntk/b38/command/ControlAllowlistedCommand.java": {
+          "expected_flow": false,
+          "reason": "Data influences a branch but not executable text; no implicit taint."
+        },
+        "src/edu/ntk/b38/html/RiskyHtmlBody.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/edu/ntk/b38/html/RiskyHtmlAttribute.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/edu/ntk/b38/html/ControlConstantHtml.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/edu/ntk/b38/html/ControlPlainText.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/demo/orders/SafeBoundValue.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/demo/orders/SafeConstantSql.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/demo/orders/UnsafePreparedSql.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/demo/orders/UnsafeStatement.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        }
+      },
+      "79": {
+        "src/edu/ntk/b38/path/RiskyRelativeRead.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/edu/ntk/b38/path/RiskyNormalizedRead.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/edu/ntk/b38/path/ControlFixedPath.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/edu/ntk/b38/path/ControlAllowlistedPath.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/edu/ntk/b38/command/RiskyExecutable.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/edu/ntk/b38/command/RiskyCommandWithEnv.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/edu/ntk/b38/command/ControlFixedCommand.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/edu/ntk/b38/command/ControlAllowlistedCommand.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/edu/ntk/b38/html/RiskyHtmlBody.java": {
+          "expected_flow": true,
+          "reason": "Unencoded decoded HTTP query inserted into HTML text."
+        },
+        "src/edu/ntk/b38/html/RiskyHtmlAttribute.java": {
+          "expected_flow": true,
+          "reason": "Unencoded HTTP query inserted into quoted HTML attribute."
+        },
+        "src/edu/ntk/b38/html/ControlConstantHtml.java": {
+          "expected_flow": false,
+          "reason": "No tainted bytes are written."
+        },
+        "src/edu/ntk/b38/html/ControlPlainText.java": {
+          "expected_flow": false,
+          "reason": "Not an HTML response under this narrow declared context; not a universal safety claim."
+        },
+        "src/demo/orders/SafeBoundValue.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/demo/orders/SafeConstantSql.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/demo/orders/UnsafePreparedSql.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/demo/orders/UnsafeStatement.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        }
+      },
+      "89": {
+        "src/edu/ntk/b38/path/RiskyRelativeRead.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/edu/ntk/b38/path/RiskyNormalizedRead.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/edu/ntk/b38/path/ControlFixedPath.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/edu/ntk/b38/path/ControlAllowlistedPath.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/edu/ntk/b38/command/RiskyExecutable.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/edu/ntk/b38/command/RiskyCommandWithEnv.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/edu/ntk/b38/command/ControlFixedCommand.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/edu/ntk/b38/command/ControlAllowlistedCommand.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/edu/ntk/b38/html/RiskyHtmlBody.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/edu/ntk/b38/html/RiskyHtmlAttribute.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/edu/ntk/b38/html/ControlConstantHtml.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/edu/ntk/b38/html/ControlPlainText.java": {
+          "expected_flow": false,
+          "reason": "Other CWE profile, not a positive for this CWE."
+        },
+        "src/demo/orders/SafeBoundValue.java": {
+          "expected_flow": false,
+          "reason": "Unchanged B37 SQL regression fixture."
+        },
+        "src/demo/orders/SafeConstantSql.java": {
+          "expected_flow": false,
+          "reason": "Unchanged B37 SQL regression fixture."
+        },
+        "src/demo/orders/UnsafePreparedSql.java": {
+          "expected_flow": true,
+          "reason": "Unchanged B37 SQL regression fixture."
+        },
+        "src/demo/orders/UnsafeStatement.java": {
+          "expected_flow": true,
+          "reason": "Unchanged B37 SQL regression fixture."
+        }
+      }
+    },
+    "evaluation_scope": "DEVELOPMENT_INTEGRATION_FIXTURE_NOT_INDEPENDENT_GOLD",
+    "scanner_expectations": {
+      "22": [
+        "src/edu/ntk/b38/path/ControlAllowlistedPath.java",
+        "src/edu/ntk/b38/path/ControlFixedPath.java",
+        "src/edu/ntk/b38/path/RiskyNormalizedRead.java",
+        "src/edu/ntk/b38/path/RiskyRelativeRead.java"
+      ],
+      "78": [
+        "src/edu/ntk/b38/command/ControlAllowlistedCommand.java",
+        "src/edu/ntk/b38/command/ControlFixedCommand.java",
+        "src/edu/ntk/b38/command/RiskyCommandWithEnv.java",
+        "src/edu/ntk/b38/command/RiskyExecutable.java"
+      ],
+      "79": [
+        "src/edu/ntk/b38/html/ControlConstantHtml.java",
+        "src/edu/ntk/b38/html/ControlPlainText.java",
+        "src/edu/ntk/b38/html/RiskyHtmlAttribute.java",
+        "src/edu/ntk/b38/html/RiskyHtmlBody.java"
+      ],
+      "89": [
+        "src/demo/orders/SafeBoundValue.java",
+        "src/demo/orders/SafeConstantSql.java",
+        "src/demo/orders/UnsafePreparedSql.java",
+        "src/demo/orders/UnsafeStatement.java"
+      ]
+    },
+    "scanner_expectations_scope": "RULE_CALLSITE_COVERAGE_INCLUDING_OWN_CONTROLS_SEPARATE_FROM_CROSS_CWE_DATAFLOW_EXPECTATIONS"
+  }
+}

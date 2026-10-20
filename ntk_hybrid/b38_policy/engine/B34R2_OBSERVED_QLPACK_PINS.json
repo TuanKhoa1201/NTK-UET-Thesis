@@ -1,0 +1,82 @@
+{
+  "codeql/controlflow": {
+    "fingerprint": "bd265c9994806490a3e80d9b7a89192fe943595929d290ec08a50c998ae5f469",
+    "qlpack_sha256": "96b368e33a543caaa8d59acc2d5ed627526846380fa0dcf07930dbe7ee95bc42",
+    "version": "2.0.35"
+  },
+  "codeql/dataflow": {
+    "fingerprint": "8e5efde1411f669073eb44eb5dec3728f08a5a0079431929d6b94ab854368c99",
+    "qlpack_sha256": "b174e23059767a015325c7d436f2675b9d9544a877212367e56bcf6e4a6d8251",
+    "version": "2.1.7"
+  },
+  "codeql/java-all": {
+    "fingerprint": "c62f77715ccaf6759f5ca24fd2e6464ff64eeec6b70f49738debe6dc3a0dd51a",
+    "qlpack_sha256": "7387833525c8d7a33085ddb0d59967f863585b2724e13848f3c98d7904870c37",
+    "version": "9.1.2"
+  },
+  "codeql/java-queries": {
+    "fingerprint": "dd1a7f978d14eef87a9d874e5e8b336e365f27fa150174ded8b13f1afbea33fe",
+    "qlpack_sha256": "0bfb63698e30b983d54da459213027d7b0fbc99610237b2cbbd8b3d28bbd0dba",
+    "version": "1.11.4"
+  },
+  "codeql/mad": {
+    "fingerprint": "fff9cff5718312274b43432f415ad7d8a67cb96e2c2fb45b64376881551e6e06",
+    "qlpack_sha256": "3714ac5e754d88980d666f29a38c5957ac22fa48e1aa543eb7889a664f53e22a",
+    "version": "1.0.51"
+  },
+  "codeql/quantum": {
+    "fingerprint": "811b18121760eaaea69b794c8401a2f7c46dad3c26d4e55c8301610d24f35ba3",
+    "qlpack_sha256": "21e98369cf56f3ccfd64801ad8fc7359b52627169b534c2473229a9243bf5c33",
+    "version": "0.0.29"
+  },
+  "codeql/rangeanalysis": {
+    "fingerprint": "b6aca33ff69545e5f92c9828d8afc749570984bf682700ee126c92543dde0ba2",
+    "qlpack_sha256": "582e9835f01c29377b6e816763c0f60e9a5af076afb7eef10e457e8758544020",
+    "version": "1.0.51"
+  },
+  "codeql/regex": {
+    "fingerprint": "36e104e155cb058546f068f042a04487b61fc665c25a9cece91ca5e42fcfe9c1",
+    "qlpack_sha256": "f93099ebf14bdc91c86155373fdb77957d3dc98a5c7c991b8175d18960f5e6b1",
+    "version": "1.0.51"
+  },
+  "codeql/ssa": {
+    "fingerprint": "c3c6353cd7e4a6d45be35c275ee61bfd472afdf08fe75325e2f4613731457533",
+    "qlpack_sha256": "d41ef8d7dae2bf279dda1dc6e33dc7c8233bc7c6053b398ea64b1e212c4c271f",
+    "version": "2.0.27"
+  },
+  "codeql/suite-helpers": {
+    "fingerprint": "9f198835e863d39b31ff76fe0f579f16a91ae6f58120a94581b1fb322d0b4356",
+    "qlpack_sha256": "30b8b4511851c4f20c7cc7d71bdadbd5be84ba36bf48e5cd33fa6cd65789e612",
+    "version": "1.0.51"
+  },
+  "codeql/threat-models": {
+    "fingerprint": "e9a0b7103069d8bfcb7940ef76bfdde4b111974a001a5915eab45b0647a334bf",
+    "qlpack_sha256": "6ba586f17ef9d7a4992edf1bd9a3cf8aab567a611b3bff91888380805bab0c2a",
+    "version": "1.0.51"
+  },
+  "codeql/tutorial": {
+    "fingerprint": "4334ea31af59fac9138c97dfc5a935045d5b9253ab49e5935fe2e82273a883d7",
+    "qlpack_sha256": "db91e447e5e788e9ecd34febc7ef758c546d1d3a46948b99275a0251bda10a93",
+    "version": "1.0.51"
+  },
+  "codeql/typeflow": {
+    "fingerprint": "ff5ccad0944b52fcc9a1464866c73b10385e8f48adb4728240b25745033ec310",
+    "qlpack_sha256": "5124efdeca439a28bf8496c9236e55e5afac65e78011fa4148cc13898f28e6ff",
+    "version": "1.0.51"
+  },
+  "codeql/typetracking": {
+    "fingerprint": "67398c2901492629d72138e4c2d5b6ea3195e6eff1aaf7237aa5f507438fe709",
+    "qlpack_sha256": "a0c0444de572a6c8c093185ab585d2af9f8b0d19c227776c8e9d9ff7c1f80119",
+    "version": "2.0.35"
+  },
+  "codeql/util": {
+    "fingerprint": "1aeea553b2786aa33936ccd094c7a32b80aa86ff11e231866ff75bcb6d898804",
+    "qlpack_sha256": "652676a5a7cbada3e2d91a2f213fd2b2bd3ecb5ecc90a4833c258ad2cda2b599",
+    "version": "2.0.38"
+  },
+  "codeql/xml": {
+    "fingerprint": "bbb279c79cbd8bc866db7e0d0d289bf7b10a483533469cc6b699ad313c51924d",
+    "qlpack_sha256": "f3c16f1dc4a62bafc4d327c97f59b237f4d09bd544aaca39c59967131d90ebe4",
+    "version": "1.0.51"
+  }
+}

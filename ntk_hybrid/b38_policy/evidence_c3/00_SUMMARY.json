@@ -1,0 +1,37 @@
+{
+  "status": "B38_DIAGNOSTIC_ONLY_COMPLETE_NOT_MODEL_ACCEPTANCE",
+  "revision": "B38R1_SCANNER_ENVIRONMENT",
+  "phase": "C",
+  "cwes": [
+    "79"
+  ],
+  "arms": {},
+  "diagnostics": {
+    "79": {
+      "cwe": "79",
+      "flow_count": 4,
+      "label_origin": "MANUAL_DIAGNOSTIC_ONLY_NOT_LLM_NOT_SCORED"
+    }
+  },
+  "implementation_sha256": "45c43ac41777d6c90a8b3a2b1d75519ee3cace9f169a777f8ef2f141564a2d26",
+  "policy_sha256": "b86f692de9e8f491f6bf58b3a666faee7216dab7139fa8447440c22794c73225",
+  "diagnostic_only": true,
+  "scope": "JDK21_ONLY_MAX24_JAVA_NOT_GENERAL_PROJECT_COVERAGE",
+  "codeql_dataflow": "MANUAL_DIAGNOSTIC_ONLY_NOT_LLM",
+  "source_policies": {
+    "79": "CODEQL_HTTP_EXCHANGE_REQUEST_URI_QUERY_DECLARED_REMOTE_SOURCE_NOT_LLM"
+  },
+  "source_discovered_by_llm": false,
+  "transfers": "DECLARED_JDK_MODELS_NOT_LEARNED_PROPAGATOR_LABELS",
+  "training": "NOT_EXECUTED",
+  "Stage4": "NOT_EXECUTED",
+  "full_SAPipeline_run": "NOT_EXECUTED",
+  "independent_gold": false,
+  "run_dir": "/home/tuankhoa/migration/ntk_stage3_verified_v5_work/batch38_runs/batch38c_20261019T091032Z_460ea6",
+  "current_stage": "FINISHED",
+  "input_sha256": "f7041366bcb8cc82660b6baaf3eae7e4fec1aa75db895d512bff2b0d11c620c8",
+  "fixture": "OPERATOR_PROJECT_NOT_GOLD",
+  "opengrep_count": 9,
+  "frozen_unchanged": true,
+  "wall_time_s": 337.823559681
+}

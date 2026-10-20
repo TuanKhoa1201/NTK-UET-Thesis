@@ -1,3 +1,27 @@
+# NTK SAST — Current Engineering Prototype (Batch 38DPA)
+
+**Current scoped prototype:** OpenGrep + IRIS Stage 3 +
+local Qwen2.5-Coder-0.5B LoRA + CodeQL +
+semantic validation + SAST scoring V2.2.
+
+The localhost web prototype supports CWE-22, CWE-78,
+CWE-79 and CWE-89 within its declared JDK-only scope.
+
+**Important:** CWE-79 uses CodeQL contextual policy-assisted
+evidence. The LoRA model-derived XSS gate has NOT passed.
+
+Implementation: [`ntk_hybrid/b38_policy/`](ntk_hybrid/b38_policy/)
+
+Technical scope:
+[`docs/NTK_B38_DPA_STATUS.md`](docs/NTK_B38_DPA_STATUS.md)
+
+The historical README material below describes earlier
+milestones, including the older 1.5B/V2.1 configuration.
+Those historical claims must not be confused with the
+current 0.5B/V2.2 prototype.
+
+---
+
 # NTK-IRIS: Công Cụ Phát Hiện Lỗ Hổng Mã Nguồn Kết Hợp Phân Tích Tĩnh Nguồn Mở và Mô Hình Ngôn Ngữ Lớn
 
 > **Đồ án Tốt nghiệp Đại học Công nghệ (VNU-UET)**  

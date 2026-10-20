@@ -1,0 +1,18 @@
+usage: run_batch38.py [-h] --phase {A,B,C,D,SQL}
+                      [--arm {epoch_1,epoch_2,both}]
+                      [--project-zip PROJECT_ZIP] [--work WORK] [--repo REPO]
+                      [--downloads DOWNLOADS] [--diagnostic-only]
+
+Batch 38 A/B/C: isolated CWEs. D: combined regression before separate web
+launch.
+
+options:
+  -h, --help            show this help message and exit
+  --phase {A,B,C,D,SQL}
+  --arm {epoch_1,epoch_2,both}
+  --project-zip PROJECT_ZIP
+  --work WORK
+  --repo REPO
+  --downloads DOWNLOADS
+  --diagnostic-only     Real CodeQL diagnostics; NEVER a model or final gate
+                        PASS.

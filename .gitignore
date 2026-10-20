@@ -52,3 +52,31 @@ src/models/gemini_old.py
 evaluate_result.py
 merge_result.py
 parse_iris_result.py
+
+# ===== NTK B38 local-only runtime =====
+**/.env
+**/.env.*
+**/.venv/
+**/.ntk_v5_lora_venv/
+**/__pycache__/
+**/.pytest_cache/
+
+# Model artifacts: do not publish local trained weights
+**/*.safetensors
+**/*.ckpt
+**/*.pth
+**/*.pt
+**/*.gguf
+
+# User scanning runs, reports and local databases
+**/batch38_policy_runs/
+**/batch38_policy_web/
+**/batch38_policy_gates/
+**/batch38c2_context_probe_runs/
+**/*_result.zip
+**/*-evidence.zip
+**/*-result.json
+**/*-engine.log
+
+# Local workspace pointers
+**/NTK_BATCH38_*_PATH.txt

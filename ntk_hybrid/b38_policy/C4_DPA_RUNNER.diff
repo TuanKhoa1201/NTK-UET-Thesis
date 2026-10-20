@@ -1,0 +1,310 @@
+--- B38R1/run_batch38.py
++++ C4_DPA/run_policy.py
+@@ -1,5 +1,5 @@
+ #!/usr/bin/env python3
+-"""Batch 38 A/B/C: isolated CWEs. D: combined regression before separate web launch."""
++"""C4 compiler-certified encoding review; DPA fresh mixed-evidence four-CWE integration."""
+ from __future__ import annotations
+ import argparse
+ from copy import deepcopy
+@@ -30,20 +30,27 @@
+ from ntk_b38.core import read_calls,emit_flow,parse_flows,calibrated_fusion,to_sarif
+ from ntk_b38.scanner import scan
+ 
+-PHASES={**PHASE_CWES,'SQL':['89']}
++from c4.policy import (tagged,tag_paths,bind_ast,assess_paths,policy_fusion,check_policy_fixture,
++  to_sarif,ORIGIN,MODEL,POLICY as C4_POLICY,POLICY_SHA as C4_SHA)
++from c4.gates import require_gate,issue_gate
++PHASES={'C4':['79'],'DPA':['22','78','79','89']}
+ 
+ 
+ def implementation_sha():
+  paths=[p for p in ROOT.rglob('*') if p.is_file() and
+-        (p.suffix in ('.py','.ql','.qll','.template','.yml','.sh','.js','.html','.css') or p==ROOT/'samples/MANIFEST.json') and
++        (p.suffix in ('.py','.ql','.qll','.template','.yml','.sh','.js','.html','.css','.java') or p in (ROOT/'samples/MANIFEST.json',ROOT/'POLICY_SAMPLES.json')) and
+         '__pycache__' not in p.parts]
+  return digest({str(p.relative_to(ROOT)):sha_file(p) for p in sorted(paths)})
+ 
+ 
+ def fixture_for(archive_sha):
+- obj=json.loads((ROOT/'samples/MANIFEST.json').read_text())
+- rows=[v for v in obj.values() if v['archive_sha256']==archive_sha]
+- return rows[0] if len(rows)==1 else None
++ rows=[dict(v,phase=k) for k,v in json.loads((ROOT/'POLICY_SAMPLES.json').read_text()).items() if v['sha256']==archive_sha]
++ if len(rows)!=1:return None
++ f=rows[0];f['files']=f['java_hashes'];allfiles=set(f['files'])
++ f['expectations']={c:{p:{'expected_flow':p in vals and vals[p]['expected_flow']} for p in allfiles} for c,vals in f.get('model_expectations',{}).items()}
++ f['expectations']['79']={p:{'expected_flow':p in f['expectations79'] and f['expectations79'][p]['raw_policy_flow']} for p in allfiles}
++ f['scanner_expectations']={c:list(v) for c,v in f.get('model_expectations',{}).items()};f['scanner_expectations']['79']=list(f['expectations79'])
++ return f
+ 
+ 
+ def check_cases(flows,expectations):
+@@ -79,31 +86,9 @@
+  return proof
+ 
+ 
+-def gate_path(work,phase,arm):return work/'batch38_gates'/(phase+'_'+arm+'.json')
+-
+-
+-def require_gate(work,phase,arm,impl):
+- p=gate_path(work,phase,arm)
+- if not p.is_file():raise Blocker('REQUIRED_GATE_MISSING: '+phase+' '+arm)
+- g=json.loads(p.read_text());summary=Path(g['summary_path']);manifest=Path(g['manifest_path'])
+- if (g.get('implementation_sha256')!=impl or not summary.is_file() or not manifest.is_file() or
+-     sha_file(summary)!=g.get('summary_sha256') or sha_file(manifest)!=g.get('manifest_sha256')):
+-  raise Blocker('REQUIRED_GATE_EVIDENCE_DRIFT: '+phase)
+- s=json.loads(summary.read_text());m=json.loads(manifest.read_text())
+- if s.get('status')!='B38_SCOPED_DEMO_COMPLETE' or not s.get('frozen_unchanged') or s.get('diagnostic_only'):
+-  raise Blocker('REQUIRED_GATE_NOT_ACCEPTED: '+phase)
+- if s.get('phase')!=phase or arm not in s.get('arms',{}):raise Blocker('GATE_CONTEXT_MISMATCH')
+- # Validate every stored included artifact, not only a self-declared PASS flag.
+- for name,expected in m.items():
+-  path=(summary.parent/name).resolve()
+-  if not path.is_relative_to(summary.parent.resolve()) or not path.is_file() or sha_file(path)!=expected:
+-   raise Blocker('GATE_ARTIFACT_MISSING_OR_CHANGED: '+phase+' '+name)
+- return g
+-
+-
+ def pack(run,downloads,summary):
+  excluded_roots={'database','snapshot','codeql-cache','query-compilation-cache','b33_evidence','uploaded_project',
+-  'classes','javac_preflight','javac_codeql','toolchain_recovery','cache'}
++  'encoding_compiler','classes','javac_preflight','javac_codeql','toolchain_recovery','cache'}
+  included=[];excluded=[]
+  for p in sorted(run.rglob('*')):
+   if not p.is_file() or p.is_symlink():continue
+@@ -131,7 +116,7 @@
+  p.add_argument('--work',type=Path,default=Path.home()/'migration/ntk_stage3_verified_v5_work')
+  p.add_argument('--repo',type=Path,default=Path.home()/'iris')
+  p.add_argument('--downloads',type=Path,default=Path('/mnt/c/Users/HP/Downloads'))
+- p.add_argument('--diagnostic-only',action='store_true',help='Real CodeQL diagnostics; NEVER a model or final gate PASS.')
++ # No diagnostic-only bypass; policy receipt is a different, explicit contract.
+  return p
+ 
+ 
+@@ -139,7 +124,8 @@
+  from ntk_b38.processes import install_cleanup_handler
+  install_cleanup_handler()
+  args=parser().parse_args(argv)
+- project=(args.project_zip or ROOT/'samples'/('B38'+args.phase+'_JAVA.zip')).resolve()
++ sample_spec=json.loads((ROOT/'POLICY_SAMPLES.json').read_text())[args.phase]
++ project=(args.project_zip or ROOT/sample_spec['archive']).resolve()
+  cw=PHASES[args.phase];arms=['epoch_1','epoch_2'] if args.arm=='both' else [args.arm]
+  args.work=args.work.resolve();args.repo=args.repo.resolve();args.downloads=args.downloads.resolve()
+  if args.work==args.repo or args.repo in args.work.parents:
+@@ -149,15 +135,16 @@
+  lock=(args.work/'batch38_gpu_scan.lock').open('a+')
+  try:fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+  except BlockingIOError:raise Blocker('ANOTHER_B38_SCAN_IS_RUNNING')
+- run=args.work/'batch38_runs'/('batch38'+args.phase.lower()+'_'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'_'+uuid.uuid4().hex[:6])
++ run=args.work/'batch38_policy_runs'/('batch38'+args.phase.lower()+'_'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'_'+uuid.uuid4().hex[:6])
+  run.mkdir(parents=True,exist_ok=False)
+  before=None;start=time.monotonic();impl=implementation_sha();fixture=None
+- s={'status':'RUNNING','revision':'B38R1_SCANNER_ENVIRONMENT','phase':args.phase,'cwes':cw,'arms':{},'diagnostics':{},
+-    'implementation_sha256':impl,'policy_sha256':POLICY_SHA,'diagnostic_only':args.diagnostic_only,
++ s={'status':'RUNNING','revision':'B38_C4_DPA_COMPILER_ENCODING_AND_MIXED_EVIDENCE_V1','phase':args.phase,'cwes':cw,'arms':{},'diagnostics':{},
++    'implementation_sha256':impl,'policy_sha256':POLICY_SHA,'diagnostic_only':False,'evidence_mode':'CODEQL_CONTEXTUAL_POLICY_ASSISTED' if args.phase=='C4' else 'MIXED_MODEL_DERIVED_AND_CONTEXTUAL_POLICY',
++    'model_derived_xss_gate':'NOT_GRANTED','old_gate_D':'UNCHANGED_NOT_GRANTED','c4_policy_sha256':C4_SHA,
+     'scope':'JDK21_ONLY_MAX24_JAVA_NOT_GENERAL_PROJECT_COVERAGE',
+     'codeql_dataflow':'NOT_EXECUTED','source_policies':{c:SOURCE_POLICY[c] for c in cw},
+     'source_discovered_by_llm':False,'transfers':'DECLARED_JDK_MODELS_NOT_LEARNED_PROPAGATOR_LABELS',
+-    'training':'NOT_EXECUTED','Stage4':'NOT_EXECUTED','full_SAPipeline_run':'NOT_EXECUTED',
++    'training':'NOT_EXECUTED','model_inference':'NOT_EXECUTED','Stage4':'NOT_EXECUTED','full_SAPipeline_run':'NOT_EXECUTED',
+     'independent_gold':False,'run_dir':str(run)}
+  def event(stage,detail=''):
+   s['current_stage']=stage;write_json(run/'PROGRESS.json',s)
+@@ -183,15 +170,15 @@
+     'note':'Per-run minimum, not an estimate of total A-D storage; no automatic deletion.'})
+   if capacity.free<4*1024**3:raise Blocker('LESS_THAN_4_GIB_FREE_IN_WORK_FILESYSTEM')
+   # D combines four CWEs only after the three separate fixed-fixture gates for the same arm.
+-  if args.phase=='D' and not args.diagnostic_only:
++  if args.phase=='DPA':
+    event('VERIFY_PREVIOUS_GATES')
+-   for arm in arms:
+-    for phase in ('A','B','C'):require_gate(args.work,phase,arm,impl)
++   require_gate(args.work,'C4','none',impl)
+   event('ZIP_INTAKE');target=run/'uploaded_project';inp=ensure_safe_input(project,target)
+   write_json(run/'UPLOADED_INPUT_PROVENANCE.json',inp);s['input_sha256']=inp['archive_sha256']
+   fixture=fixture_for(inp['archive_sha256'])
+   if fixture and inp['java_source_hashes']!=fixture['files']:raise Blocker('KNOWN_FIXTURE_SOURCE_HASHES_DRIFT')
+   s['fixture']='PINNED_DEVELOPMENT_FIXTURE' if fixture else 'OPERATOR_PROJECT_NOT_GOLD'
++  write_json(run/'C4_POLICY.json',C4_POLICY)
+   mlpy=args.work/'.ntk_v5_lora_venv/bin/python'
+   if not mlpy.is_file():raise Blocker('PINNED_ML_PYTHON_MISSING')
+   event('OPENGREP_REAL');og=scan(run,target,cw,mlpy)
+@@ -230,10 +217,17 @@
+   version=command(['javac','-version'],run/'JAVAC_VERSION.log',cwd=run,timeout=30)
+   if not re.search(r'\b21\.',version):raise Blocker('PINNED_JDK21_REQUIRED')
+   command([mlpy,'-B',ENGINE/'build_jdk_only.py',target,run/'javac_preflight'],run/'JAVAC_PREFLIGHT.log',cwd=run,timeout=180)
++  event('JAVAC_ENCODING_AND_OUTPUT_CONTEXT_PROOF')
++  write_json(run/'ENCODING_TOOL_PROVENANCE.json',{'java_source_sha256':sha_file(ROOT/'trusted/NtkEncodingAudit.java'),'policy_sha256':C4_SHA,'compiler_interface':'JDK21_JAVAC_TREES','uploaded_classes_executed':False})
++  astclasses=run/'encoding_compiler';astclasses.mkdir()
++  command([mlpy,'-B',ROOT/'java_clean.py','javac','-proc:none','--release','21','-d',astclasses,ROOT/'trusted/NtkEncodingAudit.java'],run/'ENCODING_COMPILER_BUILD.log',cwd=run,timeout=180)
++  rawast=command([mlpy,'-B',ROOT/'java_clean.py','java','-Xmx768m','--add-modules','jdk.compiler','-cp',astclasses,'NtkEncodingAudit',target],run/'ENCODING_COMPILER_RUN.log',cwd=run,timeout=180)
++  ast=json.loads(rawast);write_json(run/'ENCODING_COMPILER_RAW.json',ast)
+   event('CODEQL_NEW_DATABASE')
+   db=run/'database';builder=' '.join(shlex.quote(str(x)) for x in [mlpy,'-B',ENGINE/'build_jdk_only.py',target,run/'javac_codeql'])
+   command([codeql,'database','create',db,'--language=java','--source-root='+str(target),'--command='+builder,
+     '--no-pre-finalize','--common-caches='+str(cache),*chosen.database_options,*res],run/'DATABASE_CREATE.log',cwd=run,timeout=1800)
++  if {str(p.relative_to(target)):sha_file(p) for p in sorted(target.rglob('*.java'))}!=inp['java_source_hashes']:raise Blocker('UPLOADED_JAVA_CHANGED_DURING_ANALYSIS')
+   if not (db/'db-java').is_dir() or not (db/'src.zip').is_file():raise Blocker('NEW_DATABASE_EVIDENCE_MISSING')
+   write_json(run/'DATABASE_PROOF.json',{'created_in_this_run':True,'new_project_sha256':inp['archive_sha256'],
+     'db_path':str(db),'db_metadata_sha256':sha_file(db/'codeql-database.yml'),'src_zip_sha256':sha_file(db/'src.zip'),
+@@ -247,32 +241,59 @@
+    command([codeql,'bqrs','decode',run/(name+'.bqrs'),'--format=csv','--output='+str(run/(name+'.csv'))],
+      run/(name+'_DECODE.log'),cwd=run,timeout=180)
+   allcases,calls=read_calls(run/'ApiCalls.csv',target);arguments=read_arguments(run/'ArgumentSpans.csv',target)
+-  contexts=read_calls(run/'HttpContexts.csv',target)[1]
++  calls=tagged(calls)
++  contexts=tagged(read_calls(run/'HttpContexts.csv',target)[1],'79')
+   cases={c:select_candidates(allcases,c) for c in cw}
+-  sources={c:read_calls(run/('Sources_'+c+'.csv'),target)[1] for c in cw}
++  sources={c:tagged(read_calls(run/('Sources_'+c+'.csv'),target)[1],c) for c in cw}
+   flattened=[x for c in cw for x in cases[c]]
+   if len(flattened)>100:raise Blocker('CWE_API_REQUEST_LIMIT_100')
+   write_json(run/'CANDIDATES_BY_CWE.json',cases);write_json(run/'ALL_CALLS.json',calls)
+   write_json(run/'ARGUMENTS.json',arguments);write_json(run/'HTTP_CONTEXT_CALLS.json',contexts)
+   write_json(run/'SOURCES_BY_CWE.json',sources);write_json(run/'SEMANTIC_POLICY.json',POLICY)
+-  event('MANUAL_CODEQL_DIAGNOSTICS_NOT_LLM')
+-  # These source/sink diagnostics are never fed to model scoring, never counted as LLM paths.
++  astproof=bind_ast(ast,calls,inp['java_source_hashes']);write_json(run/'ENCODING_COMPILER_BOUND.json',astproof)
++  policy_raw=[];policy_qualified=[];policy_assessments=[]
++  event('CONTEXTUAL_POLICY_AND_SEPARATE_MODEL_DIAGNOSTICS')
++  # 22/78/89 diagnostics are not model results. 79 executes a distinct declared policy
++  # whose guarded evidence is scored with NEUTRAL AI, never counted as LLM paths.
+   for c in cw:
+-   out=run/'diagnostic'/('cwe-'+c)
++   out=run/('context_policy' if c=='79' else 'diagnostic')/('cwe-'+c)
+    q,proof=emit_flow(template,cases[c],manual_labels(cases[c],c),c,arms[0],'diagnostic')
+-   qfile=qp/('Diagnostic_'+c+'.ql');qfile.write_text(q)
++   if c=='79':
++    q=q.replace('-diagnostic-', '-context-policy-')
++    for binding in proof:binding['label_origin']=ORIGIN;binding['policy_sha256']=C4_SHA
++   qfile=qp/(('ContextPolicy_' if c=='79' else 'Diagnostic_')+c+'.ql');qfile.write_text(q)
+    sarif=run_ql(codeql,qp,db,qfile,out,opts,res)
+-   flows=parse_flows(sarif,target,calls,arguments,proof,sources[c],c,contexts)
+-   write_json(out/'MANUAL_DIAGNOSTIC_BINDINGS.json',proof);write_json(out/'PATHS.json',flows)
+-   result={'cwe':c,'flow_count':len(flows),'label_origin':'MANUAL_DIAGNOSTIC_ONLY_NOT_LLM_NOT_SCORED'}
++   s['codeql_dataflow']='REAL_CONTEXT_OR_DIAGNOSTIC_QUERY_EXECUTED_NOT_YET_MODEL_ACCEPTED'
++   flows=tag_paths(parse_flows(sarif,target,calls,arguments,proof,sources[c],c,contexts),c)
++   write_json(out/('DECLARED_POLICY_BINDINGS.json' if c=='79' else 'MANUAL_DIAGNOSTIC_BINDINGS.json'),proof);write_json(out/'PATHS.json',flows)
++   if c=='79':
++    # The existing contextual policy defines this new branch, not the failed LLM labels.
++    policy_raw=tag_paths(flows,'79')
++    for f in policy_raw:f.update(input_project_sha256=inp['archive_sha256'],database_created_in_this_run=True,sink_origin=ORIGIN)
++    policy_qualified,policy_assessments=assess_paths(policy_raw,astproof)
++    po=run/'policy79';po.mkdir(exist_ok=True)
++    write_json(po/'RAW_PATHS.json',policy_raw);write_json(po/'QUALIFIED_PATHS.json',policy_qualified)
++    write_json(po/'ASSESSMENTS.json',policy_assessments)
++    write_json(po/'PROVENANCE.json',{'origin':ORIGIN,'new_query_executed':True,'query_sha256':sha_file(qfile),
++      'bqrs_sha256':sha_file(out/'flow.bqrs'),'sarif_sha256':sha_file(out/'codeql.sarif'),
++      'policy_sha256':C4_SHA,'raw_model_labels_modified':False,'not_model_derived':True})
++    if fixture:
++     s['policy_fixture_check']=check_policy_fixture(policy_raw,policy_qualified,astproof,fixture['expectations79'])
++     write_json(po/'FIXTURE_CHECK.json',s['policy_fixture_check'])
++   result={'cwe':c,'flow_count':len(flows),'label_origin':ORIGIN if c=='79' else 'MANUAL_DIAGNOSTIC_ONLY_NOT_LLM_NOT_SCORED'}
+    if fixture and c in fixture['expectations']:
+     result['fixture_check']=check_cases(flows,fixture['expectations'][c])
+     s['diagnostics'][c]=result;write_json(out/'SUMMARY.json',result)
+     if not result['fixture_check']['match']:raise Blocker('CODEQL_DIAGNOSTIC_MISMATCH_BEFORE_GPU_CWE_'+c)
+    else:s['diagnostics'][c]=result;write_json(out/'SUMMARY.json',result)
+-  if args.diagnostic_only:
+-   s['status']='B38_DIAGNOSTIC_ONLY_COMPLETE_NOT_MODEL_ACCEPTANCE'
+-   s['codeql_dataflow']='MANUAL_DIAGNOSTIC_ONLY_NOT_LLM'
++  if args.phase=='C4':
++   fused=policy_fusion(og,policy_raw,policy_qualified,policy_assessments,astproof,calls,target,scorer,[])
++   write_json(run/'analysis/policy/FUSED_FINDINGS.json',fused)
++   write_json(run/'analysis/policy/FUSED_FINDINGS.sarif',to_sarif(fused))
++   s['policy_counts']={'raw_paths':len(policy_raw),'qualified_paths':len(policy_qualified),'retained_opengrep':sum(x['origin']=='OPENGREP' for x in fused)}
++   s['status']='B38_C4_POLICY_SCOPED_COMPLETE' if fixture and s['policy_fixture_check']['match'] else 'B38_POLICY_NEEDS_REVIEW'
++   s['codeql_dataflow']='REAL_CODEQL_CONTEXTUAL_POLICY_NOT_LLM'
++
+   else:
+    common=dict(cfgs['epoch_1'],snapshot=str(snapshot),frozen_root=str(args.repo),ml_python=str(mlpy),
+                protocol_path=str(run/'runtime_protocol.json'),cases=flattened)
+@@ -298,6 +319,7 @@
+     if stage3['cold_live_responses']!=len(flattened) or stage3['warm_exact_cache_hits']!=len(flattened):
+      raise Blocker('LIVE_MODEL_OR_EXACT_CACHE_COVERAGE_INCOMPLETE')
+     tracefile=lr/'native_trace.jsonl';trace=[json.loads(x) for x in tracefile.read_text().splitlines() if x.strip()] if tracefile.exists() else []
++    s['model_inference']='FRESH_LOCAL_IRIS_STAGE3'
+     result={'stage3':stage3,'cwes':{}};full=[];allflows=[]
+     for c in cw:
+      event('LIVE_CODEQL_AND_SCORING',arm+' CWE-'+c)
+@@ -309,30 +331,46 @@
+      qfile=qp/('Live_'+c+'_'+arm+'.ql');qfile.write_text(text)
+      out=run/'analysis'/arm/('cwe-'+c)
+      sarif=run_ql(codeql,qp,db,qfile,out,opts,res)
+-     flows=parse_flows(sarif,target,calls,arguments,proof,sources[c],c,contexts)
++     flows=tag_paths(parse_flows(sarif,target,calls,arguments,proof,sources[c],c,contexts),c)
+      for f in flows:f.update(input_project_sha256=inp['archive_sha256'],database_created_in_this_run=True)
+-     fused=calibrated_fusion(og,flows,trace,calls,target,scorer,c,decisions)
++     model_flows=deepcopy(flows)
++     for f in model_flows:f['evidence_origin']=MODEL
++     if c=='79':
++      write_json(out/'MODEL_ONLY_PATHS_NOT_POLICY.json',model_flows)
++      fused=policy_fusion(og,policy_raw,policy_qualified,policy_assessments,astproof,calls,target,scorer,trace)
++      flows=deepcopy(policy_qualified)
++     else:
++      fused=calibrated_fusion(og,flows,trace,calls,target,scorer,c,decisions)
++      for finding in fused:
++       finding['evidence_origin']=MODEL;finding['sink_origin']='LOCAL_LIVE_STAGE3'
++       if finding.get('callsite'):finding['callsite']['cwe']=c
++
+      write_json(out/'RAW_SINK_LABELS.json',labels);write_json(out/'SEMANTIC_DECISIONS.json',decisions)
+      write_json(out/'SINK_BINDINGS.json',proof);write_json(out/'VERIFIED_PATHS.json',flows)
+      write_json(out/'FUSED_FINDINGS.json',fused);write_json(out/'FUSED_FINDINGS.sarif',to_sarif(fused))
+      cold=[x for x in trace if x['phase']=='cold' and x['candidate']['cwe']==c]
+      r={'flow_count':len(flows),'candidate_count':len(cases[c]),'source_count':len(sources[c]),
+         'accepted':sum(x['status']=='ACCEPTED' for x in cold),'abstain':sum(x['status']=='ABSTAIN' for x in cold),
+-        'opengrep_preserved':sum(x['origin']=='OPENGREP' for x in fused),'additional_codeql':sum(x['origin']=='CODEQL_ADDITIONAL' for x in fused),
++        'opengrep_preserved':sum(x['origin']=='OPENGREP' for x in fused),'additional_codeql':sum(x['origin'] in ('CODEQL_ADDITIONAL','CODEQL_POLICY_ADDITIONAL') for x in fused),
+         'no_path_means_safe':False,'source_policy':SOURCE_POLICY[c]}
+-     if fixture and c in fixture['expectations']:r['fixture_check']=check_cases(flows,fixture['expectations'][c])
++     r['evidence_origin']=ORIGIN if c=='79' else MODEL
++     r['model_only_flow_count']=len(model_flows)
++     if c=='79':
++      r['raw_policy_flow_count']=len(policy_raw);r['not_model_derived']=True
++      if fixture:r['fixture_check']=s['policy_fixture_check']
++     elif fixture and c in fixture['expectations']:r['fixture_check']=check_cases(flows,fixture['expectations'][c])
+      result['cwes'][c]=r;full.extend(fused);allflows.extend(flows)
+     if len({r['id'] for r in full})!=len(full):raise Blocker('DUPLICATE_MERGED_FINDING_ID')
+     if sum(r['origin']=='OPENGREP' for r in full)!=len(og['results']):raise Blocker('AGGREGATE_OPENGREP_FINDINGS_LOST')
+     write_json(run/'analysis'/arm/'FUSED_FINDINGS.json',full)
+     write_json(run/'analysis'/arm/'FUSED_FINDINGS.sarif',to_sarif(full))
+     write_json(run/'analysis'/arm/'VERIFIED_PATHS.json',allflows)
+-    s['arms'][arm]=result;s['codeql_dataflow']='REAL_LOCAL_MODEL_CWE_QUERIES_BQRS_SARIF_EXECUTED'
++    s['arms'][arm]=result;s['codeql_dataflow']='REAL_FRESH_MIXED_MODEL_22_78_89_POLICY_79_QUERIES_EXECUTED'
+     write_json(run/'PROGRESS.json',s)
+    if fixture and all(c in fixture['expectations'] for c in cw):
+     ok=all(r['fixture_check']['match'] for a in s['arms'].values() for r in a['cwes'].values())
+-    s['status']='B38_SCOPED_DEMO_COMPLETE' if ok else 'B38_COMPLETED_NEEDS_REVIEW'
+-   else:s['status']='B38_SCOPED_ANALYSIS_COMPLETE_NOT_A_SAFETY_VERDICT'
++    s['status']='B38_DPA_POLICY_SCOPED_COMPLETE' if ok else 'B38_POLICY_NEEDS_REVIEW'
++   else:s['status']='B38_POLICY_ANALYSIS_COMPLETE_NOT_A_SAFETY_VERDICT'
+  except Exception as exc:
+   s['status']='B38_BLOCKED';s['blocker']=str(exc);(run/'FAILURE.txt').write_text(traceback.format_exc())
+  finally:
+@@ -345,19 +383,15 @@
+   write_json(run/'00_SUMMARY.json',s);write_json(run/'PROGRESS.json',s)
+   if args.downloads.is_dir():
+    out,manifest=pack(run,args.downloads,s)
+-   if s['status']=='B38_SCOPED_DEMO_COMPLETE' and fixture and fixture['phase']==args.phase:
+-    for arm in arms:
+-     write_json(gate_path(args.work,args.phase,arm),{'phase':args.phase,'arm':arm,
+-       'implementation_sha256':impl,'summary_path':str(run/'00_SUMMARY.json'),
+-       'summary_sha256':sha_file(run/'00_SUMMARY.json'),'manifest_path':str(manifest),
+-       'manifest_sha256':sha_file(manifest),'input_sha256':s['input_sha256']})
++   if s['status'] in ('B38_C4_POLICY_SCOPED_COMPLETE','B38_DPA_POLICY_SCOPED_COMPLETE') and fixture and fixture['phase']==args.phase:
++    for arm in (['none'] if args.phase=='C4' else arms):issue_gate(args.work,args.phase,arm,impl,run,manifest)
+    print('\n===== BATCH 38'+args.phase+' RESULT =====',flush=True)
+-   for k,v in [('STATUS',s['status']),('CODEQL_DATAFLOW',s['codeql_dataflow']),('FROZEN_REPO_UNCHANGED',s['frozen_unchanged']),
++   for k,v in [('STATUS',s['status']),('EVIDENCE_MODE',s['evidence_mode']),('MODEL_XSS_GATE',s['model_derived_xss_gate']),('OLD_GATE_D',s['old_gate_D']),('CODEQL_DATAFLOW',s['codeql_dataflow']),('FROZEN_REPO_UNCHANGED',s['frozen_unchanged']),
+      ('RUN_DIR',run),('OUTPUT_ZIP',out),('OUTPUT_SHA256',sha_file(out))]:print(str(k)+'='+str(v),flush=True)
+    if 'blocker' in s:print('BLOCKER='+s['blocker'],flush=True)
+   else:print('RUN_DIR='+str(run),flush=True)
+   fcntl.flock(lock,fcntl.LOCK_UN);lock.close()
+- return 2 if s['status']=='B38_BLOCKED' else 3 if s['status']=='B38_COMPLETED_NEEDS_REVIEW' else 0
++ return 2 if s['status']=='B38_BLOCKED' else 3 if s['status']=='B38_POLICY_NEEDS_REVIEW' else 0
+ 
+ if __name__=='__main__':
+  try:sys.exit(main())

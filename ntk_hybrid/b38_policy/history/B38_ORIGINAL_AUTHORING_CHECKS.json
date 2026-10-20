@@ -1,0 +1,60 @@
+{
+  "date": "2026-10-19",
+  "release": "NTK_B38_ABCD_V1",
+  "cpu_http_unit_tests": {
+    "ran": 67,
+    "passed": 67,
+    "skipped": 0
+  },
+  "orchestration_tests": "5 of the 67 use FAKE CodeQL/GPU processes; no new real B38 model evidence",
+  "java": {
+    "compiler": "javac 21.0.12.1",
+    "independent_source_files": 16,
+    "A": 4,
+    "B": 4,
+    "C": 4,
+    "SQL": 4,
+    "D_combined": 16,
+    "annotation_processing": false,
+    "application_executed": false,
+    "http_server_or_os_command_executed": false
+  },
+  "syntax": {
+    "python_ast": "PASS",
+    "bash": "PASS",
+    "javascript": "PASS",
+    "node": "v22.16.0"
+  },
+  "recorded_sql_regression": "Real B37C artifacts replayed; all four original scores reproduced; not a new tool run",
+  "new_codeql_queries_compiled_here": false,
+  "new_codeql_database_created_here": false,
+  "new_opengrep_real_scan_here": false,
+  "new_model_inference_here": false,
+  "wsl_runtime_acceptance": "PENDING",
+  "training_executed": false,
+  "model_checkpoint_changed": false,
+  "original_scoring_algorithm_changed": false,
+  "inherited_engine_files_unchanged": 38,
+  "sources": {
+    "B38A_JAVA.zip": "a1435721b91eae1ab7701db34989ad3c0bc83855eef835769387d2d6df18b21e",
+    "B38B_JAVA.zip": "a8e0de4772e73093c0192a2f67c65a9ef2469fe99af7e10cefc0c69a5b1cbcb7",
+    "B38C_JAVA.zip": "f6f20f128b5e7a3e1d18dab137dc32d5567b52c9415fe1a2a8851743d16d5a4e",
+    "B38SQL_JAVA.zip": "5d96e746889b11f5244e59677c41d382e6f88fe9e3014af5dcf3e9df7299bfb1",
+    "B38D_JAVA.zip": "e067e6fab85f272136bd477f1832db3cd226d7406a29d65996f3bcebe5f9dc79"
+  },
+  "important_limits": [
+    "JDK21 only, <=24 Java files, no Maven/Gradle/Servlet or Spring",
+    "CWE22/78/89 getenv sources and JDK transfers are declared by analyst, not learned from this model",
+    "CWE79 uses direct same-exchange HTTP URI query to explicitly HTML response, narrow source-order constraints",
+    "All fixtures are development fixtures, not independent gold",
+    "Only model-accepted sinks can be scored as model-supported path evidence",
+    "No claim of general four-CWE coverage before actual WSL outputs"
+  ],
+  "evidence_logs": {
+    "AUTHORING_JAVA_COMPILE.log": "c3b9cb33cb461f174ab09c5afe777690036dd7c770d0fb0d64cf2964cfd809e8",
+    "AUTHORING_HELP.log": "765988d05d79f21c82983db97432391a48d6821a9714b32a27e332bef77f79cf",
+    "AUTHORING_SYNTAX.log": "7b88fe663b1f3af94ae398fe84a4c6518e9dcbb720998db804de9814227a5a4b",
+    "AUTHORING_SELFTEST.log": "644dea9e164832431e346cdc75b58a5d01c1f3c2cb99d45f748f26e675b691a3"
+  },
+  "known_fixture_scanner_gate": "Requires coverage of positive AND control files before CodeQL/GPU"
+}

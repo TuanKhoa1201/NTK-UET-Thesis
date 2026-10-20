@@ -1,0 +1,1226 @@
+[
+  {
+    "id": "d86a0ec5cb63d49a8ebfe7cd183ee98afd0f79c3db7c0661c0073d482735ac37",
+    "cwe": "79",
+    "location": {
+      "uri": "src/edu/ntk/b38/html/ChallengeEscapedHtml.java",
+      "start_line": 20,
+      "start_column": 42,
+      "end_line": 20,
+      "end_column": 79
+    },
+    "callsite": {
+      "package": "java.io",
+      "class": "OutputStream",
+      "method": "write",
+      "signature": "void write(byte[] p0)",
+      "cwe": "89",
+      "is_static": false,
+      "receiver_policy": "HOLD_THIS_UNTIL_SEMANTIC_REVIEW",
+      "compiler_signature": "write(byte[])",
+      "arity": 1,
+      "source_record_sha256": "2beff0d4d3b9a9f304704d6494691cbb916b1aa121e7404ffcc983dcdbe2ebf2",
+      "uri": "src/edu/ntk/b38/html/ChallengeEscapedHtml.java",
+      "case_key": "def8ecb5322343d6c9acb7038bca4fc1028a3952655e455ffa4571949ca1cef7",
+      "start_line": 20,
+      "start_column": 9,
+      "end_line": 20,
+      "end_column": 79
+    },
+    "argument_index": 0,
+    "paths": [
+      [
+        {
+          "uri": "src/edu/ntk/b38/html/ChallengeEscapedHtml.java",
+          "start_line": 16,
+          "start_column": 42,
+          "end_line": 16,
+          "end_column": 80
+        },
+        {
+          "uri": "src/edu/ntk/b38/html/ChallengeEscapedHtml.java",
+          "start_line": 16,
+          "start_column": 24,
+          "end_line": 16,
+          "end_column": 105
+        },
+        {
+          "uri": "src/edu/ntk/b38/html/ChallengeEscapedHtml.java",
+          "start_line": 17,
+          "start_column": 47,
+          "end_line": 17,
+          "end_column": 52
+        },
+        {
+          "uri": "src/edu/ntk/b38/html/ChallengeEscapedHtml.java",
+          "start_line": 10,
+          "start_column": 42,
+          "end_line": 10,
+          "end_column": 54
+        },
+        {
+          "uri": "src/edu/ntk/b38/html/ChallengeEscapedHtml.java",
+          "start_line": 11,
+          "start_column": 16,
+          "end_line": 11,
+          "end_column": 21
+        },
+        {
+          "uri": "src/edu/ntk/b38/html/ChallengeEscapedHtml.java",
+          "start_line": 11,
+          "start_column": 16,
+          "end_line": 11,
+          "end_column": 43
+        },
+        {
+          "uri": "src/edu/ntk/b38/html/ChallengeEscapedHtml.java",
+          "start_line": 11,
+          "start_column": 16,
+          "end_line": 11,
+          "end_column": 64
+        },
+        {
+          "uri": "src/edu/ntk/b38/html/ChallengeEscapedHtml.java",
+          "start_line": 11,
+          "start_column": 16,
+          "end_line": 12,
+          "end_column": 42
+        },
+        {
+          "uri": "src/edu/ntk/b38/html/ChallengeEscapedHtml.java",
+          "start_line": 11,
+          "start_column": 16,
+          "end_line": 12,
+          "end_column": 66
+        },
+        {
+          "uri": "src/edu/ntk/b38/html/ChallengeEscapedHtml.java",
+          "start_line": 11,
+          "start_column": 16,
+          "end_line": 13,
+          "end_column": 43
+        },
+        {
+          "uri": "src/edu/ntk/b38/html/ChallengeEscapedHtml.java",
+          "start_line": 17,
+          "start_column": 32,
+          "end_line": 17,
+          "end_column": 53
+        },
+        {
+          "uri": "src/edu/ntk/b38/html/ChallengeEscapedHtml.java",
+          "start_line": 20,
+          "start_column": 42,
+          "end_line": 20,
+          "end_column": 46
+        },
+        {
+          "uri": "src/edu/ntk/b38/html/ChallengeEscapedHtml.java",
+          "start_line": 20,
+          "start_column": 42,
+          "end_line": 20,
+          "end_column": 79
+        }
+      ]
+    ],
+    "raw_result": {
+      "ruleId": "java/ntk-b38/cwe79-diagnostic-epoch-1",
+      "ruleIndex": 0,
+      "rule": {
+        "id": "java/ntk-b38/cwe79-diagnostic-epoch-1",
+        "index": 0
+      },
+      "message": {
+        "text": "Declared source reaches the scoped CWE-79 argument from [declared source (not LLM discovered)](1)."
+      },
+      "locations": [
+        {
+          "physicalLocation": {
+            "artifactLocation": {
+              "uri": "src/edu/ntk/b38/html/ChallengeEscapedHtml.java",
+              "uriBaseId": "%SRCROOT%",
+              "index": 0
+            },
+            "region": {
+              "startLine": 20,
+              "startColumn": 42,
+              "endColumn": 79
+            }
+          }
+        }
+      ],
+      "partialFingerprints": {
+        "primaryLocationLineHash": "3e88cf2c1417118a:1",
+        "primaryLocationStartColumnFingerprint": "33"
+      },
+      "codeFlows": [
+        {
+          "threadFlows": [
+            {
+              "locations": [
+                {
+                  "location": {
+                    "physicalLocation": {
+                      "artifactLocation": {
+                        "uri": "src/edu/ntk/b38/html/ChallengeEscapedHtml.java",
+                        "uriBaseId": "%SRCROOT%",
+                        "index": 0
+                      },
+                      "region": {
+                        "startLine": 16,
+                        "startColumn": 42,
+                        "endColumn": 80
+                      }
+                    },
+                    "message": {
+                      "text": "getRawQuery(...) : String"
+                    }
+                  }
+                },
+                {
+                  "location": {
+                    "physicalLocation": {
+                      "artifactLocation": {
+                        "uri": "src/edu/ntk/b38/html/ChallengeEscapedHtml.java",
+                        "uriBaseId": "%SRCROOT%",
+                        "index": 0
+                      },
+                      "region": {
+                        "startLine": 16,
+                        "startColumn": 24,
+                        "endColumn": 105
+                      }
+                    },
+                    "message": {
+                      "text": "decode(...) : String"
+                    }
+                  },
+                  "taxa": [
+                    {
+                      "id": "Config",
+                      "properties": {
+                        "CodeQL/DataflowRole": "step"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "location": {
+                    "physicalLocation": {
+                      "artifactLocation": {
+                        "uri": "src/edu/ntk/b38/html/ChallengeEscapedHtml.java",
+                        "uriBaseId": "%SRCROOT%",
+                        "index": 0
+                      },
+                      "region": {
+                        "startLine": 17,
+                        "startColumn": 47,
+                        "endColumn": 52
+                      }
+                    },
+                    "message": {
+                      "text": "input : String"
+                    }
+                  }
+                },
+                {
+                  "location": {
+                    "physicalLocation": {
+                      "artifactLocation": {
+                        "uri": "src/edu/ntk/b38/html/ChallengeEscapedHtml.java",
+                        "uriBaseId": "%SRCROOT%",
+                        "index": 0
+                      },
+                      "region": {
+                        "startLine": 10,
+                        "startColumn": 42,
+                        "endColumn": 54
+                      }
+                    },
+                    "message": {
+                      "text": "value : String"
+                    }
+                  }
+                },
+                {
+                  "location": {
+                    "physicalLocation": {
+                      "artifactLocation": {
+                        "uri": "src/edu/ntk/b38/html/ChallengeEscapedHtml.java",
+                        "uriBaseId": "%SRCROOT%",
+                        "index": 0
+                      },
+                      "region": {
+                        "startLine": 11,
+                        "startColumn": 16,
+                        "endColumn": 21
+                      }
+                    },
+                    "message": {
+                      "text": "value : String"
+                    }
+                  }
+                },
+                {
+                  "location": {
+                    "physicalLocation": {
+                      "artifactLocation": {
+                        "uri": "src/edu/ntk/b38/html/ChallengeEscapedHtml.java",
+                        "uriBaseId": "%SRCROOT%",
+                        "index": 0
+                      },
+                      "region": {
+                        "startLine": 11,
+                        "startColumn": 16,
+                        "endColumn": 43
+                      }
+                    },
+                    "message": {
+                      "text": "replace(...) : String"
+                    }
+                  },
+                  "taxa": [
+                    {
+                      "index": 0,
+                      "toolComponent": {
+                        "index": 1
+                      },
+                      "properties": {
+                        "CodeQL/DataflowRole": "step"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "location": {
+                    "physicalLocation": {
+                      "artifactLocation": {
+                        "uri": "src/edu/ntk/b38/html/ChallengeEscapedHtml.java",
+                        "uriBaseId": "%SRCROOT%",
+                        "index": 0
+                      },
+                      "region": {
+                        "startLine": 11,
+                        "startColumn": 16,
+                        "endColumn": 64
+                      }
+                    },
+                    "message": {
+                      "text": "replace(...) : String"
+                    }
+                  },
+                  "taxa": [
+                    {
+                      "index": 0,
+                      "toolComponent": {
+                        "index": 1
+                      },
+                      "properties": {
+                        "CodeQL/DataflowRole": "step"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "location": {
+                    "physicalLocation": {
+                      "artifactLocation": {
+                        "uri": "src/edu/ntk/b38/html/ChallengeEscapedHtml.java",
+                        "uriBaseId": "%SRCROOT%",
+                        "index": 0
+                      },
+                      "region": {
+                        "startLine": 11,
+                        "startColumn": 16,
+                        "endLine": 12,
+                        "endColumn": 42
+                      }
+                    },
+                    "message": {
+                      "text": "replace(...) : String"
+                    }
+                  },
+                  "taxa": [
+                    {
+                      "index": 0,
+                      "toolComponent": {
+                        "index": 1
+                      },
+                      "properties": {
+                        "CodeQL/DataflowRole": "step"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "location": {
+                    "physicalLocation": {
+                      "artifactLocation": {
+                        "uri": "src/edu/ntk/b38/html/ChallengeEscapedHtml.java",
+                        "uriBaseId": "%SRCROOT%",
+                        "index": 0
+                      },
+                      "region": {
+                        "startLine": 11,
+                        "startColumn": 16,
+                        "endLine": 12,
+                        "endColumn": 66
+                      }
+                    },
+                    "message": {
+                      "text": "replace(...) : String"
+                    }
+                  },
+                  "taxa": [
+                    {
+                      "index": 0,
+                      "toolComponent": {
+                        "index": 1
+                      },
+                      "properties": {
+                        "CodeQL/DataflowRole": "step"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "location": {
+                    "physicalLocation": {
+                      "artifactLocation": {
+                        "uri": "src/edu/ntk/b38/html/ChallengeEscapedHtml.java",
+                        "uriBaseId": "%SRCROOT%",
+                        "index": 0
+                      },
+                      "region": {
+                        "startLine": 11,
+                        "startColumn": 16,
+                        "endLine": 13,
+                        "endColumn": 43
+                      }
+                    },
+                    "message": {
+                      "text": "replace(...) : String"
+                    }
+                  },
+                  "taxa": [
+                    {
+                      "index": 0,
+                      "toolComponent": {
+                        "index": 1
+                      },
+                      "properties": {
+                        "CodeQL/DataflowRole": "step"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "location": {
+                    "physicalLocation": {
+                      "artifactLocation": {
+                        "uri": "src/edu/ntk/b38/html/ChallengeEscapedHtml.java",
+                        "uriBaseId": "%SRCROOT%",
+                        "index": 0
+                      },
+                      "region": {
+                        "startLine": 17,
+                        "startColumn": 32,
+                        "endColumn": 53
+                      }
+                    },
+                    "message": {
+                      "text": "escapeHtmlText(...) : String"
+                    }
+                  }
+                },
+                {
+                  "location": {
+                    "physicalLocation": {
+                      "artifactLocation": {
+                        "uri": "src/edu/ntk/b38/html/ChallengeEscapedHtml.java",
+                        "uriBaseId": "%SRCROOT%",
+                        "index": 0
+                      },
+                      "region": {
+                        "startLine": 20,
+                        "startColumn": 42,
+                        "endColumn": 46
+                      }
+                    },
+                    "message": {
+                      "text": "body : String"
+                    }
+                  }
+                },
+                {
+                  "location": {
+                    "physicalLocation": {
+                      "artifactLocation": {
+                        "uri": "src/edu/ntk/b38/html/ChallengeEscapedHtml.java",
+                        "uriBaseId": "%SRCROOT%",
+                        "index": 0
+                      },
+                      "region": {
+                        "startLine": 20,
+                        "startColumn": 42,
+                        "endColumn": 79
+                      }
+                    },
+                    "message": {
+                      "text": "getBytes(...)"
+                    }
+                  },
+                  "taxa": [
+                    {
+                      "id": "Config",
+                      "properties": {
+                        "CodeQL/DataflowRole": "step"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "relatedLocations": [
+        {
+          "id": 1,
+          "physicalLocation": {
+            "artifactLocation": {
+              "uri": "src/edu/ntk/b38/html/ChallengeEscapedHtml.java",
+              "uriBaseId": "%SRCROOT%",
+              "index": 0
+            },
+            "region": {
+              "startLine": 16,
+              "startColumn": 42,
+              "endColumn": 80
+            }
+          },
+          "message": {
+            "text": "declared source (not LLM discovered)"
+          }
+        },
+        {
+          "physicalLocation": {
+            "artifactLocation": {
+              "uri": "src/edu/ntk/b38/html/ChallengeEscapedHtml.java",
+              "uriBaseId": "%SRCROOT%",
+              "index": 0
+            },
+            "region": {
+              "startLine": 16,
+              "startColumn": 42,
+              "endColumn": 80
+            }
+          }
+        }
+      ]
+    },
+    "source_policy": "CODEQL_HTTP_EXCHANGE_REQUEST_URI_QUERY_DECLARED_REMOTE_SOURCE_NOT_LLM",
+    "source_discovered_by_llm": false,
+    "origin": "REAL_CODEQL_PATH_QUERY",
+    "http_context_verified": true
+  },
+  {
+    "id": "9a5f2acb74bb61ca2ac54fe9aa7fcdb6d4e0fde59d8f80a3a4f4f735b308727f",
+    "cwe": "79",
+    "location": {
+      "uri": "src/edu/ntk/b38/html/RiskyHtmlAttribute.java",
+      "start_line": 15,
+      "start_column": 42,
+      "end_line": 15,
+      "end_column": 79
+    },
+    "callsite": {
+      "package": "java.io",
+      "class": "OutputStream",
+      "method": "write",
+      "signature": "void write(byte[] p0)",
+      "cwe": "89",
+      "is_static": false,
+      "receiver_policy": "HOLD_THIS_UNTIL_SEMANTIC_REVIEW",
+      "compiler_signature": "write(byte[])",
+      "arity": 1,
+      "source_record_sha256": "2beff0d4d3b9a9f304704d6494691cbb916b1aa121e7404ffcc983dcdbe2ebf2",
+      "uri": "src/edu/ntk/b38/html/RiskyHtmlAttribute.java",
+      "case_key": "def8ecb5322343d6c9acb7038bca4fc1028a3952655e455ffa4571949ca1cef7",
+      "start_line": 15,
+      "start_column": 9,
+      "end_line": 15,
+      "end_column": 79
+    },
+    "argument_index": 0,
+    "paths": [
+      [
+        {
+          "uri": "src/edu/ntk/b38/html/RiskyHtmlAttribute.java",
+          "start_line": 10,
+          "start_column": 42,
+          "end_line": 10,
+          "end_column": 80
+        },
+        {
+          "uri": "src/edu/ntk/b38/html/RiskyHtmlAttribute.java",
+          "start_line": 10,
+          "start_column": 24,
+          "end_line": 10,
+          "end_column": 105
+        },
+        {
+          "uri": "src/edu/ntk/b38/html/RiskyHtmlAttribute.java",
+          "start_line": 15,
+          "start_column": 42,
+          "end_line": 15,
+          "end_column": 46
+        },
+        {
+          "uri": "src/edu/ntk/b38/html/RiskyHtmlAttribute.java",
+          "start_line": 15,
+          "start_column": 42,
+          "end_line": 15,
+          "end_column": 79
+        }
+      ]
+    ],
+    "raw_result": {
+      "ruleId": "java/ntk-b38/cwe79-diagnostic-epoch-1",
+      "ruleIndex": 0,
+      "rule": {
+        "id": "java/ntk-b38/cwe79-diagnostic-epoch-1",
+        "index": 0
+      },
+      "message": {
+        "text": "Declared source reaches the scoped CWE-79 argument from [declared source (not LLM discovered)](1)."
+      },
+      "locations": [
+        {
+          "physicalLocation": {
+            "artifactLocation": {
+              "uri": "src/edu/ntk/b38/html/RiskyHtmlAttribute.java",
+              "uriBaseId": "%SRCROOT%",
+              "index": 1
+            },
+            "region": {
+              "startLine": 15,
+              "startColumn": 42,
+              "endColumn": 79
+            }
+          }
+        }
+      ],
+      "partialFingerprints": {
+        "primaryLocationLineHash": "3e88cf2c1417118a:1",
+        "primaryLocationStartColumnFingerprint": "33"
+      },
+      "codeFlows": [
+        {
+          "threadFlows": [
+            {
+              "locations": [
+                {
+                  "location": {
+                    "physicalLocation": {
+                      "artifactLocation": {
+                        "uri": "src/edu/ntk/b38/html/RiskyHtmlAttribute.java",
+                        "uriBaseId": "%SRCROOT%",
+                        "index": 1
+                      },
+                      "region": {
+                        "startLine": 10,
+                        "startColumn": 42,
+                        "endColumn": 80
+                      }
+                    },
+                    "message": {
+                      "text": "getRawQuery(...) : String"
+                    }
+                  }
+                },
+                {
+                  "location": {
+                    "physicalLocation": {
+                      "artifactLocation": {
+                        "uri": "src/edu/ntk/b38/html/RiskyHtmlAttribute.java",
+                        "uriBaseId": "%SRCROOT%",
+                        "index": 1
+                      },
+                      "region": {
+                        "startLine": 10,
+                        "startColumn": 24,
+                        "endColumn": 105
+                      }
+                    },
+                    "message": {
+                      "text": "decode(...) : String"
+                    }
+                  },
+                  "taxa": [
+                    {
+                      "id": "Config",
+                      "properties": {
+                        "CodeQL/DataflowRole": "step"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "location": {
+                    "physicalLocation": {
+                      "artifactLocation": {
+                        "uri": "src/edu/ntk/b38/html/RiskyHtmlAttribute.java",
+                        "uriBaseId": "%SRCROOT%",
+                        "index": 1
+                      },
+                      "region": {
+                        "startLine": 15,
+                        "startColumn": 42,
+                        "endColumn": 46
+                      }
+                    },
+                    "message": {
+                      "text": "body : String"
+                    }
+                  }
+                },
+                {
+                  "location": {
+                    "physicalLocation": {
+                      "artifactLocation": {
+                        "uri": "src/edu/ntk/b38/html/RiskyHtmlAttribute.java",
+                        "uriBaseId": "%SRCROOT%",
+                        "index": 1
+                      },
+                      "region": {
+                        "startLine": 15,
+                        "startColumn": 42,
+                        "endColumn": 79
+                      }
+                    },
+                    "message": {
+                      "text": "getBytes(...)"
+                    }
+                  },
+                  "taxa": [
+                    {
+                      "id": "Config",
+                      "properties": {
+                        "CodeQL/DataflowRole": "step"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "relatedLocations": [
+        {
+          "id": 1,
+          "physicalLocation": {
+            "artifactLocation": {
+              "uri": "src/edu/ntk/b38/html/RiskyHtmlAttribute.java",
+              "uriBaseId": "%SRCROOT%",
+              "index": 1
+            },
+            "region": {
+              "startLine": 10,
+              "startColumn": 42,
+              "endColumn": 80
+            }
+          },
+          "message": {
+            "text": "declared source (not LLM discovered)"
+          }
+        },
+        {
+          "physicalLocation": {
+            "artifactLocation": {
+              "uri": "src/edu/ntk/b38/html/RiskyHtmlAttribute.java",
+              "uriBaseId": "%SRCROOT%",
+              "index": 1
+            },
+            "region": {
+              "startLine": 10,
+              "startColumn": 42,
+              "endColumn": 80
+            }
+          }
+        }
+      ]
+    },
+    "source_policy": "CODEQL_HTTP_EXCHANGE_REQUEST_URI_QUERY_DECLARED_REMOTE_SOURCE_NOT_LLM",
+    "source_discovered_by_llm": false,
+    "origin": "REAL_CODEQL_PATH_QUERY",
+    "http_context_verified": true
+  },
+  {
+    "id": "b34ed65b013ca9dedce2bc371a47eb1c0f9fdff829dda95b62c890951e943040",
+    "cwe": "79",
+    "location": {
+      "uri": "src/edu/ntk/b38/html/RiskyHtmlBody.java",
+      "start_line": 15,
+      "start_column": 42,
+      "end_line": 15,
+      "end_column": 79
+    },
+    "callsite": {
+      "package": "java.io",
+      "class": "OutputStream",
+      "method": "write",
+      "signature": "void write(byte[] p0)",
+      "cwe": "89",
+      "is_static": false,
+      "receiver_policy": "HOLD_THIS_UNTIL_SEMANTIC_REVIEW",
+      "compiler_signature": "write(byte[])",
+      "arity": 1,
+      "source_record_sha256": "2beff0d4d3b9a9f304704d6494691cbb916b1aa121e7404ffcc983dcdbe2ebf2",
+      "uri": "src/edu/ntk/b38/html/RiskyHtmlBody.java",
+      "case_key": "def8ecb5322343d6c9acb7038bca4fc1028a3952655e455ffa4571949ca1cef7",
+      "start_line": 15,
+      "start_column": 9,
+      "end_line": 15,
+      "end_column": 79
+    },
+    "argument_index": 0,
+    "paths": [
+      [
+        {
+          "uri": "src/edu/ntk/b38/html/RiskyHtmlBody.java",
+          "start_line": 10,
+          "start_column": 42,
+          "end_line": 10,
+          "end_column": 80
+        },
+        {
+          "uri": "src/edu/ntk/b38/html/RiskyHtmlBody.java",
+          "start_line": 10,
+          "start_column": 24,
+          "end_line": 10,
+          "end_column": 105
+        },
+        {
+          "uri": "src/edu/ntk/b38/html/RiskyHtmlBody.java",
+          "start_line": 15,
+          "start_column": 42,
+          "end_line": 15,
+          "end_column": 46
+        },
+        {
+          "uri": "src/edu/ntk/b38/html/RiskyHtmlBody.java",
+          "start_line": 15,
+          "start_column": 42,
+          "end_line": 15,
+          "end_column": 79
+        }
+      ]
+    ],
+    "raw_result": {
+      "ruleId": "java/ntk-b38/cwe79-diagnostic-epoch-1",
+      "ruleIndex": 0,
+      "rule": {
+        "id": "java/ntk-b38/cwe79-diagnostic-epoch-1",
+        "index": 0
+      },
+      "message": {
+        "text": "Declared source reaches the scoped CWE-79 argument from [declared source (not LLM discovered)](1)."
+      },
+      "locations": [
+        {
+          "physicalLocation": {
+            "artifactLocation": {
+              "uri": "src/edu/ntk/b38/html/RiskyHtmlBody.java",
+              "uriBaseId": "%SRCROOT%",
+              "index": 2
+            },
+            "region": {
+              "startLine": 15,
+              "startColumn": 42,
+              "endColumn": 79
+            }
+          }
+        }
+      ],
+      "partialFingerprints": {
+        "primaryLocationLineHash": "3e88cf2c1417118a:1",
+        "primaryLocationStartColumnFingerprint": "33"
+      },
+      "codeFlows": [
+        {
+          "threadFlows": [
+            {
+              "locations": [
+                {
+                  "location": {
+                    "physicalLocation": {
+                      "artifactLocation": {
+                        "uri": "src/edu/ntk/b38/html/RiskyHtmlBody.java",
+                        "uriBaseId": "%SRCROOT%",
+                        "index": 2
+                      },
+                      "region": {
+                        "startLine": 10,
+                        "startColumn": 42,
+                        "endColumn": 80
+                      }
+                    },
+                    "message": {
+                      "text": "getRawQuery(...) : String"
+                    }
+                  }
+                },
+                {
+                  "location": {
+                    "physicalLocation": {
+                      "artifactLocation": {
+                        "uri": "src/edu/ntk/b38/html/RiskyHtmlBody.java",
+                        "uriBaseId": "%SRCROOT%",
+                        "index": 2
+                      },
+                      "region": {
+                        "startLine": 10,
+                        "startColumn": 24,
+                        "endColumn": 105
+                      }
+                    },
+                    "message": {
+                      "text": "decode(...) : String"
+                    }
+                  },
+                  "taxa": [
+                    {
+                      "id": "Config",
+                      "properties": {
+                        "CodeQL/DataflowRole": "step"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "location": {
+                    "physicalLocation": {
+                      "artifactLocation": {
+                        "uri": "src/edu/ntk/b38/html/RiskyHtmlBody.java",
+                        "uriBaseId": "%SRCROOT%",
+                        "index": 2
+                      },
+                      "region": {
+                        "startLine": 15,
+                        "startColumn": 42,
+                        "endColumn": 46
+                      }
+                    },
+                    "message": {
+                      "text": "body : String"
+                    }
+                  }
+                },
+                {
+                  "location": {
+                    "physicalLocation": {
+                      "artifactLocation": {
+                        "uri": "src/edu/ntk/b38/html/RiskyHtmlBody.java",
+                        "uriBaseId": "%SRCROOT%",
+                        "index": 2
+                      },
+                      "region": {
+                        "startLine": 15,
+                        "startColumn": 42,
+                        "endColumn": 79
+                      }
+                    },
+                    "message": {
+                      "text": "getBytes(...)"
+                    }
+                  },
+                  "taxa": [
+                    {
+                      "id": "Config",
+                      "properties": {
+                        "CodeQL/DataflowRole": "step"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "relatedLocations": [
+        {
+          "id": 1,
+          "physicalLocation": {
+            "artifactLocation": {
+              "uri": "src/edu/ntk/b38/html/RiskyHtmlBody.java",
+              "uriBaseId": "%SRCROOT%",
+              "index": 2
+            },
+            "region": {
+              "startLine": 10,
+              "startColumn": 42,
+              "endColumn": 80
+            }
+          },
+          "message": {
+            "text": "declared source (not LLM discovered)"
+          }
+        },
+        {
+          "physicalLocation": {
+            "artifactLocation": {
+              "uri": "src/edu/ntk/b38/html/RiskyHtmlBody.java",
+              "uriBaseId": "%SRCROOT%",
+              "index": 2
+            },
+            "region": {
+              "startLine": 10,
+              "startColumn": 42,
+              "endColumn": 80
+            }
+          }
+        }
+      ]
+    },
+    "source_policy": "CODEQL_HTTP_EXCHANGE_REQUEST_URI_QUERY_DECLARED_REMOTE_SOURCE_NOT_LLM",
+    "source_discovered_by_llm": false,
+    "origin": "REAL_CODEQL_PATH_QUERY",
+    "http_context_verified": true
+  },
+  {
+    "id": "7499eb61eafe1b5d790419c6dce1cec77d559ae7bebed7fa4dbcbd29da38dfbe",
+    "cwe": "79",
+    "location": {
+      "uri": "src/edu/ntk/b38/html/RiskyOtherHtmlHandler.java",
+      "start_line": 15,
+      "start_column": 42,
+      "end_line": 15,
+      "end_column": 87
+    },
+    "callsite": {
+      "package": "java.io",
+      "class": "OutputStream",
+      "method": "write",
+      "signature": "void write(byte[] p0)",
+      "cwe": "89",
+      "is_static": false,
+      "receiver_policy": "HOLD_THIS_UNTIL_SEMANTIC_REVIEW",
+      "compiler_signature": "write(byte[])",
+      "arity": 1,
+      "source_record_sha256": "2beff0d4d3b9a9f304704d6494691cbb916b1aa121e7404ffcc983dcdbe2ebf2",
+      "uri": "src/edu/ntk/b38/html/RiskyOtherHtmlHandler.java",
+      "case_key": "def8ecb5322343d6c9acb7038bca4fc1028a3952655e455ffa4571949ca1cef7",
+      "start_line": 15,
+      "start_column": 9,
+      "end_line": 15,
+      "end_column": 87
+    },
+    "argument_index": 0,
+    "paths": [
+      [
+        {
+          "uri": "src/edu/ntk/b38/html/RiskyOtherHtmlHandler.java",
+          "start_line": 11,
+          "start_column": 42,
+          "end_line": 11,
+          "end_column": 80
+        },
+        {
+          "uri": "src/edu/ntk/b38/html/RiskyOtherHtmlHandler.java",
+          "start_line": 11,
+          "start_column": 24,
+          "end_line": 11,
+          "end_column": 105
+        },
+        {
+          "uri": "src/edu/ntk/b38/html/RiskyOtherHtmlHandler.java",
+          "start_line": 15,
+          "start_column": 42,
+          "end_line": 15,
+          "end_column": 54
+        },
+        {
+          "uri": "src/edu/ntk/b38/html/RiskyOtherHtmlHandler.java",
+          "start_line": 15,
+          "start_column": 42,
+          "end_line": 15,
+          "end_column": 87
+        }
+      ]
+    ],
+    "raw_result": {
+      "ruleId": "java/ntk-b38/cwe79-diagnostic-epoch-1",
+      "ruleIndex": 0,
+      "rule": {
+        "id": "java/ntk-b38/cwe79-diagnostic-epoch-1",
+        "index": 0
+      },
+      "message": {
+        "text": "Declared source reaches the scoped CWE-79 argument from [declared source (not LLM discovered)](1)."
+      },
+      "locations": [
+        {
+          "physicalLocation": {
+            "artifactLocation": {
+              "uri": "src/edu/ntk/b38/html/RiskyOtherHtmlHandler.java",
+              "uriBaseId": "%SRCROOT%",
+              "index": 3
+            },
+            "region": {
+              "startLine": 15,
+              "startColumn": 42,
+              "endColumn": 87
+            }
+          }
+        }
+      ],
+      "partialFingerprints": {
+        "primaryLocationLineHash": "c010d96f67f44124:1",
+        "primaryLocationStartColumnFingerprint": "33"
+      },
+      "codeFlows": [
+        {
+          "threadFlows": [
+            {
+              "locations": [
+                {
+                  "location": {
+                    "physicalLocation": {
+                      "artifactLocation": {
+                        "uri": "src/edu/ntk/b38/html/RiskyOtherHtmlHandler.java",
+                        "uriBaseId": "%SRCROOT%",
+                        "index": 3
+                      },
+                      "region": {
+                        "startLine": 11,
+                        "startColumn": 42,
+                        "endColumn": 80
+                      }
+                    },
+                    "message": {
+                      "text": "getRawQuery(...) : String"
+                    }
+                  }
+                },
+                {
+                  "location": {
+                    "physicalLocation": {
+                      "artifactLocation": {
+                        "uri": "src/edu/ntk/b38/html/RiskyOtherHtmlHandler.java",
+                        "uriBaseId": "%SRCROOT%",
+                        "index": 3
+                      },
+                      "region": {
+                        "startLine": 11,
+                        "startColumn": 24,
+                        "endColumn": 105
+                      }
+                    },
+                    "message": {
+                      "text": "decode(...) : String"
+                    }
+                  },
+                  "taxa": [
+                    {
+                      "id": "Config",
+                      "properties": {
+                        "CodeQL/DataflowRole": "step"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "location": {
+                    "physicalLocation": {
+                      "artifactLocation": {
+                        "uri": "src/edu/ntk/b38/html/RiskyOtherHtmlHandler.java",
+                        "uriBaseId": "%SRCROOT%",
+                        "index": 3
+                      },
+                      "region": {
+                        "startLine": 15,
+                        "startColumn": 42,
+                        "endColumn": 54
+                      }
+                    },
+                    "message": {
+                      "text": "responseText : String"
+                    }
+                  }
+                },
+                {
+                  "location": {
+                    "physicalLocation": {
+                      "artifactLocation": {
+                        "uri": "src/edu/ntk/b38/html/RiskyOtherHtmlHandler.java",
+                        "uriBaseId": "%SRCROOT%",
+                        "index": 3
+                      },
+                      "region": {
+                        "startLine": 15,
+                        "startColumn": 42,
+                        "endColumn": 87
+                      }
+                    },
+                    "message": {
+                      "text": "getBytes(...)"
+                    }
+                  },
+                  "taxa": [
+                    {
+                      "id": "Config",
+                      "properties": {
+                        "CodeQL/DataflowRole": "step"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "relatedLocations": [
+        {
+          "id": 1,
+          "physicalLocation": {
+            "artifactLocation": {
+              "uri": "src/edu/ntk/b38/html/RiskyOtherHtmlHandler.java",
+              "uriBaseId": "%SRCROOT%",
+              "index": 3
+            },
+            "region": {
+              "startLine": 11,
+              "startColumn": 42,
+              "endColumn": 80
+            }
+          },
+          "message": {
+            "text": "declared source (not LLM discovered)"
+          }
+        },
+        {
+          "physicalLocation": {
+            "artifactLocation": {
+              "uri": "src/edu/ntk/b38/html/RiskyOtherHtmlHandler.java",
+              "uriBaseId": "%SRCROOT%",
+              "index": 3
+            },
+            "region": {
+              "startLine": 11,
+              "startColumn": 42,
+              "endColumn": 80
+            }
+          }
+        }
+      ]
+    },
+    "source_policy": "CODEQL_HTTP_EXCHANGE_REQUEST_URI_QUERY_DECLARED_REMOTE_SOURCE_NOT_LLM",
+    "source_discovered_by_llm": false,
+    "origin": "REAL_CODEQL_PATH_QUERY",
+    "http_context_verified": true
+  }
+]

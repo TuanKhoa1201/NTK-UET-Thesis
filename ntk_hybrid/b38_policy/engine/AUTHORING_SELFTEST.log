@@ -1,0 +1,37 @@
+test_report_excludes_upload_source_and_db (test_batch37a.BundleTests.test_report_excludes_upload_source_and_db) ... 
+===== BATCH 37A RESULT =====
+STATUS=B37A_BLOCKED
+MODE=NEW_JAVA_ZIP_REAL_HYBRID_SCOPED
+CODEQL_DATAFLOW=None
+SOURCE_MODEL=None
+FROZEN_REPO_UNCHANGED=None
+RUN_DIR=/tmp/tmpwgk2sqzy/run
+OUTPUT_ZIP=/tmp/tmpwgk2sqzy/dl/run_result.zip
+OUTPUT_SHA256=262f91b4850ba28bb8c2c980e2b392ea9216bf5256686808bbf346b5ec8f13b5
+ok
+test_absolute_path_rejected (test_batch37a.InputTests.test_absolute_path_rejected) ... ok
+test_builder_disables_annotation_processing (test_batch37a.InputTests.test_builder_disables_annotation_processing) ... ok
+test_javac_real_build_if_available (test_batch37a.InputTests.test_javac_real_build_if_available) ... ok
+test_more_than_24_java_refused (test_batch37a.InputTests.test_more_than_24_java_refused) ... ok
+test_non_java_file_not_extracted (test_batch37a.InputTests.test_non_java_file_not_extracted) ... ok
+test_relative_traversal_rejected (test_batch37a.InputTests.test_relative_traversal_rejected) ... ok
+test_sample_is_not_old_fixture (test_batch37a.InputTests.test_sample_is_not_old_fixture) ... ok
+test_sample_unpacks_only_java (test_batch37a.InputTests.test_sample_unpacks_only_java) ... ok
+test_symlink_rejected (test_batch37a.InputTests.test_symlink_rejected) ... ok
+test_adjudication_raw_label_immutable (test_batch37a.QueryTests.test_adjudication_raw_label_immutable) ... ok
+test_b34r5_real_evidence_semantic_guard_parity (test_batch37a.QueryTests.test_b34r5_real_evidence_semantic_guard_parity) ... ok
+test_call_query_extracts_sql_and_source (test_batch37a.QueryTests.test_call_query_extracts_sql_and_source) ... ok
+test_compiled_flow_template_exact_overload (test_batch37a.QueryTests.test_compiled_flow_template_exact_overload) ... ok
+test_exact_semantic_allows_sql_text_and_rejects_binding (test_batch37a.QueryTests.test_exact_semantic_allows_sql_text_and_rejects_binding) ... ok
+test_incorrect_generated_query_is_rejected (test_batch37a.QueryTests.test_incorrect_generated_query_is_rejected) ... ok
+test_no_query_without_positive_is_not_pass (test_batch37a.QueryTests.test_no_query_without_positive_is_not_pass) ... ok
+test_policy_is_scoped_and_explicit_source (test_batch37a.QueryTests.test_policy_is_scoped_and_explicit_source) ... ok
+test_queries_are_not_scoped_to_old_fixture (test_batch37a.QueryTests.test_queries_are_not_scoped_to_old_fixture) ... ok
+test_source_model_requires_real_compiler_call (test_batch37a.QueryTests.test_source_model_requires_real_compiler_call) ... ok
+test_namespaced_id_normalization (test_batch37a.ScannerTests.test_namespaced_id_normalization) ... ok
+test_raw_scan_preserved_and_canonical_derived (test_batch37a.ScannerTests.test_raw_scan_preserved_and_canonical_derived) ... ok
+
+----------------------------------------------------------------------
+Ran 22 tests in 0.505s
+
+OK

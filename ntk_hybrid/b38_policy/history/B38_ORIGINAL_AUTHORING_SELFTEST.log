@@ -1,0 +1,83 @@
+test_code_fingerprint_is_deterministic (test_profiles_and_evidence.GateTests.test_code_fingerprint_is_deterministic) ... ok
+test_expected_control_false_does_not_mean_remove_finding (test_profiles_and_evidence.GateTests.test_expected_control_false_does_not_mean_remove_finding) ... ok
+test_manifest_gate_tamper_and_diagnostic_rejected (test_profiles_and_evidence.GateTests.test_manifest_gate_tamper_and_diagnostic_rejected) ... ok
+test_missing_gate_rejected (test_profiles_and_evidence.GateTests.test_missing_gate_rejected) ... ok
+test_missing_scanner_signal_blocks_known_fixture (test_profiles_and_evidence.GateTests.test_missing_scanner_signal_blocks_known_fixture) ... ok
+test_pack_excludes_binary_cache_and_uploaded_source (test_profiles_and_evidence.GateTests.test_pack_excludes_binary_cache_and_uploaded_source) ... ok
+test_sample_manifest_hashes (test_profiles_and_evidence.GateTests.test_sample_manifest_hashes) ... ok
+test_scanner_fixture_control_must_also_be_covered (test_profiles_and_evidence.GateTests.test_scanner_fixture_control_must_also_be_covered) ... ok
+test_unexpected_path_fails_fixture (test_profiles_and_evidence.GateTests.test_unexpected_path_fails_fixture) ... ok
+test_unknown_input_not_a_fixture (test_profiles_and_evidence.GateTests.test_unknown_input_not_a_fixture) ... ok
+test_all_cwe_allowlists_exact_arguments (test_profiles_and_evidence.ProfileTests.test_all_cwe_allowlists_exact_arguments) ... ok
+test_candidate_cwe_and_provenance_separate (test_profiles_and_evidence.ProfileTests.test_candidate_cwe_and_provenance_separate) ... ok
+test_cross_cwe_label_rejected (test_profiles_and_evidence.ProfileTests.test_cross_cwe_label_rejected) ... ok
+test_duplicate_label_rejected (test_profiles_and_evidence.ProfileTests.test_duplicate_label_rejected) ... ok
+test_dynamic_prepare_is_not_blanket_excluded (test_profiles_and_evidence.ProfileTests.test_dynamic_prepare_is_not_blanket_excluded) ... ok
+test_empty_list_is_not_none (test_profiles_and_evidence.ProfileTests.test_empty_list_is_not_none) ... ok
+test_empty_sinks_remain_empty (test_profiles_and_evidence.ProfileTests.test_empty_sinks_remain_empty) ... ok
+test_generated_ql_exact_owner_and_profile (test_profiles_and_evidence.ProfileTests.test_generated_ql_exact_owner_and_profile) ... ok
+test_http_context_not_generic_string_sink (test_profiles_and_evidence.ProfileTests.test_http_context_not_generic_string_sink) ... ok
+test_invalid_index_rejected (test_profiles_and_evidence.ProfileTests.test_invalid_index_rejected) ... ok
+test_manual_is_diagnostic_only (test_profiles_and_evidence.ProfileTests.test_manual_is_diagnostic_only) ... ok
+test_no_old_fixture_names_in_new_queries (test_profiles_and_evidence.ProfileTests.test_no_old_fixture_names_in_new_queries) ... ok
+test_offset_and_count_not_xss_sinks (test_profiles_and_evidence.ProfileTests.test_offset_and_count_not_xss_sinks) ... ok
+test_raw_labels_immutable (test_profiles_and_evidence.ProfileTests.test_raw_labels_immutable) ... ok
+test_receiver_not_silently_guessed (test_profiles_and_evidence.ProfileTests.test_receiver_not_silently_guessed) ... ok
+test_runtime_environment_is_not_command_sink (test_profiles_and_evidence.ProfileTests.test_runtime_environment_is_not_command_sink) ... ok
+test_setstring_value_is_not_sql_grammar (test_profiles_and_evidence.ProfileTests.test_setstring_value_is_not_sql_grammar) ... ok
+test_unknown_method_not_auto_added (test_profiles_and_evidence.ProfileTests.test_unknown_method_not_auto_added) ... ok
+test_wrong_owner_fails_semantics (test_profiles_and_evidence.ProfileTests.test_wrong_owner_fails_semantics) ... ok
+test_zero_sources_is_not_safe (test_profiles_and_evidence.ProfileTests.test_zero_sources_is_not_safe) ... ok
+test_fabricated_or_absent_source_rejected (test_profiles_and_evidence.SQLReplayTests.test_fabricated_or_absent_source_rejected) ... ok
+test_flow_without_live_accepted_label_rejected (test_profiles_and_evidence.SQLReplayTests.test_flow_without_live_accepted_label_rejected) ... ok
+test_flow_without_semantic_acceptance_rejected (test_profiles_and_evidence.SQLReplayTests.test_flow_without_semantic_acceptance_rejected) ... ok
+test_no_flow_never_upgrades_api_alone (test_profiles_and_evidence.SQLReplayTests.test_no_flow_never_upgrades_api_alone) ... ok
+test_parse_real_paths_uses_current_source_inventory (test_profiles_and_evidence.SQLReplayTests.test_parse_real_paths_uses_current_source_inventory) ... ok
+test_sarif_cwe_is_not_always_89 (test_profiles_and_evidence.SQLReplayTests.test_sarif_cwe_is_not_always_89) ... ok
+test_saved_evidence_hashes (test_profiles_and_evidence.SQLReplayTests.test_saved_evidence_hashes) ... ok
+test_sql_scores_unchanged_on_real_37c_replay (test_profiles_and_evidence.SQLReplayTests.test_sql_scores_unchanged_on_real_37c_replay) ... ok
+test_deceptive_rule_ids (test_profiles_and_evidence.ScannerTests.test_deceptive_rule_ids) ... ok
+test_empty_real_result_valid (test_profiles_and_evidence.ScannerTests.test_empty_real_result_valid) ... ok
+test_errors_fail_closed (test_profiles_and_evidence.ScannerTests.test_errors_fail_closed) ... ok
+test_metadata_mismatch (test_profiles_and_evidence.ScannerTests.test_metadata_mismatch) ... ok
+test_multi_rules_distinct_cwes (test_profiles_and_evidence.ScannerTests.test_multi_rules_distinct_cwes) ... ok
+test_namespaced_ids (test_profiles_and_evidence.ScannerTests.test_namespaced_ids) ... ok
+test_outside_file_rejected (test_profiles_and_evidence.ScannerTests.test_outside_file_rejected) ... ok
+test_sql_pattern_invariant (test_profiles_and_evidence.ScannerTests.test_sql_pattern_invariant) ... ok
+test_unselected_cwe_rejected (test_profiles_and_evidence.ScannerTests.test_unselected_cwe_rejected) ... ok
+test_mock_diagnostics_only_never_writes_model_gate (test_runner_orchestration.MockRunnerTests.test_mock_diagnostics_only_never_writes_model_gate) ... ok
+test_mock_empty_live_sink_is_review_not_manual_fallback (test_runner_orchestration.MockRunnerTests.test_mock_empty_live_sink_is_review_not_manual_fallback) ... ok
+test_mock_missing_earlier_gates_blocks_d (test_runner_orchestration.MockRunnerTests.test_mock_missing_earlier_gates_blocks_d) ... ok
+test_mock_orchestration_abcd_with_separate_diagnostics_and_reports (test_runner_orchestration.MockRunnerTests.test_mock_orchestration_abcd_with_separate_diagnostics_and_reports) ... ok
+test_mock_ql_error_does_not_run_model (test_runner_orchestration.MockRunnerTests.test_mock_ql_error_does_not_run_model) ... ok
+test_csrf_rejected (test_web_and_intake.HTTPTests.test_csrf_rejected) ... 127.0.0.1 - - [19/Oct/2026 05:15:12] "POST /api/jobs HTTP/1.1" 403 -
+ok
+test_health_requires_gate_but_not_gold (test_web_and_intake.HTTPTests.test_health_requires_gate_but_not_gold) ... 127.0.0.1 - - [19/Oct/2026 05:15:12] "GET /api/health HTTP/1.1" 200 -
+ok
+test_host_rebinding_denied (test_web_and_intake.HTTPTests.test_host_rebinding_denied) ... 127.0.0.1 - - [19/Oct/2026 05:15:13] "GET / HTTP/1.1" 403 -
+ok
+test_html_local_assets_and_security_headers (test_web_and_intake.HTTPTests.test_html_local_assets_and_security_headers) ... 127.0.0.1 - - [19/Oct/2026 05:15:13] "GET / HTTP/1.1" 200 -
+ok
+test_http_upload_hash_and_job_scope (test_web_and_intake.HTTPTests.test_http_upload_hash_and_job_scope) ... 127.0.0.1 - - [19/Oct/2026 05:15:14] "POST /api/jobs HTTP/1.1" 202 -
+127.0.0.1 - - [19/Oct/2026 05:15:14] "GET /api/jobs/d7d9f29df1acb00639f2 HTTP/1.1" 200 -
+127.0.0.1 - - [19/Oct/2026 05:15:14] "GET /api/jobs/d7d9f29df1acb00639f2/report.sarif HTTP/1.1" 409 -
+ok
+test_missing_gate_blocks_web_start (test_web_and_intake.HTTPTests.test_missing_gate_blocks_web_start) ... ok
+test_nonzip_rejected (test_web_and_intake.HTTPTests.test_nonzip_rejected) ... 127.0.0.1 - - [19/Oct/2026 05:15:15] "POST /api/jobs HTTP/1.1" 415 -
+ok
+test_one_job_at_a_time (test_web_and_intake.HTTPTests.test_one_job_at_a_time) ... ok
+test_origin_rejected (test_web_and_intake.HTTPTests.test_origin_rejected) ... 127.0.0.1 - - [19/Oct/2026 05:15:16] "POST /api/jobs HTTP/1.1" 403 -
+ok
+test_sample_download_hash (test_web_and_intake.HTTPTests.test_sample_download_hash) ... 127.0.0.1 - - [19/Oct/2026 05:15:16] "GET /api/sample/C HTTP/1.1" 200 -
+ok
+test_upload_unknown_arm_rejected (test_web_and_intake.HTTPTests.test_upload_unknown_arm_rejected) ... 127.0.0.1 - - [19/Oct/2026 05:15:17] "POST /api/jobs HTTP/1.1" 400 -
+ok
+test_all_sample_inputs_pass_existing_intake (test_web_and_intake.IntakeTests.test_all_sample_inputs_pass_existing_intake) ... ok
+test_real_child_socket_denial (test_web_and_intake.IntakeTests.test_real_child_socket_denial) ... ok
+test_symlink_rejected (test_web_and_intake.IntakeTests.test_symlink_rejected) ... ok
+test_zip_traversal_rejected (test_web_and_intake.IntakeTests.test_zip_traversal_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 67 tests in 6.892s
+
+OK
