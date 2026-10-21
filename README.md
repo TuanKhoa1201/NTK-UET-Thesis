@@ -1,24 +1,10 @@
-# NTK SAST — Current Engineering Prototype (Batch 38DPA)
+# NTK SAST - Local OpenGrep + IRIS + LLM prototype
 
-**Current scoped prototype:** OpenGrep + IRIS Stage 3 +
-local Qwen2.5-Coder-0.5B LoRA + CodeQL +
-semantic validation + SAST scoring V2.2.
+The current scoped prototype combines **OpenGrep OSS, CodeQL, native IRIS Stage 3, locally fine-tuned Qwen2.5-Coder-0.5B LoRA, and SAST V2.2 priority scoring**. It supports a Java 21 JDK-only research scope across CWE-22, CWE-78, CWE-79 and CWE-89. CWE-79 qualified paths remain **policy-assisted, not model-derived LoRA XSS sinks**.
 
-The localhost web prototype supports CWE-22, CWE-78,
-CWE-79 and CWE-89 within its declared JDK-only scope.
+Current engineering state, results and limits: [`docs/engineering/LOCAL_HYBRID_STATUS.md`](docs/engineering/LOCAL_HYBRID_STATUS.md). Source components are organized by their functionality in `ntk_hybrid/local_hybrid_cli/`, `ntk_hybrid/local_workbench/`, and `evaluation/`.
 
-**Important:** CWE-79 uses CodeQL contextual policy-assisted
-evidence. The LoRA model-derived XSS gate has NOT passed.
-
-Implementation: [`ntk_hybrid/b38_policy/`](ntk_hybrid/b38_policy/)
-
-Technical scope:
-[`docs/NTK_B38_DPA_STATUS.md`](docs/NTK_B38_DPA_STATUS.md)
-
-The historical README material below describes earlier
-milestones, including the older 1.5B/V2.1 configuration.
-Those historical claims must not be confused with the
-current 0.5B/V2.2 prototype.
+The held-out 24-file synthetic evaluation is **not independently human-labelled gold**. Historical benchmark and earlier 1.5B/QLoRA descriptions appear below for historical context, not as claims about this current 0.5B system. Local model checkpoints, scanned projects and private evidence are not stored in the public repository.
 
 ---
 

@@ -1,0 +1,16 @@
+{
+  "schema": "NTK_B39B8_OFFLINE_CLOSEOUT_PINS_V1",
+  "backend_run_id": "b39b4_20261020T100814Z_63d29938",
+  "backend_result_zip_sha256": "560020e7a5d78e0b2b8500652eaf951e835b758fdcd3c596374c72a2a2e59bf2",
+  "holdout_evaluation_zip_sha256": "8d95a918da2f4601415a12eba0ea9dc7e93a28c8e4a107a53e2ed4ec01dbc0fd",
+  "holdout_source_zip_sha256": "6e968d05c11073a71a218950c80250ad10ed59a97d8ac04faa354746a489c15a",
+  "holdout_lock_sha256": "5bccf51fcc98611abde6c01049816a9d02681b89d52f1befacced6a51387597d",
+  "scorer_sha256": "c1b9cbf071739ca6d96062032867835dbf4db185f4e0ac1e2d609bd319e0de7e",
+  "github_release_commit": "9f8f1a7977423edabc262a06b39ce39965f58df8",
+  "frozen_iris_commit": "51c2aafaf2746a6246ab057752791cc397c272d4",
+  "ablation_or_weights_tuning": "NOT_PERFORMED",
+  "independent_human_gold": false,
+  "run_new_scans": false,
+  "run_new_inference": false,
+  "changes_to_production": false
+}

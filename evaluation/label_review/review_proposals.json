@@ -1,0 +1,229 @@
+{
+  "schema": "NTK_B39B6_BULK_REVIEW_PROPOSAL_V1",
+  "origin": "AI_SOURCE_REVIEW_DRAFT_REQUIRES_OPERATOR_APPROVAL",
+  "input_sha256": "4a2997470997e3d9b007837ffda8d7c370e493258100194e2ebd01c6d798d148",
+  "scope": "POSTHOC_DEVELOPMENT_REVIEW_NOT_INDEPENDENT_GOLD",
+  "already_exposed_to_predictions": true,
+  "proposed_by": "ChatGPT",
+  "reference_notes": [
+    {
+      "topic": "Java URI raw query preserves escaped octets, unlike decoded query",
+      "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/net/URI.html#getRawQuery()"
+    },
+    {
+      "topic": "Runtime.exec(String) tokenizes command; no assumption of implicit shell",
+      "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Runtime.html"
+    },
+    {
+      "topic": "Prepared statement creation versus execution and parameter binding",
+      "source": "https://docs.oracle.com/en/java/javase/21/docs/api/java.sql/java/sql/PreparedStatement.html"
+    }
+  ],
+  "records": [
+    {
+      "uri": "src/ntk/b39b4/CommandFixed.java",
+      "cwe": "78",
+      "source_sha256": "e974f4b852b1f88bec9eb3f0981b332f2e598dc43ca2934aa7c7d12cb2d6fba8",
+      "truth": "NEGATIVE",
+      "rationale": "The executable path is the fixed literal /usr/bin/true. No external command text is supplied at this call.",
+      "assumptions": "Assess CWE-78 only. The runtime and /usr/bin/true are trusted and not replaceable by the adversary. The process environment and executable-file tampering are outside this testcase.",
+      "evidence_lines": [
+        3,
+        4
+      ]
+    },
+    {
+      "uri": "src/ntk/b39b4/CommandFixedArray.java",
+      "cwe": "78",
+      "source_sha256": "bae6df68c694d87404884d0a02787b1fac63788566f0984ca33eaa0a02523825",
+      "truth": "NEGATIVE",
+      "rationale": "The executable and argument array are fixed literals. This source does not interpolate external text into the command.",
+      "assumptions": "Assess CWE-78 only. /usr/bin/printf and the process environment are trusted; executable replacement and filesystem tampering are outside this testcase.",
+      "evidence_lines": [
+        3,
+        4
+      ]
+    },
+    {
+      "uri": "src/ntk/b39b4/CommandRequest.java",
+      "cwe": "78",
+      "source_sha256": "e53351b32b2a4ff9b020a09edf1d83065927038a5c5060a3d053fdd2d6fcc357",
+      "truth": "POSITIVE",
+      "rationale": "NTK_COMMAND is read from the environment and passed without restriction as the entire command to Runtime.exec. Under the stated trust boundary, the adversary can choose the executable/arguments. This does not rely on assuming that exec(String) implicitly interprets shell metacharacters.",
+      "assumptions": "The demo threat model explicitly treats NTK_COMMAND as attacker-controlled across a trust boundary, the method is invoked, and the process can launch a selected executable. This is conditional; normal trusted deployment environment variables are not inherently remote input.",
+      "evidence_lines": [
+        4,
+        5
+      ]
+    },
+    {
+      "uri": "src/ntk/b39b4/CommandShell.java",
+      "cwe": "78",
+      "source_sha256": "374f748971754d13e2c2d9fd84f47f588201a4f2ef2c038abfeb15391cfcd1f7",
+      "truth": "POSITIVE",
+      "rationale": "NTK_SHELL_ARGUMENT is used as the argument to /bin/sh -c without validation. Shell evaluation of attacker-controlled command text is explicitly requested.",
+      "assumptions": "The demo threat model treats NTK_SHELL_ARGUMENT as attacker-controlled, launch() is invoked, and /bin/sh is present. Fixed shell binary integrity is trusted. No shell was executed during this source review.",
+      "evidence_lines": [
+        4,
+        5
+      ]
+    },
+    {
+      "uri": "src/ntk/b39b4/HtmlAttribute.java",
+      "cwe": "79",
+      "source_sha256": "9271a403f72142f844c6e6de1914dba6712c70ec15dcddd70966fc047c4f5abc",
+      "truth": "UNKNOWN",
+      "rationale": "The raw URI query is concatenated into a double-quoted title attribute. The source does not establish whether quote-delimiter characters can reach that raw query through the actual HTTP/URI processing. Attribute-context sensitivity and a raw dataflow path alone do not prove exploitability.",
+      "assumptions": "Need to establish request-target validity, decoding/rewriting, and whether attribute delimiters can actually reach the response. Retain UNKNOWN instead of assuming raw percent-encoded text is decoded at HTML output.",
+      "evidence_lines": [
+        7,
+        8,
+        9,
+        11
+      ]
+    },
+    {
+      "uri": "src/ntk/b39b4/HtmlEncoded.java",
+      "cwe": "79",
+      "source_sha256": "f4f2abb154592caa3ada87c5d36fa925952d7050ef2f0837a413c3d5e1dcaee9",
+      "truth": "NEGATIVE",
+      "rationale": "The helper replaces ampersand first and then both angle brackets. Its result is inserted in a single ordinary HTML text slot inside p, not script or an attribute. Under the narrow assumptions, supplied text does not introduce markup.",
+      "assumptions": "Only this straight-line HTML-text output is evaluated; encode() behaves exactly as shown, the response is processed as UTF-8 HTML, and there is no later decoding, rewriting, unsafe DOM insertion, or reuse in script/attribute contexts. This is not a universal sanitizer claim.",
+      "evidence_lines": [
+        6,
+        7,
+        10,
+        11,
+        12,
+        14
+      ]
+    },
+    {
+      "uri": "src/ntk/b39b4/HtmlResponse.java",
+      "cwe": "79",
+      "source_sha256": "450e4abeb73eb1f4f7a7c5c4dc99dba42ea108b351850e2d9215c24d7249f89d",
+      "truth": "UNKNOWN",
+      "rationale": "The code inserts getRawQuery() into HTML text and writes an HTML response. However, raw URI query access does not itself decode escaped octets. A CodeQL path or absent explicit HTML encoder is not enough to establish that executable HTML syntax can reach this output in the real request-processing context.",
+      "assumptions": "Need to determine accepted request-target characters, any decoding or rewriting before/after this method, and actual browser parsing. Do not assume getRawQuery() equals getQuery(). This unresolved case is not labelled safe or vulnerable automatically.",
+      "evidence_lines": [
+        7,
+        8,
+        9,
+        11
+      ]
+    },
+    {
+      "uri": "src/ntk/b39b4/PathDownload.java",
+      "cwe": "22",
+      "source_sha256": "bf37d8ea6cf3f6d95e336c5196fae14a9c23f5e0c3d03184bb3a144223473070",
+      "truth": "POSITIVE",
+      "rationale": "External path text is converted directly to a Path and read without any visible restriction to an allowed root. It can select a readable path outside the intended boundary under the stated assumptions.",
+      "assumptions": "NTK_DOWNLOAD_PATH is attacker-controlled in the demo; the application is intended to confine reads to an authorized root, but the process can read at least one file outside it and load() is called. An authorized arbitrary-file-reader deployment would not meet this assumption.",
+      "evidence_lines": [
+        5,
+        6
+      ]
+    },
+    {
+      "uri": "src/ntk/b39b4/PathFixed.java",
+      "cwe": "22",
+      "source_sha256": "419df8629ca923ce7af7c58a38b8c00a019124a486f70f4d524f9c9b73181efe",
+      "truth": "NEGATIVE",
+      "rationale": "The path passed to Files.readString is the fixed absolute literal /opt/ntk/config.txt; the testcase has no adversary-controlled path segment.",
+      "assumptions": "Assess CWE-22 only. /opt/ntk and its symlinks/mounts are trusted and not attacker-modifiable; permission and information-disclosure policy errors outside path traversal are excluded.",
+      "evidence_lines": [
+        4,
+        5
+      ]
+    },
+    {
+      "uri": "src/ntk/b39b4/PathFixedBytes.java",
+      "cwe": "22",
+      "source_sha256": "409f79e20963550641874239afce1df9d52a601f5fe7837df21f3f6d500cbc34",
+      "truth": "NEGATIVE",
+      "rationale": "Files.readAllBytes receives a fixed absolute literal /opt/ntk/help.txt, not a path constructed from external input.",
+      "assumptions": "Assess CWE-22 only. The fixed directory tree, symlinks, and mounts are trusted; an adversary cannot replace the fixed resource or change path resolution.",
+      "evidence_lines": [
+        4,
+        5
+      ]
+    },
+    {
+      "uri": "src/ntk/b39b4/PathLookup.java",
+      "cwe": "22",
+      "source_sha256": "2f76817ce5fee95fd0bbffcc80b8a1c678c2a5e5062f28a534960f36e4ba9b46",
+      "truth": "POSITIVE",
+      "rationale": "External path text is passed directly to Files.readString through Path.of, with no visible trusted-root containment check.",
+      "assumptions": "NTK_DOCUMENT_PATH is attacker-controlled in the demo; reads are intended to stay within an authorized root, the process can read outside it, and lookup() is invoked. These are explicit deployment assumptions, not facts established by the source alone.",
+      "evidence_lines": [
+        5,
+        6
+      ]
+    },
+    {
+      "uri": "src/ntk/b39b4/PlainResponse.java",
+      "cwe": "79",
+      "source_sha256": "87188bfc24a9b9ac9f1020543aa298294cc6a920cdb6b9415077bcb2a09e1a3d",
+      "truth": "NEGATIVE",
+      "rationale": "The response content type is explicitly text/plain; the returned query text is not placed in an HTML document by this handler.",
+      "assumptions": "Assess reflected XSS only. The client honors the text/plain UTF-8 response and no downstream consumer embeds it as HTML or changes the type. This excludes MIME rewriting/sniffing anomalies and separate downstream sinks, which this source does not document.",
+      "evidence_lines": [
+        7,
+        8,
+        9,
+        11
+      ]
+    },
+    {
+      "uri": "src/ntk/b39b4/SqlBoundValue.java",
+      "cwe": "89",
+      "source_sha256": "3f3514d2f34f0c4f71a7a267f9440221f36519dd6ba14a1ea1481a9b6129c4f3",
+      "truth": "NEGATIVE",
+      "rationale": "The SQL grammar is a fixed statement with a parameter marker. The external name is supplied using setString, separately from that SQL text, before executeQuery.",
+      "assumptions": "A conforming trusted JDBC driver binds the string as parameter data; the shown statement is used without later SQL concatenation or a custom driver that rewrites parameters into SQL unsafely. Assess SQL injection only.",
+      "evidence_lines": [
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "uri": "src/ntk/b39b4/SqlPrepareText.java",
+      "cwe": "89",
+      "source_sha256": "c652c21796bf07ea8a862e17ca56c939fb68b15de1456c784fdfe765c8793b12",
+      "truth": "UNKNOWN",
+      "rationale": "External text is concatenated into the SQL submitted to prepareStatement, so unsafe SQL construction is present. This method returns the prepared statement without showing its execution. For testcase-level vulnerability labelling, the caller/use and driver behavior remain unspecified.",
+      "assumptions": "Need to establish that the returned statement is used in an operation that realizes the injection, or explicitly define and justify a query-construction-level target instead. Do not silently substitute an API-sink label for testcase ground truth. UNKNOWN does not endorse the concatenation as safe.",
+      "evidence_lines": [
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "uri": "src/ntk/b39b4/SqlSearch.java",
+      "cwe": "89",
+      "source_sha256": "9efd5d7c1ff440a7f020a7c0decc853579b5f29bc551b95dd32af9e3aaa68766",
+      "truth": "POSITIVE",
+      "rationale": "NTK_ACCOUNT is concatenated into the quoted SQL predicate and the resulting SQL text is passed to executeQuery. There is no parameter binding or validation in this source.",
+      "assumptions": "NTK_ACCOUNT is attacker-controlled under the declared demo boundary, search() is invoked, the Statement is trusted/conforming, and the database accepts an adversary-selected value that changes the intended SQL predicate.",
+      "evidence_lines": [
+        5,
+        6
+      ]
+    },
+    {
+      "uri": "src/ntk/b39b4/SqlStatic.java",
+      "cwe": "89",
+      "source_sha256": "df6042e54cdd35560c1a9bbca875c417288d0bae192f817e2ffff56215bf8bed",
+      "truth": "NEGATIVE",
+      "rationale": "The SQL passed to executeQuery is a fixed literal SELECT id FROM accounts and contains no external data.",
+      "assumptions": "Assess SQL injection only. The supplied Statement and JDBC implementation are trusted, and the shown literal is the entire executed statement. Authorization and unrestricted table-read policy are separate questions.",
+      "evidence_lines": [
+        4,
+        5
+      ]
+    }
+  ]
+}

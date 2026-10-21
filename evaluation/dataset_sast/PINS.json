@@ -1,0 +1,18 @@
+{
+  "receipt_name": "b39b5_web_job_20261020T084614Z_3eefcfe9_audit.zip",
+  "receipt_sha256": "11ee4f554d0974bc4c0496e3f180b25bff7a911abd2314c4624953ddfeeb8413",
+  "backend_audit_sha256": "d23f4298485b133b09ae37e8fa6201ef428c617460b1f74a70a0629f4c176501",
+  "run_id": "b39b4_20261020T080156Z_8a7b45f0",
+  "b4_run_relative": "batch39b4_hybrid_runs/b39b4_20261020T080156Z_8a7b45f0",
+  "input_sha256": "4a2997470997e3d9b007837ffda8d7c370e493258100194e2ebd01c6d798d148",
+  "b2_name": "b39b2_20261020T045315Z_bf52f398_result.zip",
+  "b2_sha256": "5ada3b025c9cf99d3e3f908e5767d9b867b818872f16b827bb936c2724c39585",
+  "b2_run_relative": "batch39b2_data_runtime/b39b2_20261020T045315Z_bf52f398",
+  "iris_commit": "51c2aafaf2746a6246ab057752791cc397c272d4",
+  "github_commit": "9f8f1a7977423edabc262a06b39ce39965f58df8",
+  "scorer_sha256": "c1b9cbf071739ca6d96062032867835dbf4db185f4e0ac1e2d609bd319e0de7e",
+  "code_provenance": {
+    "ntk_core.py": "cb87888d421371c6fc4431e27cc6e856d15de720220f92f98bd0900b62d94120",
+    "vendor/common.py": "b9c6e611d22dfeb3ba3c0f44e8e813fbf39c163e2cd1445240e6925cc4a57b0b"
+  }
+}
