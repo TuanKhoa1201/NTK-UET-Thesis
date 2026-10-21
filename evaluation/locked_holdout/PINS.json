@@ -1,0 +1,13 @@
+{
+  "b39b4_package_name": "ntk_batch39b4_hybrid_cli_20261020.zip",
+  "b39b4_package_sha256": "e30a7fc1434b083c87bda80da1667bd2e9d64664d8cb2bf80d00534efaf3791c",
+  "b39b3_result_name": "b39b3_20261020T051708Z_d535d53e_result.zip",
+  "b39b3_result_sha256": "26666def24a3ad71af54d520c9c3c9f9c425675865184a35c53ea2c22e2318ea",
+  "holdout_zip_sha256": "6e968d05c11073a71a218950c80250ad10ed59a97d8ac04faa354746a489c15a",
+  "holdout_files": 24,
+  "truth_counts": {
+    "POSITIVE": 12,
+    "NEGATIVE": 12
+  },
+  "scope": "PRE_PREDICTION_LOCKED_SYNTHETIC_HOLDOUT_NOT_INDEPENDENT_HUMAN_GOLD"
+}

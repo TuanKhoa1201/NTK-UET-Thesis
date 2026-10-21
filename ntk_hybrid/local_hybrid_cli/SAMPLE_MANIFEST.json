@@ -1,0 +1,26 @@
+{
+  "archive_sha256": "4a2997470997e3d9b007837ffda8d7c370e493258100194e2ebd01c6d798d148",
+  "java_files": {
+    "src/ntk/b39b4/CommandFixed.java": "e974f4b852b1f88bec9eb3f0981b332f2e598dc43ca2934aa7c7d12cb2d6fba8",
+    "src/ntk/b39b4/CommandFixedArray.java": "bae6df68c694d87404884d0a02787b1fac63788566f0984ca33eaa0a02523825",
+    "src/ntk/b39b4/CommandRequest.java": "e53351b32b2a4ff9b020a09edf1d83065927038a5c5060a3d053fdd2d6fcc357",
+    "src/ntk/b39b4/CommandShell.java": "374f748971754d13e2c2d9fd84f47f588201a4f2ef2c038abfeb15391cfcd1f7",
+    "src/ntk/b39b4/HtmlAttribute.java": "9271a403f72142f844c6e6de1914dba6712c70ec15dcddd70966fc047c4f5abc",
+    "src/ntk/b39b4/HtmlEncoded.java": "f4f2abb154592caa3ada87c5d36fa925952d7050ef2f0837a413c3d5e1dcaee9",
+    "src/ntk/b39b4/HtmlResponse.java": "450e4abeb73eb1f4f7a7c5c4dc99dba42ea108b351850e2d9215c24d7249f89d",
+    "src/ntk/b39b4/PathDownload.java": "bf37d8ea6cf3f6d95e336c5196fae14a9c23f5e0c3d03184bb3a144223473070",
+    "src/ntk/b39b4/PathFixed.java": "419df8629ca923ce7af7c58a38b8c00a019124a486f70f4d524f9c9b73181efe",
+    "src/ntk/b39b4/PathFixedBytes.java": "409f79e20963550641874239afce1df9d52a601f5fe7837df21f3f6d500cbc34",
+    "src/ntk/b39b4/PathLookup.java": "2f76817ce5fee95fd0bbffcc80b8a1c678c2a5e5062f28a534960f36e4ba9b46",
+    "src/ntk/b39b4/PlainResponse.java": "87188bfc24a9b9ac9f1020543aa298294cc6a920cdb6b9415077bcb2a09e1a3d",
+    "src/ntk/b39b4/SqlBoundValue.java": "3f3514d2f34f0c4f71a7a267f9440221f36519dd6ba14a1ea1481a9b6129c4f3",
+    "src/ntk/b39b4/SqlPrepareText.java": "c652c21796bf07ea8a862e17ca56c939fb68b15de1456c784fdfe765c8793b12",
+    "src/ntk/b39b4/SqlSearch.java": "9efd5d7c1ff440a7f020a7c0decc853579b5f29bc551b95dd32af9e3aaa68766",
+    "src/ntk/b39b4/SqlStatic.java": "df6042e54cdd35560c1a9bbca875c417288d0bae192f817e2ffff56215bf8bed"
+  },
+  "scope": "SYNTHETIC_ENGINE_INTEGRATION_FIXTURE_NOT_INDEPENDENT_GOLD",
+  "labelled_ground_truth": false,
+  "java_count": 16,
+  "application_executed": false,
+  "authoring_compilation": "REAL_JAVAC_21_PROC_NONE_SUCCESS"
+}

@@ -1,0 +1,400 @@
+[
+  {
+    "uri": "src/ntk/b39b7/PathEnvRead.java",
+    "cwe": "22",
+    "truth": "POSITIVE",
+    "source_sha256": "5afc34ef5b98029cc82422282317b04ff0d6e7d297361f9b62928123c4a077bc",
+    "source_line_count": 9,
+    "evidence_lines": [
+      6,
+      7
+    ],
+    "rationale": "Untrusted path text is passed directly to Path.of and Files.readString without a trusted-root containment check.",
+    "assumptions": "NTK_H7_PATH_A is attacker-controlled in the evaluation threat model, load() is invoked, and the process can read at least one file outside the intended root.",
+    "review_mode": "AI_ASSISTED_OPERATOR_APPROVED_PRE_PREDICTION",
+    "independent_human_gold": false,
+    "predictions_exposed_before_lock": false
+  },
+  {
+    "uri": "src/ntk/b39b7/PathEnvBytes.java",
+    "cwe": "22",
+    "truth": "POSITIVE",
+    "source_sha256": "b050176f86ad44fe21397940c94c728b7e7cfd16c8be7d22e771772a3df05f75",
+    "source_line_count": 9,
+    "evidence_lines": [
+      6,
+      7
+    ],
+    "rationale": "Untrusted path text is passed directly to Path.of and Files.readAllBytes without containment to an authorized root.",
+    "assumptions": "NTK_H7_PATH_B is attacker-controlled, load() is invoked, and the process can read outside the intended root.",
+    "review_mode": "AI_ASSISTED_OPERATOR_APPROVED_PRE_PREDICTION",
+    "independent_human_gold": false,
+    "predictions_exposed_before_lock": false
+  },
+  {
+    "uri": "src/ntk/b39b7/PathResolveUnsafe.java",
+    "cwe": "22",
+    "truth": "POSITIVE",
+    "source_sha256": "cfdba6d88bcb6bbf82c950acc4a0f0c01d9c6eeb60ab66ddc2554c21beef71b4",
+    "source_line_count": 10,
+    "evidence_lines": [
+      6,
+      7,
+      8
+    ],
+    "rationale": "An attacker-controlled path is resolved against a nominal root but there is no normalization plus startsWith containment check before reading.",
+    "assumptions": "NTK_H7_PATH_C is attacker-controlled, the application intends confinement under /srv/ntk/data, and load() is invoked.",
+    "review_mode": "AI_ASSISTED_OPERATOR_APPROVED_PRE_PREDICTION",
+    "independent_human_gold": false,
+    "predictions_exposed_before_lock": false
+  },
+  {
+    "uri": "src/ntk/b39b7/PathFixedRead.java",
+    "cwe": "22",
+    "truth": "NEGATIVE",
+    "source_sha256": "82b55fba54f9657a9f8bdbc07f6c488f82ae032e03faf4d1257729d4ada65ff7",
+    "source_line_count": 8,
+    "evidence_lines": [
+      6
+    ],
+    "rationale": "The path passed to Files.readString is a fixed literal and has no attacker-controlled path component in this testcase.",
+    "assumptions": "Assess CWE-22 only; the fixed filesystem path, mounts, and symlinks are trusted and not attacker-modifiable.",
+    "review_mode": "AI_ASSISTED_OPERATOR_APPROVED_PRE_PREDICTION",
+    "independent_human_gold": false,
+    "predictions_exposed_before_lock": false
+  },
+  {
+    "uri": "src/ntk/b39b7/PathRootChecked.java",
+    "cwe": "22",
+    "truth": "NEGATIVE",
+    "source_sha256": "d59e4e10cce95ea7fafecfb619304148580e1bbbd0f524b6695786d0eb721c4e",
+    "source_line_count": 12,
+    "evidence_lines": [
+      6,
+      7,
+      9,
+      10
+    ],
+    "rationale": "The candidate path is normalized and rejected unless it remains under the normalized trusted root before the read.",
+    "assumptions": "The trusted root and descendants are not attacker-controlled symlinks or mounts; assess lexical path traversal under the declared root boundary.",
+    "review_mode": "AI_ASSISTED_OPERATOR_APPROVED_PRE_PREDICTION",
+    "independent_human_gold": false,
+    "predictions_exposed_before_lock": false
+  },
+  {
+    "uri": "src/ntk/b39b7/PathAllowlisted.java",
+    "cwe": "22",
+    "truth": "NEGATIVE",
+    "source_sha256": "ede69a32ba36ae62fdd9b989ccea63a3d6f1d826ef48978783879bc9dbd76948",
+    "source_line_count": 11,
+    "evidence_lines": [
+      6,
+      7,
+      9
+    ],
+    "rationale": "The external filename is restricted to a single safe filename component ending in .txt before resolution under a fixed trusted root.",
+    "assumptions": "The trusted root and filesystem metadata are not attacker-controlled; the regex check executes exactly as shown and load() is invoked.",
+    "review_mode": "AI_ASSISTED_OPERATOR_APPROVED_PRE_PREDICTION",
+    "independent_human_gold": false,
+    "predictions_exposed_before_lock": false
+  },
+  {
+    "uri": "src/ntk/b39b7/CommandShellSh.java",
+    "cwe": "78",
+    "truth": "POSITIVE",
+    "source_sha256": "843b62b99ff1de3922e00bba5f4232fb567967b827b09aeeedb58e73c0cafd85",
+    "source_line_count": 7,
+    "evidence_lines": [
+      4,
+      5
+    ],
+    "rationale": "Attacker-controlled command text is supplied to /bin/sh -c, explicitly requesting shell interpretation.",
+    "assumptions": "NTK_H7_CMD_A is attacker-controlled, /bin/sh exists, and launch() is invoked.",
+    "review_mode": "AI_ASSISTED_OPERATOR_APPROVED_PRE_PREDICTION",
+    "independent_human_gold": false,
+    "predictions_exposed_before_lock": false
+  },
+  {
+    "uri": "src/ntk/b39b7/CommandShellBash.java",
+    "cwe": "78",
+    "truth": "POSITIVE",
+    "source_sha256": "057fa765a2e25d5c5faf7a2f3d159c3813466ea43dbe5fdb2416b8ecd0c57d60",
+    "source_line_count": 7,
+    "evidence_lines": [
+      4,
+      5
+    ],
+    "rationale": "Attacker-controlled command text is supplied to /bin/bash -c, explicitly requesting shell interpretation.",
+    "assumptions": "NTK_H7_CMD_B is attacker-controlled, /bin/bash exists, and launch() is invoked.",
+    "review_mode": "AI_ASSISTED_OPERATOR_APPROVED_PRE_PREDICTION",
+    "independent_human_gold": false,
+    "predictions_exposed_before_lock": false
+  },
+  {
+    "uri": "src/ntk/b39b7/CommandDirectEnv.java",
+    "cwe": "78",
+    "truth": "POSITIVE",
+    "source_sha256": "1222c74bbc214c9f10ad5ed7e053fa52f10034bb13b10143c9ea4c87f40c0b07",
+    "source_line_count": 7,
+    "evidence_lines": [
+      4,
+      5
+    ],
+    "rationale": "The complete command string passed to Runtime.exec is attacker-controlled, allowing selection of the executable and arguments under the stated boundary.",
+    "assumptions": "NTK_H7_CMD_C is attacker-controlled, launch() is invoked, and the process is permitted to start an attacker-selected executable. This claim does not rely on shell metacharacter interpretation.",
+    "review_mode": "AI_ASSISTED_OPERATOR_APPROVED_PRE_PREDICTION",
+    "independent_human_gold": false,
+    "predictions_exposed_before_lock": false
+  },
+  {
+    "uri": "src/ntk/b39b7/CommandFixedTrue.java",
+    "cwe": "78",
+    "truth": "NEGATIVE",
+    "source_sha256": "535f30544f86ac2c2783d5249fee2174e97487bdada7bb578629aed2faeb575b",
+    "source_line_count": 6,
+    "evidence_lines": [
+      4
+    ],
+    "rationale": "The command is a fixed absolute executable path with no external command text.",
+    "assumptions": "Assess CWE-78 only; /usr/bin/true and the process environment are trusted and not attacker-replaceable.",
+    "review_mode": "AI_ASSISTED_OPERATOR_APPROVED_PRE_PREDICTION",
+    "independent_human_gold": false,
+    "predictions_exposed_before_lock": false
+  },
+  {
+    "uri": "src/ntk/b39b7/CommandFixedArray.java",
+    "cwe": "78",
+    "truth": "NEGATIVE",
+    "source_sha256": "65b1a429328b346cc9f651cb5aabc0f5b170c1051789a9879ce2ed3e62080f71",
+    "source_line_count": 6,
+    "evidence_lines": [
+      4
+    ],
+    "rationale": "The executable and argument array are fixed literals with no attacker-controlled command material.",
+    "assumptions": "Assess CWE-78 only; /usr/bin/printf and the process environment are trusted.",
+    "review_mode": "AI_ASSISTED_OPERATOR_APPROVED_PRE_PREDICTION",
+    "independent_human_gold": false,
+    "predictions_exposed_before_lock": false
+  },
+  {
+    "uri": "src/ntk/b39b7/CommandDataArgument.java",
+    "cwe": "78",
+    "truth": "NEGATIVE",
+    "source_sha256": "8b8855e15766062f905776f254fa0ffc3d2c68bc48a300bd2c6734af2cf1a668",
+    "source_line_count": 7,
+    "evidence_lines": [
+      4,
+      5
+    ],
+    "rationale": "External text is passed only as a data argument to a fixed executable in an argument array; no shell interpreter is invoked.",
+    "assumptions": "Assess CWE-78 OS command injection only; /usr/bin/printf is trusted and does not interpret the value as a command. Separate option/argument injection concerns are outside this testcase.",
+    "review_mode": "AI_ASSISTED_OPERATOR_APPROVED_PRE_PREDICTION",
+    "independent_human_gold": false,
+    "predictions_exposed_before_lock": false
+  },
+  {
+    "uri": "src/ntk/b39b7/HtmlQueryText.java",
+    "cwe": "79",
+    "truth": "POSITIVE",
+    "source_sha256": "ce7a4eb2d31284197e94ba03f3243df89e3d1b809d4413b9ef2fdea8e2f75272",
+    "source_line_count": 13,
+    "evidence_lines": [
+      7,
+      8,
+      9,
+      11
+    ],
+    "rationale": "Decoded query text is concatenated into an HTML text context and written as text/html without HTML encoding.",
+    "assumptions": "The request query is attacker-controlled, getQuery() supplies decoded query text, the response is rendered as HTML, and handle() is invoked.",
+    "review_mode": "AI_ASSISTED_OPERATOR_APPROVED_PRE_PREDICTION",
+    "independent_human_gold": false,
+    "predictions_exposed_before_lock": false
+  },
+  {
+    "uri": "src/ntk/b39b7/HtmlQueryAttribute.java",
+    "cwe": "79",
+    "truth": "POSITIVE",
+    "source_sha256": "694b6c9d60f7b00195f2bb0a2b80988f545f872b1cc64d183e8e446382b0ba90",
+    "source_line_count": 13,
+    "evidence_lines": [
+      7,
+      8,
+      9,
+      11
+    ],
+    "rationale": "Decoded query text is concatenated directly into a double-quoted HTML attribute without attribute encoding.",
+    "assumptions": "The request query is attacker-controlled and can contain characters that terminate the quoted attribute after URI decoding; the response is rendered as HTML.",
+    "review_mode": "AI_ASSISTED_OPERATOR_APPROVED_PRE_PREDICTION",
+    "independent_human_gold": false,
+    "predictions_exposed_before_lock": false
+  },
+  {
+    "uri": "src/ntk/b39b7/HtmlQueryScript.java",
+    "cwe": "79",
+    "truth": "POSITIVE",
+    "source_sha256": "1a84457714459638ced62cf2b9b27fc545aaa61b16c43d171e9c15a46ae70bc6",
+    "source_line_count": 13,
+    "evidence_lines": [
+      7,
+      8,
+      9,
+      11
+    ],
+    "rationale": "Decoded query text is embedded directly inside a JavaScript string in an HTML script block without JavaScript or HTML context encoding.",
+    "assumptions": "The request query is attacker-controlled and can contain quote/script-breaking characters after decoding; the response is rendered as HTML and script execution is permitted.",
+    "review_mode": "AI_ASSISTED_OPERATOR_APPROVED_PRE_PREDICTION",
+    "independent_human_gold": false,
+    "predictions_exposed_before_lock": false
+  },
+  {
+    "uri": "src/ntk/b39b7/HtmlEscapedText.java",
+    "cwe": "79",
+    "truth": "NEGATIVE",
+    "source_sha256": "699c9748bd5270d5b2b31372780b381062704fc5ace3fab825abb4d69bfc6640",
+    "source_line_count": 16,
+    "evidence_lines": [
+      7,
+      11,
+      12
+    ],
+    "rationale": "The helper encodes ampersand and angle brackets before the value is inserted into a normal HTML text node.",
+    "assumptions": "Only this straight-line HTML text context is assessed; there is no later decoding or unsafe DOM reinsertion and esc() behaves exactly as shown.",
+    "review_mode": "AI_ASSISTED_OPERATOR_APPROVED_PRE_PREDICTION",
+    "independent_human_gold": false,
+    "predictions_exposed_before_lock": false
+  },
+  {
+    "uri": "src/ntk/b39b7/HtmlTextPlain.java",
+    "cwe": "79",
+    "truth": "NEGATIVE",
+    "source_sha256": "ec406a7ec0836e5a7b767415e3d21e98583f18fe9213a52ada375c05a11dcfc6",
+    "source_line_count": 12,
+    "evidence_lines": [
+      7,
+      8,
+      10
+    ],
+    "rationale": "Attacker-controlled query text is returned as text/plain rather than embedded into an HTML document by this handler.",
+    "assumptions": "The client honors text/plain UTF-8 and no downstream component rewrites the response as HTML; assess reflected XSS only.",
+    "review_mode": "AI_ASSISTED_OPERATOR_APPROVED_PRE_PREDICTION",
+    "independent_human_gold": false,
+    "predictions_exposed_before_lock": false
+  },
+  {
+    "uri": "src/ntk/b39b7/HtmlEscapedAttribute.java",
+    "cwe": "79",
+    "truth": "NEGATIVE",
+    "source_sha256": "e409c1417a36ac6b57441d336bdf03f4278adab8ebfc803929b1ca1227d1de89",
+    "source_line_count": 16,
+    "evidence_lines": [
+      7,
+      11,
+      12
+    ],
+    "rationale": "The helper encodes ampersand, angle brackets, double quotes, and apostrophes before insertion into a quoted HTML attribute.",
+    "assumptions": "Only this quoted attribute context is assessed; there is no later decoding or unsafe DOM reinsertion and escAttr() behaves exactly as shown.",
+    "review_mode": "AI_ASSISTED_OPERATOR_APPROVED_PRE_PREDICTION",
+    "independent_human_gold": false,
+    "predictions_exposed_before_lock": false
+  },
+  {
+    "uri": "src/ntk/b39b7/SqlStatementConcat.java",
+    "cwe": "89",
+    "truth": "POSITIVE",
+    "source_sha256": "d0e71f8df7c7751efadff862d9bea8ac54f55eb032a3d36c96435eca27435647",
+    "source_line_count": 9,
+    "evidence_lines": [
+      6,
+      7
+    ],
+    "rationale": "Attacker-controlled text is concatenated into SQL grammar and the resulting statement is executed directly.",
+    "assumptions": "NTK_H7_SQL_A is attacker-controlled, search() is invoked, and the JDBC driver/database accept an input that can alter the intended predicate.",
+    "review_mode": "AI_ASSISTED_OPERATOR_APPROVED_PRE_PREDICTION",
+    "independent_human_gold": false,
+    "predictions_exposed_before_lock": false
+  },
+  {
+    "uri": "src/ntk/b39b7/SqlPreparedConcatExec.java",
+    "cwe": "89",
+    "truth": "POSITIVE",
+    "source_sha256": "0f557a11c1d0d078c298f5cd6c3170f8490665a96fee3a74444e1c923fb22221",
+    "source_line_count": 11,
+    "evidence_lines": [
+      7,
+      8,
+      9
+    ],
+    "rationale": "Attacker-controlled text is concatenated into the SQL passed to prepareStatement, and that constructed statement is subsequently executed.",
+    "assumptions": "NTK_H7_SQL_B is attacker-controlled, search() is invoked, and the JDBC implementation executes the SQL text constructed before preparation.",
+    "review_mode": "AI_ASSISTED_OPERATOR_APPROVED_PRE_PREDICTION",
+    "independent_human_gold": false,
+    "predictions_exposed_before_lock": false
+  },
+  {
+    "uri": "src/ntk/b39b7/SqlFormatted.java",
+    "cwe": "89",
+    "truth": "POSITIVE",
+    "source_sha256": "c618251e3b5bb8c785c0a18225c1fb3f7da0ce54c615c62e56392e99b2b00c30",
+    "source_line_count": 10,
+    "evidence_lines": [
+      6,
+      7,
+      8
+    ],
+    "rationale": "Attacker-controlled text is formatted into quoted SQL grammar and the resulting SQL string is executed with Statement.executeQuery.",
+    "assumptions": "NTK_H7_SQL_C is attacker-controlled, search() is invoked, and the database accepts a value that can alter the intended predicate.",
+    "review_mode": "AI_ASSISTED_OPERATOR_APPROVED_PRE_PREDICTION",
+    "independent_human_gold": false,
+    "predictions_exposed_before_lock": false
+  },
+  {
+    "uri": "src/ntk/b39b7/SqlBound.java",
+    "cwe": "89",
+    "truth": "NEGATIVE",
+    "source_sha256": "77e724e14571f0e62e4efd657e1337be2fca15b454ce9f3fb172aeec59bf028c",
+    "source_line_count": 12,
+    "evidence_lines": [
+      7,
+      8,
+      9,
+      10
+    ],
+    "rationale": "The SQL grammar is fixed with a parameter marker and the external value is bound separately with setString before execution.",
+    "assumptions": "A trusted conforming JDBC driver preserves parameter binding semantics; the shown statement is not later rebuilt by concatenation.",
+    "review_mode": "AI_ASSISTED_OPERATOR_APPROVED_PRE_PREDICTION",
+    "independent_human_gold": false,
+    "predictions_exposed_before_lock": false
+  },
+  {
+    "uri": "src/ntk/b39b7/SqlStatic.java",
+    "cwe": "89",
+    "truth": "NEGATIVE",
+    "source_sha256": "76e3a4f06e40af58b58365aa18df729b16f6c5e605614613f48283511daa8c84",
+    "source_line_count": 8,
+    "evidence_lines": [
+      6
+    ],
+    "rationale": "The SQL passed to executeQuery is a fixed literal with no external data.",
+    "assumptions": "Assess CWE-89 only; the Statement/JDBC implementation is trusted and the shown literal is the entire executed SQL text.",
+    "review_mode": "AI_ASSISTED_OPERATOR_APPROVED_PRE_PREDICTION",
+    "independent_human_gold": false,
+    "predictions_exposed_before_lock": false
+  },
+  {
+    "uri": "src/ntk/b39b7/SqlFixedChoice.java",
+    "cwe": "89",
+    "truth": "NEGATIVE",
+    "source_sha256": "6ebf3636c3a153581f7869d3010499fbf0d05a68e778ef9880855a1f45a3cdd4",
+    "source_line_count": 12,
+    "evidence_lines": [
+      6,
+      7,
+      10
+    ],
+    "rationale": "External input selects between two fixed SQL literals but is not inserted into either SQL string.",
+    "assumptions": "Assess SQL injection only; the JDBC implementation is trusted and no downstream concatenation modifies the selected fixed query.",
+    "review_mode": "AI_ASSISTED_OPERATOR_APPROVED_PRE_PREDICTION",
+    "independent_human_gold": false,
+    "predictions_exposed_before_lock": false
+  }
+]

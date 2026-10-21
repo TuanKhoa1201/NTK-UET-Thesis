@@ -1,0 +1,545 @@
+{
+  "caveat": "Source files remain pinned to historical local environment; not a fresh-install reproduction",
+  "components": {
+    "evaluation/dataset_sast": {
+      "archive_members": 15,
+      "archive_sha256": "4de2a57db67e61eaf34c9d6f1a4ebe910a489ca3fb3e8d51b9f17b0ba9a057bd",
+      "published_source_files": 9
+    },
+    "evaluation/evidence_closeout": {
+      "archive_members": 8,
+      "archive_sha256": "775a57f552694e9cc5b846bef8a7ce28d0b8cb3b0255fb86d0a906a991706637",
+      "published_source_files": 4
+    },
+    "evaluation/label_review": {
+      "archive_members": 7,
+      "archive_sha256": "31c789917ab569c47ac2373df15dc97433aed5d033b96d4b08a730d488b979de",
+      "published_source_files": 4
+    },
+    "evaluation/locked_holdout": {
+      "archive_members": 39,
+      "archive_sha256": "db5fe575ef541570d19f99b8ad8a6a6874ee152f7b76f5441b9af84c9a786eb0",
+      "published_source_files": 34
+    },
+    "ntk_hybrid/local_hybrid_cli": {
+      "archive_members": 44,
+      "archive_sha256": "e30a7fc1434b083c87bda80da1667bd2e9d64664d8cb2bf80d00534efaf3791c",
+      "published_source_files": 37
+    },
+    "ntk_hybrid/local_workbench": {
+      "archive_members": 16,
+      "archive_sha256": "14b4094ab6cdb31dd51db1dd932eb8577682c5497b432bc8f887ab1da83afc26",
+      "published_source_files": 11
+    }
+  },
+  "description": "Curated source export, NOT a runtime benchmark or release gate",
+  "excluded": [
+    "private source and prompts",
+    "weights/adapters",
+    "database files",
+    "results ZIPs",
+    "runtime logs",
+    "authoring logs",
+    "unsanitized private operator metadata"
+  ],
+  "expected_main_sha": "9f8f1a7977423edabc262a06b39ce39965f58df8",
+  "original_file_sha256": {
+    "evaluation/dataset_sast/PINS.json": {
+      "origin_archive": "ntk_batch39b6_dataset_sast_eval_20261020.zip",
+      "origin_member": "PINS.json",
+      "sha256": "dc889214a502a4cc505a68c2e7e9dc8ed155b21c43f5df0d994a6d133fdb1ab2"
+    },
+    "evaluation/dataset_sast/UNITS.json": {
+      "origin_archive": "ntk_batch39b6_dataset_sast_eval_20261020.zip",
+      "origin_member": "UNITS.json",
+      "sha256": "449fa0cce78e8645e97115736c9a1917bc006e69f989663e6154157e5516cbdf"
+    },
+    "evaluation/dataset_sast/cli.py": {
+      "origin_archive": "ntk_batch39b6_dataset_sast_eval_20261020.zip",
+      "origin_member": "cli.py",
+      "sha256": "be46f47fcde42818bf763fd0360413b3b2fa8970057cb78013e6f1027f1a7403"
+    },
+    "evaluation/dataset_sast/eval_core.py": {
+      "origin_archive": "ntk_batch39b6_dataset_sast_eval_20261020.zip",
+      "origin_member": "eval_core.py",
+      "sha256": "d2f6ebdf403881d68c45faf807bf89c59e927f20deaf014f494626a11a290e2f"
+    },
+    "evaluation/dataset_sast/ntk_core.py": {
+      "origin_archive": "ntk_batch39b6_dataset_sast_eval_20261020.zip",
+      "origin_member": "ntk_core.py",
+      "sha256": "cb87888d421371c6fc4431e27cc6e856d15de720220f92f98bd0900b62d94120"
+    },
+    "evaluation/dataset_sast/run.sh": {
+      "origin_archive": "ntk_batch39b6_dataset_sast_eval_20261020.zip",
+      "origin_member": "run.sh",
+      "sha256": "6128f26421636816b658af96021509c3ba55ce75a691ef811386ba6b3e6973ed"
+    },
+    "evaluation/dataset_sast/test_eval.py": {
+      "origin_archive": "ntk_batch39b6_dataset_sast_eval_20261020.zip",
+      "origin_member": "test_eval.py",
+      "sha256": "c338002da5aa76d443cd15599dabbf9e48d39449fa2ac5afb5135d189e6c8dad"
+    },
+    "evaluation/dataset_sast/vendor/__init__.py": {
+      "origin_archive": "ntk_batch39b6_dataset_sast_eval_20261020.zip",
+      "origin_member": "vendor/__init__.py",
+      "sha256": "06a69e67a7d2fc68f012a526c46a565cb33b3bf33bd94ceccd712e654022f23e"
+    },
+    "evaluation/dataset_sast/vendor/common.py": {
+      "origin_archive": "ntk_batch39b6_dataset_sast_eval_20261020.zip",
+      "origin_member": "vendor/common.py",
+      "sha256": "b9c6e611d22dfeb3ba3c0f44e8e813fbf39c163e2cd1445240e6925cc4a57b0b"
+    },
+    "evaluation/evidence_closeout/PINS.json": {
+      "origin_archive": "ntk_batch39b8_closeout_20261020.zip",
+      "origin_member": "ntk_batch39b8_closeout_20261020/PINS.json",
+      "sha256": "f684e28f78266ca25e2f5eafcafcaea3b16097ebd46f052d4568e7882109ddf5"
+    },
+    "evaluation/evidence_closeout/closeout.py": {
+      "origin_archive": "ntk_batch39b8_closeout_20261020.zip",
+      "origin_member": "ntk_batch39b8_closeout_20261020/closeout.py",
+      "sha256": "bc5fb4e6cc305c04d4ab5814dc06bbb9bcf4a546b1238c350fcf08ca51cb088f"
+    },
+    "evaluation/evidence_closeout/run.sh": {
+      "origin_archive": "ntk_batch39b8_closeout_20261020.zip",
+      "origin_member": "ntk_batch39b8_closeout_20261020/run.sh",
+      "sha256": "9e16ce48069e524fc31eef0d05bdfd02f897c19aa45eb8d0f00084828cb08219"
+    },
+    "evaluation/evidence_closeout/test_closeout.py": {
+      "origin_archive": "ntk_batch39b8_closeout_20261020.zip",
+      "origin_member": "ntk_batch39b8_closeout_20261020/test_closeout.py",
+      "sha256": "711be7e5ba13cbff2b4c3c626e99961f25984039f1522b52efc78b1d081b05f8"
+    },
+    "evaluation/label_review/EXPECTED_CODE.json": {
+      "origin_archive": "ntk_b39b6_bulk_input_20261020.zip",
+      "origin_member": "EXPECTED_CODE.json",
+      "sha256": "54ac479baaf77c3b4be15e5aa20aaa600001093b1d98611275dc5065f71a3ab3"
+    },
+    "evaluation/label_review/bulk_review.py": {
+      "origin_archive": "ntk_b39b6_bulk_input_20261020.zip",
+      "origin_member": "bulk_review.py",
+      "sha256": "d49c534e8a511d4db98ef53304240bcf2a8676fa32d783b1c795842515b5ae72"
+    },
+    "evaluation/label_review/review_proposals.json": {
+      "origin_archive": "ntk_b39b6_bulk_input_20261020.zip",
+      "origin_member": "review_proposals.json",
+      "sha256": "468991f9303af4aa11c56e5b437bde0273b6c3cd246db65148c6c596f732844a"
+    },
+    "evaluation/label_review/test_bulk.py": {
+      "origin_archive": "ntk_b39b6_bulk_input_20261020.zip",
+      "origin_member": "test_bulk.py",
+      "sha256": "c1383f4f866c1cea0cfae96b3289c81d2f03fd8a5f13bc2768b8cd3e11fd116f"
+    },
+    "evaluation/locked_holdout/HOLDOUT_PROPOSALS.json": {
+      "origin_archive": "ntk_batch39b7_holdout_eval_20261020_r1.zip",
+      "origin_member": "ntk_b39b7_holdout_eval_20261020/HOLDOUT_PROPOSALS.json",
+      "sha256": "7f113cb33f509e4a33b1511ba88d26ed742e37113f9ae18d83e4b11b7dad5085"
+    },
+    "evaluation/locked_holdout/PINS.json": {
+      "origin_archive": "ntk_batch39b7_holdout_eval_20261020_r1.zip",
+      "origin_member": "ntk_b39b7_holdout_eval_20261020/PINS.json",
+      "sha256": "599b4ec1f3f886d579a08ccbf6e0d06ff3c22fa4c31d6113f5e0b721f8ad775d"
+    },
+    "evaluation/locked_holdout/SOURCE_MANIFEST.json": {
+      "origin_archive": "ntk_batch39b7_holdout_eval_20261020_r1.zip",
+      "origin_member": "ntk_b39b7_holdout_eval_20261020/SOURCE_MANIFEST.json",
+      "sha256": "70cfe0824d0fd9a275388e8653d6b8107e142764f2791fca1450f73ba7feb7f4"
+    },
+    "evaluation/locked_holdout/evaluate_holdout.py": {
+      "origin_archive": "ntk_batch39b7_holdout_eval_20261020_r1.zip",
+      "origin_member": "ntk_b39b7_holdout_eval_20261020/evaluate_holdout.py",
+      "sha256": "36f58635c99d35309959c4027391db5a88de0c21be7b35694a51beff466c4a15"
+    },
+    "evaluation/locked_holdout/metric_core.py": {
+      "origin_archive": "ntk_batch39b7_holdout_eval_20261020_r1.zip",
+      "origin_member": "ntk_b39b7_holdout_eval_20261020/metric_core.py",
+      "sha256": "18f8900e5e3fa903d8c366603e2a54603eab4b0451bfbfba263acbc79a5accb6"
+    },
+    "evaluation/locked_holdout/prepare_holdout.py": {
+      "origin_archive": "ntk_batch39b7_holdout_eval_20261020_r1.zip",
+      "origin_member": "ntk_b39b7_holdout_eval_20261020/prepare_holdout.py",
+      "sha256": "e089152b707b99f534f28f71eeffcbb2c33b312eafa87e85303368ee3ada5efe"
+    },
+    "evaluation/locked_holdout/run.sh": {
+      "origin_archive": "ntk_batch39b7_holdout_eval_20261020_r1.zip",
+      "origin_member": "ntk_b39b7_holdout_eval_20261020/run.sh",
+      "sha256": "b14054f8782f0ddd48b5abfc11986df362c0c8b93d4356e3885a092b2c560d02"
+    },
+    "evaluation/locked_holdout/run_and_evaluate.sh": {
+      "origin_archive": "ntk_batch39b7_holdout_eval_20261020_r1.zip",
+      "origin_member": "ntk_b39b7_holdout_eval_20261020/run_and_evaluate.sh",
+      "sha256": "76eb7a4a4c8c2dad0ce9cace1fac6ae9186afb684f91a13f9e5dd85fb872a648"
+    },
+    "evaluation/locked_holdout/samples/B39B7_HOLDOUT_JDK.zip": {
+      "origin_archive": "ntk_batch39b7_holdout_eval_20261020_r1.zip",
+      "origin_member": "ntk_b39b7_holdout_eval_20261020/samples/B39B7_HOLDOUT_JDK.zip",
+      "sha256": "6e968d05c11073a71a218950c80250ad10ed59a97d8ac04faa354746a489c15a"
+    },
+    "evaluation/locked_holdout/samples/java/CommandDataArgument.java": {
+      "origin_archive": "ntk_batch39b7_holdout_eval_20261020_r1.zip",
+      "origin_member": "ntk_b39b7_holdout_eval_20261020/samples/java/CommandDataArgument.java",
+      "sha256": "8b8855e15766062f905776f254fa0ffc3d2c68bc48a300bd2c6734af2cf1a668"
+    },
+    "evaluation/locked_holdout/samples/java/CommandDirectEnv.java": {
+      "origin_archive": "ntk_batch39b7_holdout_eval_20261020_r1.zip",
+      "origin_member": "ntk_b39b7_holdout_eval_20261020/samples/java/CommandDirectEnv.java",
+      "sha256": "1222c74bbc214c9f10ad5ed7e053fa52f10034bb13b10143c9ea4c87f40c0b07"
+    },
+    "evaluation/locked_holdout/samples/java/CommandFixedArray.java": {
+      "origin_archive": "ntk_batch39b7_holdout_eval_20261020_r1.zip",
+      "origin_member": "ntk_b39b7_holdout_eval_20261020/samples/java/CommandFixedArray.java",
+      "sha256": "65b1a429328b346cc9f651cb5aabc0f5b170c1051789a9879ce2ed3e62080f71"
+    },
+    "evaluation/locked_holdout/samples/java/CommandFixedTrue.java": {
+      "origin_archive": "ntk_batch39b7_holdout_eval_20261020_r1.zip",
+      "origin_member": "ntk_b39b7_holdout_eval_20261020/samples/java/CommandFixedTrue.java",
+      "sha256": "535f30544f86ac2c2783d5249fee2174e97487bdada7bb578629aed2faeb575b"
+    },
+    "evaluation/locked_holdout/samples/java/CommandShellBash.java": {
+      "origin_archive": "ntk_batch39b7_holdout_eval_20261020_r1.zip",
+      "origin_member": "ntk_b39b7_holdout_eval_20261020/samples/java/CommandShellBash.java",
+      "sha256": "057fa765a2e25d5c5faf7a2f3d159c3813466ea43dbe5fdb2416b8ecd0c57d60"
+    },
+    "evaluation/locked_holdout/samples/java/CommandShellSh.java": {
+      "origin_archive": "ntk_batch39b7_holdout_eval_20261020_r1.zip",
+      "origin_member": "ntk_b39b7_holdout_eval_20261020/samples/java/CommandShellSh.java",
+      "sha256": "843b62b99ff1de3922e00bba5f4232fb567967b827b09aeeedb58e73c0cafd85"
+    },
+    "evaluation/locked_holdout/samples/java/HtmlEscapedAttribute.java": {
+      "origin_archive": "ntk_batch39b7_holdout_eval_20261020_r1.zip",
+      "origin_member": "ntk_b39b7_holdout_eval_20261020/samples/java/HtmlEscapedAttribute.java",
+      "sha256": "e409c1417a36ac6b57441d336bdf03f4278adab8ebfc803929b1ca1227d1de89"
+    },
+    "evaluation/locked_holdout/samples/java/HtmlEscapedText.java": {
+      "origin_archive": "ntk_batch39b7_holdout_eval_20261020_r1.zip",
+      "origin_member": "ntk_b39b7_holdout_eval_20261020/samples/java/HtmlEscapedText.java",
+      "sha256": "699c9748bd5270d5b2b31372780b381062704fc5ace3fab825abb4d69bfc6640"
+    },
+    "evaluation/locked_holdout/samples/java/HtmlQueryAttribute.java": {
+      "origin_archive": "ntk_batch39b7_holdout_eval_20261020_r1.zip",
+      "origin_member": "ntk_b39b7_holdout_eval_20261020/samples/java/HtmlQueryAttribute.java",
+      "sha256": "694b6c9d60f7b00195f2bb0a2b80988f545f872b1cc64d183e8e446382b0ba90"
+    },
+    "evaluation/locked_holdout/samples/java/HtmlQueryScript.java": {
+      "origin_archive": "ntk_batch39b7_holdout_eval_20261020_r1.zip",
+      "origin_member": "ntk_b39b7_holdout_eval_20261020/samples/java/HtmlQueryScript.java",
+      "sha256": "1a84457714459638ced62cf2b9b27fc545aaa61b16c43d171e9c15a46ae70bc6"
+    },
+    "evaluation/locked_holdout/samples/java/HtmlQueryText.java": {
+      "origin_archive": "ntk_batch39b7_holdout_eval_20261020_r1.zip",
+      "origin_member": "ntk_b39b7_holdout_eval_20261020/samples/java/HtmlQueryText.java",
+      "sha256": "ce7a4eb2d31284197e94ba03f3243df89e3d1b809d4413b9ef2fdea8e2f75272"
+    },
+    "evaluation/locked_holdout/samples/java/HtmlTextPlain.java": {
+      "origin_archive": "ntk_batch39b7_holdout_eval_20261020_r1.zip",
+      "origin_member": "ntk_b39b7_holdout_eval_20261020/samples/java/HtmlTextPlain.java",
+      "sha256": "ec406a7ec0836e5a7b767415e3d21e98583f18fe9213a52ada375c05a11dcfc6"
+    },
+    "evaluation/locked_holdout/samples/java/PathAllowlisted.java": {
+      "origin_archive": "ntk_batch39b7_holdout_eval_20261020_r1.zip",
+      "origin_member": "ntk_b39b7_holdout_eval_20261020/samples/java/PathAllowlisted.java",
+      "sha256": "ede69a32ba36ae62fdd9b989ccea63a3d6f1d826ef48978783879bc9dbd76948"
+    },
+    "evaluation/locked_holdout/samples/java/PathEnvBytes.java": {
+      "origin_archive": "ntk_batch39b7_holdout_eval_20261020_r1.zip",
+      "origin_member": "ntk_b39b7_holdout_eval_20261020/samples/java/PathEnvBytes.java",
+      "sha256": "b050176f86ad44fe21397940c94c728b7e7cfd16c8be7d22e771772a3df05f75"
+    },
+    "evaluation/locked_holdout/samples/java/PathEnvRead.java": {
+      "origin_archive": "ntk_batch39b7_holdout_eval_20261020_r1.zip",
+      "origin_member": "ntk_b39b7_holdout_eval_20261020/samples/java/PathEnvRead.java",
+      "sha256": "5afc34ef5b98029cc82422282317b04ff0d6e7d297361f9b62928123c4a077bc"
+    },
+    "evaluation/locked_holdout/samples/java/PathFixedRead.java": {
+      "origin_archive": "ntk_batch39b7_holdout_eval_20261020_r1.zip",
+      "origin_member": "ntk_b39b7_holdout_eval_20261020/samples/java/PathFixedRead.java",
+      "sha256": "82b55fba54f9657a9f8bdbc07f6c488f82ae032e03faf4d1257729d4ada65ff7"
+    },
+    "evaluation/locked_holdout/samples/java/PathResolveUnsafe.java": {
+      "origin_archive": "ntk_batch39b7_holdout_eval_20261020_r1.zip",
+      "origin_member": "ntk_b39b7_holdout_eval_20261020/samples/java/PathResolveUnsafe.java",
+      "sha256": "cfdba6d88bcb6bbf82c950acc4a0f0c01d9c6eeb60ab66ddc2554c21beef71b4"
+    },
+    "evaluation/locked_holdout/samples/java/PathRootChecked.java": {
+      "origin_archive": "ntk_batch39b7_holdout_eval_20261020_r1.zip",
+      "origin_member": "ntk_b39b7_holdout_eval_20261020/samples/java/PathRootChecked.java",
+      "sha256": "d59e4e10cce95ea7fafecfb619304148580e1bbbd0f524b6695786d0eb721c4e"
+    },
+    "evaluation/locked_holdout/samples/java/SqlBound.java": {
+      "origin_archive": "ntk_batch39b7_holdout_eval_20261020_r1.zip",
+      "origin_member": "ntk_b39b7_holdout_eval_20261020/samples/java/SqlBound.java",
+      "sha256": "77e724e14571f0e62e4efd657e1337be2fca15b454ce9f3fb172aeec59bf028c"
+    },
+    "evaluation/locked_holdout/samples/java/SqlFixedChoice.java": {
+      "origin_archive": "ntk_batch39b7_holdout_eval_20261020_r1.zip",
+      "origin_member": "ntk_b39b7_holdout_eval_20261020/samples/java/SqlFixedChoice.java",
+      "sha256": "6ebf3636c3a153581f7869d3010499fbf0d05a68e778ef9880855a1f45a3cdd4"
+    },
+    "evaluation/locked_holdout/samples/java/SqlFormatted.java": {
+      "origin_archive": "ntk_batch39b7_holdout_eval_20261020_r1.zip",
+      "origin_member": "ntk_b39b7_holdout_eval_20261020/samples/java/SqlFormatted.java",
+      "sha256": "c618251e3b5bb8c785c0a18225c1fb3f7da0ce54c615c62e56392e99b2b00c30"
+    },
+    "evaluation/locked_holdout/samples/java/SqlPreparedConcatExec.java": {
+      "origin_archive": "ntk_batch39b7_holdout_eval_20261020_r1.zip",
+      "origin_member": "ntk_b39b7_holdout_eval_20261020/samples/java/SqlPreparedConcatExec.java",
+      "sha256": "0f557a11c1d0d078c298f5cd6c3170f8490665a96fee3a74444e1c923fb22221"
+    },
+    "evaluation/locked_holdout/samples/java/SqlStatementConcat.java": {
+      "origin_archive": "ntk_batch39b7_holdout_eval_20261020_r1.zip",
+      "origin_member": "ntk_b39b7_holdout_eval_20261020/samples/java/SqlStatementConcat.java",
+      "sha256": "d0e71f8df7c7751efadff862d9bea8ac54f55eb032a3d36c96435eca27435647"
+    },
+    "evaluation/locked_holdout/samples/java/SqlStatic.java": {
+      "origin_archive": "ntk_batch39b7_holdout_eval_20261020_r1.zip",
+      "origin_member": "ntk_b39b7_holdout_eval_20261020/samples/java/SqlStatic.java",
+      "sha256": "76e3a4f06e40af58b58365aa18df729b16f6c5e605614613f48283511daa8c84"
+    },
+    "evaluation/locked_holdout/test_b39b7.py": {
+      "origin_archive": "ntk_batch39b7_holdout_eval_20261020_r1.zip",
+      "origin_member": "ntk_b39b7_holdout_eval_20261020/test_b39b7.py",
+      "sha256": "8204ceb6acacae4a8b7845f91f38d3e54beda07291f853f44bc8ebacaf8415e9"
+    },
+    "ntk_hybrid/local_hybrid_cli/PINS.json": {
+      "origin_archive": "ntk_batch39b4_hybrid_cli_20261020.zip",
+      "origin_member": "PINS.json",
+      "sha256": "4af16a27b866dd5c6edf94067e25042b98c0896caa3e9789852df8897b718f56"
+    },
+    "ntk_hybrid/local_hybrid_cli/SAMPLE_MANIFEST.json": {
+      "origin_archive": "ntk_batch39b4_hybrid_cli_20261020.zip",
+      "origin_member": "SAMPLE_MANIFEST.json",
+      "sha256": "4bed678e9c16dac0d4eda56cd6a36785d0cbe7b6e3923c687c04500fb1851642"
+    },
+    "ntk_hybrid/local_hybrid_cli/audit_b39b3.py": {
+      "origin_archive": "ntk_batch39b4_hybrid_cli_20261020.zip",
+      "origin_member": "audit_b39b3.py",
+      "sha256": "717cb5461ca2bd85521ac9aee965045bf5d79a8554bc792cba19707d4a19878d"
+    },
+    "ntk_hybrid/local_hybrid_cli/hybrid_core.py": {
+      "origin_archive": "ntk_batch39b4_hybrid_cli_20261020.zip",
+      "origin_member": "hybrid_core.py",
+      "sha256": "0e008797499df523f899e2d8d449cc8882a99988338f89224968c9f759bd12ff"
+    },
+    "ntk_hybrid/local_hybrid_cli/hybrid_native_driver.py": {
+      "origin_archive": "ntk_batch39b4_hybrid_cli_20261020.zip",
+      "origin_member": "hybrid_native_driver.py",
+      "sha256": "ae5bb0f21fe03351f455008ff5109bffc474304b4d3762d61310cd512bf21ed5"
+    },
+    "ntk_hybrid/local_hybrid_cli/native_driver.py": {
+      "origin_archive": "ntk_batch39b4_hybrid_cli_20261020.zip",
+      "origin_member": "native_driver.py",
+      "sha256": "759e9a1cbf923125f5c9cc795295f26533ab75e20a09f8b2fb781396b950d912"
+    },
+    "ntk_hybrid/local_hybrid_cli/ntk_core.py": {
+      "origin_archive": "ntk_batch39b4_hybrid_cli_20261020.zip",
+      "origin_member": "ntk_core.py",
+      "sha256": "cb87888d421371c6fc4431e27cc6e856d15de720220f92f98bd0900b62d94120"
+    },
+    "ntk_hybrid/local_hybrid_cli/ntk_runtime.py": {
+      "origin_archive": "ntk_batch39b4_hybrid_cli_20261020.zip",
+      "origin_member": "ntk_runtime.py",
+      "sha256": "0801af92a421637bac65a3c050e224303154874f27fa20c7b1f728c3b1e05e38"
+    },
+    "ntk_hybrid/local_hybrid_cli/run.sh": {
+      "origin_archive": "ntk_batch39b4_hybrid_cli_20261020.zip",
+      "origin_member": "run.sh",
+      "sha256": "2efa78bb99d02739ff3fb0372a6e6c1195f07ed0e0e7c0e520277a373cd3cbd8"
+    },
+    "ntk_hybrid/local_hybrid_cli/run_b39b2.py": {
+      "origin_archive": "ntk_batch39b4_hybrid_cli_20261020.zip",
+      "origin_member": "run_b39b2.py",
+      "sha256": "8cc03241364d9e73c667f0af6403011a10380505ae518a3649142816c8407ab2"
+    },
+    "ntk_hybrid/local_hybrid_cli/run_b39b3.py": {
+      "origin_archive": "ntk_batch39b4_hybrid_cli_20261020.zip",
+      "origin_member": "run_b39b3.py",
+      "sha256": "0379713c89bda7b0dd88a91b7d3fbe94577c61a84e9bd1c053729a28ffe2102f"
+    },
+    "ntk_hybrid/local_hybrid_cli/run_hybrid.py": {
+      "origin_archive": "ntk_batch39b4_hybrid_cli_20261020.zip",
+      "origin_member": "run_hybrid.py",
+      "sha256": "b74075eb834ef563af235c183f82d7ba855adf36dd4d9198b85e63d08e274e1e"
+    },
+    "ntk_hybrid/local_hybrid_cli/samples/B39B4_JDK_INTEGRATION.zip": {
+      "origin_archive": "ntk_batch39b4_hybrid_cli_20261020.zip",
+      "origin_member": "samples/B39B4_JDK_INTEGRATION.zip",
+      "sha256": "4a2997470997e3d9b007837ffda8d7c370e493258100194e2ebd01c6d798d148"
+    },
+    "ntk_hybrid/local_hybrid_cli/samples/java/CommandFixed.java": {
+      "origin_archive": "ntk_batch39b4_hybrid_cli_20261020.zip",
+      "origin_member": "samples/java/CommandFixed.java",
+      "sha256": "e974f4b852b1f88bec9eb3f0981b332f2e598dc43ca2934aa7c7d12cb2d6fba8"
+    },
+    "ntk_hybrid/local_hybrid_cli/samples/java/CommandFixedArray.java": {
+      "origin_archive": "ntk_batch39b4_hybrid_cli_20261020.zip",
+      "origin_member": "samples/java/CommandFixedArray.java",
+      "sha256": "bae6df68c694d87404884d0a02787b1fac63788566f0984ca33eaa0a02523825"
+    },
+    "ntk_hybrid/local_hybrid_cli/samples/java/CommandRequest.java": {
+      "origin_archive": "ntk_batch39b4_hybrid_cli_20261020.zip",
+      "origin_member": "samples/java/CommandRequest.java",
+      "sha256": "e53351b32b2a4ff9b020a09edf1d83065927038a5c5060a3d053fdd2d6fcc357"
+    },
+    "ntk_hybrid/local_hybrid_cli/samples/java/CommandShell.java": {
+      "origin_archive": "ntk_batch39b4_hybrid_cli_20261020.zip",
+      "origin_member": "samples/java/CommandShell.java",
+      "sha256": "374f748971754d13e2c2d9fd84f47f588201a4f2ef2c038abfeb15391cfcd1f7"
+    },
+    "ntk_hybrid/local_hybrid_cli/samples/java/HtmlAttribute.java": {
+      "origin_archive": "ntk_batch39b4_hybrid_cli_20261020.zip",
+      "origin_member": "samples/java/HtmlAttribute.java",
+      "sha256": "9271a403f72142f844c6e6de1914dba6712c70ec15dcddd70966fc047c4f5abc"
+    },
+    "ntk_hybrid/local_hybrid_cli/samples/java/HtmlEncoded.java": {
+      "origin_archive": "ntk_batch39b4_hybrid_cli_20261020.zip",
+      "origin_member": "samples/java/HtmlEncoded.java",
+      "sha256": "f4f2abb154592caa3ada87c5d36fa925952d7050ef2f0837a413c3d5e1dcaee9"
+    },
+    "ntk_hybrid/local_hybrid_cli/samples/java/HtmlResponse.java": {
+      "origin_archive": "ntk_batch39b4_hybrid_cli_20261020.zip",
+      "origin_member": "samples/java/HtmlResponse.java",
+      "sha256": "450e4abeb73eb1f4f7a7c5c4dc99dba42ea108b351850e2d9215c24d7249f89d"
+    },
+    "ntk_hybrid/local_hybrid_cli/samples/java/PathDownload.java": {
+      "origin_archive": "ntk_batch39b4_hybrid_cli_20261020.zip",
+      "origin_member": "samples/java/PathDownload.java",
+      "sha256": "bf37d8ea6cf3f6d95e336c5196fae14a9c23f5e0c3d03184bb3a144223473070"
+    },
+    "ntk_hybrid/local_hybrid_cli/samples/java/PathFixed.java": {
+      "origin_archive": "ntk_batch39b4_hybrid_cli_20261020.zip",
+      "origin_member": "samples/java/PathFixed.java",
+      "sha256": "419df8629ca923ce7af7c58a38b8c00a019124a486f70f4d524f9c9b73181efe"
+    },
+    "ntk_hybrid/local_hybrid_cli/samples/java/PathFixedBytes.java": {
+      "origin_archive": "ntk_batch39b4_hybrid_cli_20261020.zip",
+      "origin_member": "samples/java/PathFixedBytes.java",
+      "sha256": "409f79e20963550641874239afce1df9d52a601f5fe7837df21f3f6d500cbc34"
+    },
+    "ntk_hybrid/local_hybrid_cli/samples/java/PathLookup.java": {
+      "origin_archive": "ntk_batch39b4_hybrid_cli_20261020.zip",
+      "origin_member": "samples/java/PathLookup.java",
+      "sha256": "2f76817ce5fee95fd0bbffcc80b8a1c678c2a5e5062f28a534960f36e4ba9b46"
+    },
+    "ntk_hybrid/local_hybrid_cli/samples/java/PlainResponse.java": {
+      "origin_archive": "ntk_batch39b4_hybrid_cli_20261020.zip",
+      "origin_member": "samples/java/PlainResponse.java",
+      "sha256": "87188bfc24a9b9ac9f1020543aa298294cc6a920cdb6b9415077bcb2a09e1a3d"
+    },
+    "ntk_hybrid/local_hybrid_cli/samples/java/SqlBoundValue.java": {
+      "origin_archive": "ntk_batch39b4_hybrid_cli_20261020.zip",
+      "origin_member": "samples/java/SqlBoundValue.java",
+      "sha256": "3f3514d2f34f0c4f71a7a267f9440221f36519dd6ba14a1ea1481a9b6129c4f3"
+    },
+    "ntk_hybrid/local_hybrid_cli/samples/java/SqlPrepareText.java": {
+      "origin_archive": "ntk_batch39b4_hybrid_cli_20261020.zip",
+      "origin_member": "samples/java/SqlPrepareText.java",
+      "sha256": "c652c21796bf07ea8a862e17ca56c939fb68b15de1456c784fdfe765c8793b12"
+    },
+    "ntk_hybrid/local_hybrid_cli/samples/java/SqlSearch.java": {
+      "origin_archive": "ntk_batch39b4_hybrid_cli_20261020.zip",
+      "origin_member": "samples/java/SqlSearch.java",
+      "sha256": "9efd5d7c1ff440a7f020a7c0decc853579b5f29bc551b95dd32af9e3aaa68766"
+    },
+    "ntk_hybrid/local_hybrid_cli/samples/java/SqlStatic.java": {
+      "origin_archive": "ntk_batch39b4_hybrid_cli_20261020.zip",
+      "origin_member": "samples/java/SqlStatic.java",
+      "sha256": "df6042e54cdd35560c1a9bbca875c417288d0bae192f817e2ffff56215bf8bed"
+    },
+    "ntk_hybrid/local_hybrid_cli/test_b39b2.py": {
+      "origin_archive": "ntk_batch39b4_hybrid_cli_20261020.zip",
+      "origin_member": "test_b39b2.py",
+      "sha256": "65779ab6fe0197234ce95ca55119e0b80496e49d7e07a6b05d333a6760b5057b"
+    },
+    "ntk_hybrid/local_hybrid_cli/test_b39b3.py": {
+      "origin_archive": "ntk_batch39b4_hybrid_cli_20261020.zip",
+      "origin_member": "test_b39b3.py",
+      "sha256": "b6a7ecd0bf1ac303b95e763099117659f2f931473fedce991e7c529d61d52ad8"
+    },
+    "ntk_hybrid/local_hybrid_cli/test_hybrid.py": {
+      "origin_archive": "ntk_batch39b4_hybrid_cli_20261020.zip",
+      "origin_member": "test_hybrid.py",
+      "sha256": "94b8fd5e091505f83715ac4e278ddd79feb875e01468e9526a831ef4f597bb9f"
+    },
+    "ntk_hybrid/local_hybrid_cli/test_hybrid_lifecycle.py": {
+      "origin_archive": "ntk_batch39b4_hybrid_cli_20261020.zip",
+      "origin_member": "test_hybrid_lifecycle.py",
+      "sha256": "ced53a695ed43280db9bff20bc030d44be64f9694921d3b7d2ab076427b7821d"
+    },
+    "ntk_hybrid/local_hybrid_cli/tokenizer_preflight.py": {
+      "origin_archive": "ntk_batch39b4_hybrid_cli_20261020.zip",
+      "origin_member": "tokenizer_preflight.py",
+      "sha256": "7e0735451f48fed5f25fe5c677667ec7e46c65793b8181801e5acb86f15bb88f"
+    },
+    "ntk_hybrid/local_hybrid_cli/vendor/__init__.py": {
+      "origin_archive": "ntk_batch39b4_hybrid_cli_20261020.zip",
+      "origin_member": "vendor/__init__.py",
+      "sha256": "06a69e67a7d2fc68f012a526c46a565cb33b3bf33bd94ceccd712e654022f23e"
+    },
+    "ntk_hybrid/local_hybrid_cli/vendor/common.py": {
+      "origin_archive": "ntk_batch39b4_hybrid_cli_20261020.zip",
+      "origin_member": "vendor/common.py",
+      "sha256": "b9c6e611d22dfeb3ba3c0f44e8e813fbf39c163e2cd1445240e6925cc4a57b0b"
+    },
+    "ntk_hybrid/local_hybrid_cli/vendor/worker.py": {
+      "origin_archive": "ntk_batch39b4_hybrid_cli_20261020.zip",
+      "origin_member": "vendor/worker.py",
+      "sha256": "ab2e90e81a97e6d2bb4cc799459a4b299fd0ccb7f985be2e7c3b1d6c896580d3"
+    },
+    "ntk_hybrid/local_workbench/backend_b39b4.zip": {
+      "origin_archive": "ntk_batch39b5_workbench_20261020.zip",
+      "origin_member": "backend_b39b4.zip",
+      "sha256": "e30a7fc1434b083c87bda80da1667bd2e9d64664d8cb2bf80d00534efaf3791c"
+    },
+    "ntk_hybrid/local_workbench/launch.py": {
+      "origin_archive": "ntk_batch39b5_workbench_20261020.zip",
+      "origin_member": "launch.py",
+      "sha256": "a7f274f9cebaf930159309e76f7cc34f11ba9389c7e69f6bfff468dd97e10f1a"
+    },
+    "ntk_hybrid/local_workbench/run.sh": {
+      "origin_archive": "ntk_batch39b5_workbench_20261020.zip",
+      "origin_member": "run.sh",
+      "sha256": "14d3825bd0b14c237631ddd75b6c74af943cd8bf12eab4d329f5a404f2133c5d"
+    },
+    "ntk_hybrid/local_workbench/serve.sh": {
+      "origin_archive": "ntk_batch39b5_workbench_20261020.zip",
+      "origin_member": "serve.sh",
+      "sha256": "8635078785045f188a7ce570693b4db591f413fae627c9f307458ddb3cafd41c"
+    },
+    "ntk_hybrid/local_workbench/setup_workbench.py": {
+      "origin_archive": "ntk_batch39b5_workbench_20261020.zip",
+      "origin_member": "setup_workbench.py",
+      "sha256": "b4c831161e8ea892cb8720e28a3b2bb5c2585b4d2d93585f07cbe21e43dab188"
+    },
+    "ntk_hybrid/local_workbench/store.py": {
+      "origin_archive": "ntk_batch39b5_workbench_20261020.zip",
+      "origin_member": "store.py",
+      "sha256": "1135efe78865d5883f39e2862eed4d5977e1b6d15f0eea89b605854f1a011109"
+    },
+    "ntk_hybrid/local_workbench/test_workbench.py": {
+      "origin_archive": "ntk_batch39b5_workbench_20261020.zip",
+      "origin_member": "test_workbench.py",
+      "sha256": "4a43231e3d45b7d57ad6f29d4f9da46f9cd370ab6d112b11f881e2f6764713b8"
+    },
+    "ntk_hybrid/local_workbench/web/app.js": {
+      "origin_archive": "ntk_batch39b5_workbench_20261020.zip",
+      "origin_member": "web/app.js",
+      "sha256": "8e25e7e3d8042a7998ba5d66513881d2771cbd8ec9e37e7d79ddc31087ee301a"
+    },
+    "ntk_hybrid/local_workbench/web/index.html": {
+      "origin_archive": "ntk_batch39b5_workbench_20261020.zip",
+      "origin_member": "web/index.html",
+      "sha256": "289b659b9876b73be92df234ff6df4e6d3f9a088d93636eb03860c688c2311f0"
+    },
+    "ntk_hybrid/local_workbench/web/style.css": {
+      "origin_archive": "ntk_batch39b5_workbench_20261020.zip",
+      "origin_member": "web/style.css",
+      "sha256": "09111b5c949f8d50b71e909334b8ebd0ed28caf996dfa7c42c6d4ae2bbd678f5"
+    },
+    "ntk_hybrid/local_workbench/workbench.py": {
+      "origin_archive": "ntk_batch39b5_workbench_20261020.zip",
+      "origin_member": "workbench.py",
+      "sha256": "00367256c373f6d9fdcf7dd973eed57677a30bc6428e62994946c778238d636e"
+    }
+  },
+  "schema": "NTK_PUBLIC_SOURCE_EXPORT_V1",
+  "upstream_repo": "TuanKhoa1201/NTK-UET-Thesis"
+}
