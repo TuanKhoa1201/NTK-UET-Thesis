@@ -1,0 +1,7 @@
+{
+  "phase6a_parent": "/home/tuankhoa/migration/ntk_sast_oneport_phase6a_view/NTK_SAST_OnePort_Phase6A",
+  "source_archive_sha256": "e6fa187c0f02d8122d60cf64ce89fda037a5832055265809d30a681a34986008",
+  "phase6a_verified_members": 26,
+  "new_scanner": "FULLPROJECT_CODEQL_NONE_EXPLICIT_UPLOAD",
+  "phase51_prior_import_separate": true
+}

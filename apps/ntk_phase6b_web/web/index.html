@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="ntk-csrf" content="__NTK_LOCAL_CSRF__">
+  <meta name="description" content="NTK SAST - Công cụ phân tích mã nguồn Java kết hợp OpenGrep, IRIS và AI chạy cục bộ.">
+  <title>NTK SAST — Nền tảng phân tích mã nguồn Java</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/fullproject-ui.css">
+  <link rel="stylesheet" href="/fullproject-live-ui.css">
+</head>
+<body>
+<svg class="sprite" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+<symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></symbol>
+<symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2 21 6v5c0 5.5-3.5 9-9 11-5.5-2-9-5.5-9-11V6l9-4Z"/><path d="m9 12 2 2 4-4"/></symbol>
+<symbol id="i-database" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v7c0 1.6 4 3 9 3s9-1.4 9-3V5M3 12v7c0 1.6 4 3 9 3s9-1.4 9-3v-7"/></symbol>
+<symbol id="i-brain" viewBox="0 0 24 24"><path d="M12 5a4 4 0 0 0-8 1c-2 1-2 5 0 6a4 4 0 0 0 4 6c0 2 2 4 4 4V5ZM12 5a4 4 0 0 1 8 1c2 1 2 5 0 6a4 4 0 0 1-4 6c0 2-2 4-4 4V5ZM8 10l-2 2m10-2 2 2M8 17l2-2m6 2-2-2"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V10m6 10V4m6 16v-8m6 8H2"/></symbol>
+<symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6h12M9 12h12M9 18h12M3 6h1M3 12h1M3 18h1"/></symbol>
+<symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V3m-5 5 5-5 5 5M4 16v4h16v-4"/></symbol>
+<symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v13m-5-5 5 5 5-5M4 17v4h16v-4"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
+<symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 11v6m0-10v.5"/></symbol>
+<symbol id="i-play" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7V5Z"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="m4 12 5 5L20 6"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="10" cy="10" r="7"/><path d="m15 15 6 6"/></symbol>
+<symbol id="i-file" viewBox="0 0 24 24"><path d="M5 2h9l5 5v15H5V2Z"/><path d="M14 2v6h5M8 12h8m-8 4h8"/></symbol>
+</svg>
+<div class="shell">
+  <aside class="rail" aria-label="Điều hướng một trang">
+    <div class="brand"><div class="logo">N</div><div><strong>NTK <span>SAST</span></strong><small>JAVA CODE SECURITY · Phase 6B</small></div></div>
+    <div class="rail-heading">TRUNG TÂM ĐIỀU KHIỂN</div>
+    <nav class="nav" id="nav">
+      <a class="active" href="#tong-quan"><svg><use href="#i-grid"/></svg><span>Tổng quan</span></a>
+      <a href="#quet-du-an"><svg><use href="#i-shield"/></svg><span>Quét dự án</span></a>
+      <a href="#du-lieu"><svg><use href="#i-database"/></svg><span>Dữ liệu huấn luyện</span></a>
+      <a href="#huan-luyen"><svg><use href="#i-brain"/></svg><span>Mô hình AI</span></a>
+      <a href="#cham-diem"><svg><use href="#i-chart"/></svg><span>Điểm ưu tiên</span></a>
+      <a href="#ket-qua"><svg><use href="#i-list"/></svg><span>Báo cáo quét</span></a>
+      <a href="#full-project"><svg><use href="#i-file"/></svg><span>Full-Project (đã quét)</span></a>
+      <a href="#full-project-scan"><svg><use href="#i-upload"/></svg><span>Full-Project (quét mới)</span></a>
+    </nav>
+    <div class="rail-bottom">
+      <div class="local-indicator"><span class="dot"></span> Xử lý trên localhost</div>
+      <p>OpenGrep · CodeQL · IRIS<br>Phân tích bảo mật cục bộ</p>
+      <small>Fast: JDK 21 / 4 CWE; Full: Java no-build</small>
+    </div>
+  </aside>
+  <main class="main">
+    <div class="topbar"><span>NTK SAST <span class="top-sep">/</span> Phân tích mã nguồn</span><div class="top-actions"><span class="connection" id="connection"><span class="dot"></span>Đang kiểm tra backend</span><button class="btn small secondary" id="present-btn" type="button">Chế độ tập trung</button></div></div>
+    <div class="content">
+      <section class="section hero" id="tong-quan" aria-labelledby="hero-title">
+        <div class="kicker">NỀN TẢNG PHÂN TÍCH BẢO MẬT MÃ NGUỒN</div>
+        <div class="hero-title-row"><div><h1 id="hero-title">Phân tích bảo mật mã nguồn Java<br><span>bằng OpenGrep và AI cục bộ</span></h1><p class="lead">Kết hợp OpenGrep, CodeQL, IRIS Stage 3 và Qwen2.5-Coder LoRA để hỗ trợ tìm kiếm, giải thích và ưu tiên rà soát cảnh báo SAST.</p></div><span class="status-stamp">KHÔNG DÙNG CLOUD LLM</span></div>
+        <div class="stats-grid">
+          <div class="stat"><div class="stat-value">04</div><div class="stat-label">Nhóm CWE mục tiêu</div><small>22 · 78 · 79 · 89</small></div>
+          <div class="stat"><div class="stat-value">950 <em>+</em> 137</div><div class="stat-label">Bản ghi huấn luyện &amp; đánh giá</div><small>Train silver / Weak validation</small></div>
+          <div class="stat"><div class="stat-value">02</div><div class="stat-label">Epoch fine-tuning LoRA</div><small>Qwen2.5-Coder-0.5B</small></div>
+          <div class="stat"><div class="stat-value">LOCAL</div><div class="stat-label">Phân tích bằng AI cục bộ</div><small>Không dùng dịch vụ LLM đám mây</small></div>
+        </div>
+        <div class="phase-grid">
+          <div class="phase-card"><div class="phase-head"><span class="phase-num">01</span><span>GIAI ĐOẠN HUẤN LUYỆN</span></div><h3>Xây dựng và tinh chỉnh mô hình</h3><div class="phase-flow"><span>Dataset weak/silver</span><b>→</b><span>Kiểm định dữ liệu</span><b>→</b><span>LoRA Epoch 1/2</span></div><p>Mô hình học phân loại source, sink, taint-propagator và none. Đối chứng Base/E1/E2 đã chạy trên GPU cục bộ.</p><a href="#huan-luyen" class="text-link">Xem quá trình huấn luyện <svg><use href="#i-arrow"/></svg></a></div>
+          <div class="phase-card"><div class="phase-head"><span class="phase-num">02</span><span>GIAI ĐOẠN PHÂN TÍCH</span></div><h3>Phân tích và ưu tiên cảnh báo</h3><div class="phase-flow"><span>OpenGrep</span><b>→</b><span>IRIS + local LLM</span><b>→</b><span>CodeQL + SAST</span></div><p>Đầu vào là ZIP Java được cho phép. Cảnh báo thô được giữ nguyên; bằng chứng và điểm ưu tiên được trình bày riêng.</p><a href="#quet-du-an" class="text-link">Khám phá luồng quét <svg><use href="#i-arrow"/></svg></a></div>
+        </div>
+      </section>
+
+      <section class="section" id="quet-du-an" aria-labelledby="scan-title">
+        <div class="section-heading"><div><div class="kicker">01 / QUÉT DỰ ÁN</div><h2 id="scan-title">Từ mã nguồn đến bằng chứng bảo mật</h2><p>Chọn dự án Java để phân tích, theo dõi từng bước quét và mở báo cáo sau khi hoàn tất.</p></div><span class="tag" id="scan-gate">Đang kiểm tra hệ thống</span></div>
+        <div class="scan-layout">
+          <div class="panel upload-panel">
+            <div class="panel-head"><h3>Dự án Java đầu vào</h3><span class="muted tiny">ZIP · tối đa 16 MiB</span></div>
+            <label class="dropzone" for="project-zip" id="dropzone"><svg class="drop-icon"><use href="#i-upload"/></svg><strong id="file-label">Chọn tệp ZIP hoặc kéo thả vào đây</strong><span>1–24 tệp .java · JDK 21 · không Maven/Gradle</span><input type="file" accept=".zip,application/zip" id="project-zip"></label>
+            <div class="scope-tags"><span>CWE-22 · Path traversal</span><span>CWE-78 · Command injection</span><span>CWE-79 · XSS*</span><span>CWE-89 · SQL injection</span></div>
+            <div class="scan-mode-config"><label for="scan-mode"><strong>Chế độ phân tích</strong></label>
+              <select id="scan-mode" aria-describedby="scan-mode-note"><option value="fast">Quét nhanh · OpenGrep + CodeQL + LoRA Epoch 1</option><option value="deep">Phân tích chuyên sâu · So sánh các mô hình</option><option value="fullproject">Full Project GitHub ZIP (CodeQL no-build + IRIS/LoRA E1)</option></select>
+              <p id="scan-mode-note" class="fine-print">Quét nhanh dùng một mô hình và hỗ trợ dự án thiếu profile CWE. Thời gian phụ thuộc mã nguồn và cấu hình máy; không bảo đảm hoàn tất trong 2 phút.</p>
+            </div>
+            <label class="checkline"><input type="checkbox" id="scan-consent"> Tôi có quyền phân tích mã nguồn này; hiểu rằng quy trình có bước javac/CodeQL trên đầu vào đã tin cậy ở mức giới hạn.</label>
+            <button class="btn primary wide" id="run-scan" type="button" disabled><svg><use href="#i-play"/></svg> Bắt đầu phân tích</button>
+            <div class="upload-actions"><button type="button" class="btn secondary danger-soft" data-clear-session>Làm sạch phiên quét</button><button id="simulate-flow" class="btn secondary" type="button">Xem quy trình xử lý</button><a href="/api/sample" id="sample-link" class="text-link">Tải dự án Java mẫu</a></div>
+            <p class="fine-print" id="scan-message" role="status">Đang xác minh kết nối tới backend...</p>
+          </div>
+          <div class="panel pipeline-panel">
+            <div class="panel-head"><h3>Quy trình phân tích bảo mật</h3><span class="label-soft">6 bước xử lý</span></div>
+            <div class="pipeline-list" id="pipeline-list">
+              <div class="pipe-step" data-step="1"><span class="pipe-count">01</span><div><strong>Kiểm tra gói mã nguồn</strong><small>Xác thực định dạng, số tệp và tính toàn vẹn</small></div><span class="pipe-state">·</span></div>
+              <div class="pipe-step" data-step="2"><span class="pipe-count">02</span><div><strong>OpenGrep OSS</strong><small>Tìm các dấu hiệu bảo mật bằng quy tắc phân tích tĩnh</small></div><span class="pipe-state">·</span></div>
+              <div class="pipe-step" data-step="3"><span class="pipe-count">03</span><div><strong>CodeQL &amp; IRIS Stage 3</strong><small>Xác định API, nguồn và điểm xử lý dữ liệu</small></div><span class="pipe-state">·</span></div>
+              <div class="pipe-step" data-step="4"><span class="pipe-count">04</span><div><strong>Phân tích ngữ nghĩa bằng mô hình AI</strong><small>Qwen2.5-Coder LoRA chạy hoàn toàn trên máy</small></div><span class="pipe-state">·</span></div>
+              <div class="pipe-step" data-step="5"><span class="pipe-count">05</span><div><strong>Đối chiếu bằng chứng luồng dữ liệu</strong><small>Đánh giá ngữ cảnh và điều kiện an toàn</small></div><span class="pipe-state">·</span></div>
+              <div class="pipe-step" data-step="6"><span class="pipe-count">06</span><div><strong>Chấm điểm và lập báo cáo</strong><small>Sắp xếp cảnh báo theo mức ưu tiên</small></div><span class="pipe-state">·</span></div>
+            </div>
+            <div class="job-card" id="job-card"><span class="job-title">Sẵn sàng phân tích dự án</span><p>Chọn gói ZIP Java để bắt đầu. Có thể xem giới thiệu quy trình mà không chạy quét.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="du-lieu" aria-labelledby="data-title">
+        <div class="section-heading"><div><div class="kicker">02 / BỘ DỮ LIỆU</div><h2 id="data-title">Dữ liệu huấn luyện mô hình</h2><p>Xem trực tiếp bộ dữ liệu được sử dụng để tinh chỉnh mô hình. Tìm kiếm và xuất bảng tính Excel.</p></div><span class="tag">Silver / Weak labels</span></div>
+        <div class="data-summary">
+          <div class="panel role-panel"><div class="panel-head"><h3>Phân bố vai trò API — train 950</h3><span class="muted tiny">Dữ liệu huấn luyện</span></div><div class="role-bars"><div><div class="role-label"><span>None</span><strong>252</strong></div><div class="bar"><span class="ntk-bar-1"></span></div></div><div><div class="role-label"><span>Source</span><strong>145</strong></div><div class="bar"><span class="ntk-bar-2"></span></div></div><div><div class="role-label"><span>Sink</span><strong>236</strong></div><div class="bar"><span class="ntk-bar-3"></span></div></div><div><div class="role-label"><span>Taint-propagator</span><strong>317</strong></div><div class="bar"><span class="ntk-bar-4"></span></div></div></div></div>
+          <div class="panel data-note"><div class="panel-head"><h3>Nguồn dữ liệu và chất lượng</h3><span class="icon-card"><svg><use href="#i-info"/></svg></span></div><p><strong>950</strong> training samples và <strong>137</strong> weak validation; validation không có sink CWE-78/79. Chưa có <em>independent human gold</em> và chưa chứng minh loại trừ mọi near-duplicate.</p><div class="note-line">Dữ liệu được quản lý bằng quy trình kiểm tra định dạng, vai trò API và nguồn gốc bản ghi.</div></div>
+        </div>
+        <div class="panel sheet-panel"><div class="sheet-top"><div><h3>Danh sách mẫu huấn luyện</h3><p class="muted tiny">Dữ liệu được nạp từ kho huấn luyện trên máy và hiển thị thành bảng có thể tra cứu.</p></div><div class="sheet-actions"><label class="btn secondary file-action"><svg><use href="#i-upload"/></svg> Chọn tệp từ máy<input type="file" id="dataset-file" accept=".jsonl,.csv,.tsv,.xlsx"></label><button class="btn secondary" type="button" id="export-xlsx" disabled><svg><use href="#i-download"/></svg> Xuất Excel</button></div></div>
+          <div class="sheet-toolbar"><div class="sheet-tabs"><button class="tab active" data-split="train" type="button">Train <span>950</span></button><button class="tab" data-split="validation" type="button">Validation <span>137</span></button></div><div class="sheet-controls"><span id="dataset-status" class="muted tiny">Đang nạp bộ dữ liệu</span><div class="searchbox"><svg><use href="#i-search"/></svg><input id="dataset-search" type="search" placeholder="Tìm trong dữ liệu..." aria-label="Tìm trong dataset"></div></div></div>
+          <div class="sheet-scroll"><table class="excel" id="dataset-table"><thead><tr><th class="row-num">#</th><th>Đang tìm nguồn dữ liệu huấn luyện</th></tr></thead><tbody><tr><td class="row-num">1</td><td>Đang tải mẫu đã dùng để tinh chỉnh mô hình.</td></tr></tbody></table></div>
+          <div class="dataset-provenance" id="dataset-provenance">Nguồn: bộ dữ liệu huấn luyện đã lưu trên máy</div><div class="sheet-footer"><span id="dataset-count">0 bản ghi đang hiển thị</span><div class="pagination"><button type="button" id="data-prev" class="btn mini secondary" disabled>Trước</button><span id="dataset-page">Trang 1/1</span><button type="button" id="data-next" class="btn mini secondary" disabled>Sau</button></div></div>
+        </div>
+      </section>
+
+      <section class="section" id="huan-luyen" aria-labelledby="training-title">
+        <div class="section-heading"><div><div class="kicker">03 / HUẤN LUYỆN</div><h2 id="training-title">Huấn luyện mô hình Qwen2.5-Coder</h2><p>Mô hình đã được tinh chỉnh bằng LoRA trên GPU cục bộ nhằm hỗ trợ nhận diện vai trò API bảo mật.</p></div><span class="tag">Local PEFT LoRA · rank 8</span></div>
+        <div class="training-timeline"><div class="timeline-item"><span class="timeline-n">1</span><strong>Chuẩn hóa dữ liệu</strong><small>950 train · 137 validation<br>Six-field strict contract</small></div><div class="timeline-item"><span class="timeline-n">2</span><strong>Fine-tune LoRA</strong><small>2 epochs · LR 1e-4<br>Alpha 16 · dropout 0.05</small></div><div class="timeline-item"><span class="timeline-n">3</span><strong>Đánh giá mô hình</strong><small>411 inference GPU mới<br>137 prompts × 3 arms</small></div><div class="timeline-item"><span class="timeline-n">4</span><strong>Triển khai phân tích</strong><small>Dùng checkpoint Epoch 1<br>Giữ nguyên mô hình đã đánh giá</small></div></div>
+        <div class="panel comparison-panel"><div class="panel-head"><h3>So sánh kết quả các phiên bản mô hình</h3><span class="muted tiny">Đánh giá 137 mẫu validation có nhãn weak</span></div><div class="table-scroll"><table class="table"><thead><tr><th>Nhánh</th><th>Strict JSON accepted</th><th>Macro-F1 role</th><th>Sink recall</th><th>Sink + args đúng</th><th>Ghi chú</th></tr></thead><tbody><tr><td>Base</td><td>0 / 137</td><td>—</td><td>—</td><td>—</td><td>ABSTAIN do strict-format</td></tr><tr class="emphasis-row"><td><strong>LoRA Epoch 1</strong></td><td>137 / 137</td><td><strong>0.6940</strong></td><td><strong>27 / 29</strong></td><td>25 / 29</td><td>Mô hình áp dụng khi phân tích</td></tr><tr><td>LoRA Epoch 2</td><td>137 / 137</td><td><strong>0.8362</strong></td><td>17 / 29</td><td>15 / 29</td><td>Macro-F1 cao hơn, sink recall thấp hơn</td></tr></tbody></table></div><p class="fine-print">Strict JSON được chấp nhận không đồng nghĩa dự đoán chính xác. Validation không có sink CWE-78/79; không suy diễn recall cho hai nhóm này.</p></div>
+        <div class="subsection-head"><h3>Đánh giá chất lượng mô hình</h3><p>Thực nghiệm nội bộ trên bộ kiểm thử tổng hợp. Các giá trị dưới đây không phải số liệu từ dự án khách hàng.</p></div>
+        <div class="results-science"><div class="panel"><div class="panel-head"><h3>Đánh giá trên bộ kiểm thử 24 mẫu</h3><span class="muted tiny">12 positive · 12 negative</span></div><div class="benchmark"><div class="bench-item"><span>OpenGrep raw F1</span><div class="bench-bar"><i class="ntk-bar-5"></i></div><strong>0.6667</strong></div><div class="bench-item"><span>Hybrid E1 qualified F1</span><div class="bench-bar"><i class="ntk-bar-6"></i></div><strong>0.8000</strong></div><div class="bench-item"><span>Hybrid E2 qualified F1</span><div class="bench-bar"><i class="ntk-bar-7"></i></div><strong>0.8000</strong></div></div><div class="ranking-brief"><span>Ranking AP kỳ vọng khi đồng điểm</span><strong>0.7105 <em>vs</em> 0.5514</strong><small>Epoch 1/2 so với OpenGrep-only · AP một danh sách, không phải MAP</small></div><p class="fine-print">Không so sánh như cùng một loại tín hiệu: OpenGrep là raw-alert, hybrid là qualified-evidence. Nhãn synthetic AI-assisted được khóa trước prediction; không có independent human gold.</p></div><div class="panel"><div class="panel-head"><h3>Các trường hợp cần cải thiện</h3><span class="tag-subtle">Giới hạn hiện tại</span></div><div class="failure-stats"><div><strong>03</strong><small>Cảnh báo dương tính giả</small></div><div><strong>02</strong><small>Trường hợp bỏ sót</small></div><div><strong>0</strong><small>Bộ gold độc lập</small></div></div><p class="muted">FP: CWE-22 path guards (2), CWE-78 dữ liệu argument (1). FN: CWE-79 HTML attribute và JavaScript string (2). Nguyên nhân gốc mới ở mức giả thuyết.</p><p class="muted tiny">CWE-79 qualified evidence là <strong>policy-assisted</strong>, không phải LoRA XSS sink.</p></div></div>
+      </section>
+
+      <section class="section" id="cham-diem" aria-labelledby="scoring-title">
+        <div class="section-heading"><div><div class="kicker">04 / CHẤM ĐIỂM SAST</div><h2 id="scoring-title">Giải thích mức độ ưu tiên cảnh báo</h2><p>Điểm 0–100 của SAST V2.2 hỗ trợ xếp hàng review. Không phải xác suất có lỗ hổng và không thay thế CVSS.</p></div><span class="tag">SAST scoring V2.2</span></div>
+        <div class="score-grid"><div class="panel"><div class="panel-head"><h3>Cơ sở tính điểm</h3><span class="muted tiny">Trọng số của bộ chấm điểm</span></div><div class="weights"><div class="weight"><div><strong>Mức độ nghiêm trọng</strong><span>Severity</span></div><b>35%</b><div class="weight-bar"><i class="ntk-bar-8"></i></div></div><div class="weight"><div><strong>Bằng chứng từ mô hình</strong><span>AI confidence / policy neutrality</span></div><b>30%</b><div class="weight-bar"><i class="ntk-bar-9"></i></div></div><div class="weight"><div><strong>Khả năng khai thác &amp; dataflow</strong><span>Exploitability</span></div><b>25%</b><div class="weight-bar"><i class="ntk-bar-10"></i></div></div><div class="weight"><div><strong>Độ chính xác rule</strong><span>Rule precision</span></div><b>10%</b><div class="weight-bar"><i class="ntk-bar-11"></i></div></div></div><p class="fine-print">Sơ đồ giải thích các thành phần; điểm thực tế được lấy nguyên từ scorer đã khóa và có thể chịu semantic guard/demotion. Không thay thế công thức code pin bằng phép cộng giản lược.</p></div><div class="panel score-explain"><div class="panel-head"><h3>Ý nghĩa của điểm SAST</h3><span class="icon-card"><svg><use href="#i-info"/></svg></span></div><div class="score-empty" id="score-explainer"><strong>Chưa có điểm phân tích</strong><p>Điểm ưu tiên sẽ xuất hiện khi bạn phân tích một dự án Java. Mỗi cảnh báo được chấm riêng trên thang 0–100.</p></div><div class="mini-note"><strong>Điểm cao không có nghĩa đã xác nhận lỗ hổng.</strong><br>Mức ưu tiên giúp xác định cảnh báo nào nên được chuyên gia kiểm tra trước; không thay thế kết luận kiểm thử bảo mật.</div><div class="scoring-rules"><p><svg><use href="#i-check"/></svg> Xem thêm nguồn evidence: model-derived hay policy-assisted</p><p><svg><use href="#i-check"/></svg> So sánh location, dataflow, API signature, semantic guard</p><p><svg><use href="#i-check"/></svg> ABSTAIN và NO_PATH không được coi là mã an toàn</p></div></div></div>
+        <div class="priority-guide"><span><strong>Rất cao</strong> · Rà soát trước</span><span><strong>Cao</strong> · Rà soát sớm</span><span><strong>Trung bình</strong> · Phân tích thêm</span><span><strong>Thấp</strong> · Xếp sau</span></div><div class="panel active-score" id="active-score"><div class="panel-head"><div><h3>Điểm ưu tiên từ dự án đang phân tích</h3><p class="muted">Điểm lấy từ kết quả phân tích, không tính lại trong trình duyệt.</p></div><button type="button" class="btn secondary danger-soft" data-clear-session>Xóa kết quả</button></div><div id="score-overview" class="empty-state">Chưa có kết quả chấm điểm. Hãy phân tích một dự án để xem các cảnh báo và mức ưu tiên xử lý.</div></div>
+      </section>
+
+      <section class="section" id="ket-qua" aria-labelledby="results-title">
+        <div class="section-heading"><div><div class="kicker">05 / BÁO CÁO QUÉT</div><h2 id="results-title">Kết quả phân tích mã nguồn</h2><p>Theo dõi lượt quét của bạn, xem các cảnh báo bảo mật và tải báo cáo chi tiết.</p></div><span class="tag">Từ dự án của bạn</span></div>
+        <div class="panel run-panel"><div class="panel-head"><div><h3>Lịch sử dự án đã phân tích</h3><p class="muted tiny">Chỉ hiển thị các dự án được quét từ giao diện này.</p></div><div class="toolbar-actions"><button id="refresh-runs" type="button" class="btn secondary">Cập nhật</button><button type="button" class="btn secondary danger-soft" data-clear-session>Xóa lịch sử hiển thị</button></div></div><div class="run-control"><label for="run-select">Dự án</label><select id="run-select"><option value="">Chưa có dự án được quét</option></select><span class="tiny muted" id="run-status">Chưa có dự án</span></div><div id="run-summary" class="run-summary"><div class="empty-state">Chưa có kết quả. Hãy chọn dự án Java và bắt đầu phân tích.</div></div><div class="table-scroll"><table class="table" aria-label="Các nhánh phân tích đã thực thi"><thead><tr><th>Nhánh phân tích</th><th>Cảnh báo OpenGrep</th><th>Kết quả AI</th><th>Luồng có bằng chứng AI</th><th>Luồng XSS theo chính sách</th></tr></thead><tbody id="arms-comparison"><tr><td colspan="5" class="placeholder-cell">Chưa có kết quả phân tích.</td></tr></tbody></table></div><div class="download-row" id="run-downloads"></div></div>
+        <div class="panel findings-panel"><div class="panel-head"><div><h3>Cảnh báo và thông tin chi tiết</h3><p class="muted tiny">Chọn một cảnh báo để xem vị trí, lý do, nguồn bằng chứng và mức ưu tiên xử lý.</p></div><span class="tag-subtle" id="findings-total">0 cảnh báo</span></div><div class="finding-filters"><label>Nhánh<select id="finding-arm"><option value="epoch_1">LoRA Epoch 1</option><option value="epoch_2">LoRA Epoch 2</option><option value="base">Base</option><option value="opengrep_only">OpenGrep-only</option></select></label><label>CWE<select id="finding-cwe"><option value="all">Tất cả</option><option value="22">CWE-22</option><option value="78">CWE-78</option><option value="79">CWE-79</option><option value="89">CWE-89</option></select></label><label>Evidence<select id="finding-evidence"><option value="all">Tất cả evidence</option><option value="model">Model-derived</option><option value="policy">Policy-assisted</option><option value="other">Khác / chưa qualified</option></select></label><div id="arm-downloads"></div></div><div class="inspect-layout"><div class="findings-list" id="findings-list"><div class="empty-state">Các cảnh báo sẽ xuất hiện sau khi hoàn tất phân tích.</div></div><div class="inspect" id="inspect"><div class="inspect-placeholder"><svg><use href="#i-search"/></svg><strong>Chi tiết cảnh báo</strong><span>Chọn một cảnh báo để xem điểm ưu tiên và luồng dữ liệu liên quan.</span></div></div></div></div>
+      </section>
+      <section class="section" id="full-project" aria-labelledby="fp-title">
+        <div class="section-heading"><div><div class="kicker">06 / FULL-PROJECT (BẰNG CHỨNG ĐÃ CÓ)</div><h2 id="fp-title">Phân tích dự án Java thực tế — Phase 5.1</h2>
+        <p>Hiển thị báo cáo đã được tạo từ OpenGrep, CodeQL, native IRIS Stage 3, LoRA Epoch 1 và SAST V2.2 trong các lượt thử nghiệm trước.</p></div><span class="tag">Imported · read-only</span></div>
+        <div class="fp-banner"><strong>Không có lượt scan mới trong giao diện này.</strong>
+        <p class="fine-print">Đây là bản đọc kết quả Phase 5.1 đã xác minh SHA-256. Chức năng tải project Maven/Spring từ GitHub và chạy full hybrid mới vẫn đang phát triển; không nhầm với ô upload JDK-only V2.3 ở phía trên.</p>
+        <p class="fine-print">Điểm 0–100 là mức ưu tiên review, không phải xác suất khai thác hay kết luận CVE. Không có gold độc lập xác nhận.</p></div>
+        <div class="panel">
+          <div class="fp-controls"><label for="fp-select">Dự án đã phân tích<select id="fp-select"></select></label>
+          <label for="fp-filter">Loại cảnh báo<select id="fp-filter"><option value="all">Tất cả</option><option value="exact">Exact AI–CodeQL</option><option value="opengrep">OpenGrep</option><option value="codeql">CodeQL</option></select></label>
+          <span class="muted tiny" id="fp-find-count"></span></div>
+          <p id="fp-error" role="status"></p><div class="fp-stats" id="fp-stats"></div><div class="fp-links" id="fp-downloads"></div>
+          <div class="fp-table-scroll"><table class="fp-table" aria-label="Findings đã xác minh thuộc Phase 5.1"><thead><tr><th>CWE</th><th>Engine</th><th>Rule</th><th>Vị trí</th><th>Ưu tiên /100</th><th>Liên kết AI</th></tr></thead><tbody id="fp-finding-body"></tbody></table></div>
+          <div class="fp-details" id="fp-inspect"><p>Chọn một finding để xem bằng chứng.</p></div>
+        </div>
+      </section>
+      <section class="section" id="full-project-scan" aria-labelledby="fp6b-title">
+        <div class="section-heading"><div><div class="kicker">07 / FULL PROJECT NEW SCAN</div><h2 id="fp6b-title">GitHub Java ZIP - new local scan (Phase 6B)</h2><p>New source files, new CodeQL Java no-build database, actual OpenGrep, compiler API inventory and native IRIS/LoRA when supported.</p></div><span class="tag">New analysis</span></div>
+        <div class="fp6b-warning"><strong>This is a new scan, not the Phase 5.1 import.</strong><p>ZIP up to 64 MiB, up to 40,000 entries and 15,000 Java files. No Maven/Gradle/javac build scripts are executed by this runner. Java CodeQL no-build may miss generated or framework flows. Local static tools still parse untrusted source; use repositories you are authorized to scan.</p><p>When there are no eligible local LoRA API roles, findings remain static-only and are never labelled model-confirmed. Scores 0-100 are review priorities, not exploit probabilities.</p></div>
+        <div class="panel"><div class="fp6b-form">
+        <label for="fp6b-file"><strong>Upload source ZIP downloaded from GitHub</strong></label><input id="fp6b-file" type="file" accept=".zip,application/zip">
+        <label><input type="checkbox" id="fp6b-consent"> I have permission to scan this source and understand the local static tooling and no-build limits.</label>
+        <div class="fp6b-buttons"><button class="btn primary" id="fp6b-run" type="button">Run new Full-Project scan</button><button class="btn secondary" id="fp6b-stop" type="button" disabled>Request stop</button><button class="btn secondary" id="fp6b-refresh" type="button">Refresh history</button></div></div>
+        <div id="fp6b-error" class="fp6b-error" role="alert"></div><div id="fp6b-status" class="fp6b-status" aria-live="polite">No active new scan.</div>
+        <div id="fp6b-results"></div><div id="fp6b-inspect" class="fp6b-inspect"></div><h3>New scan history</h3><div id="fp6b-history" class="fp6b-history"></div></div>
+      </section>
+      <footer class="footer"><div><strong>NTK SAST</strong><span>OpenGrep · CodeQL · IRIS · Qwen2.5-Coder LoRA · Chạy trên máy cục bộ</span></div><span>Kết quả cần được chuyên gia rà soát · Không suy diễn kết quả ngoài phạm vi nghiệm thu</span></footer>
+    </div>
+  </main>
+</div>
+<dialog class="cell-dialog" id="cell-dialog"><div class="dialog-head"><h3>Nội dung mẫu dữ liệu</h3><button type="button" id="close-cell" class="btn secondary">Đóng</button></div><pre id="cell-content"></pre></dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script defer src="/app.js"></script>
+<script defer src="/fullproject-ui.js"></script>
+<script defer src="/fullproject-live-ui.js"></script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+/* Scoped to Phase 6A history viewer; does not alter the V2.3 scan UI. */
+#full-project .fp-banner { border:1px solid var(--line, #ccd2dd); padding:14px 18px; border-radius:12px; margin:16px 0; }
+#full-project .fp-controls { display:flex; flex-wrap:wrap; gap:16px; align-items:end; margin:16px 0; }
+#full-project .fp-controls label { display:flex; flex-direction:column; gap:5px; min-width:220px; }
+#full-project .fp-stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(125px,1fr)); gap:10px; margin-bottom:16px; }
+#full-project .fp-metric {border:1px solid var(--line,#ccd2dd);padding:14px;border-radius:12px;display:flex;flex-direction:column;gap:4px;}
+#full-project .fp-metric strong {font-size:1.45rem;}
+#full-project .fp-metric span {font-size:.82rem;opacity:.75;}
+#full-project .fp-table-scroll {width:100%;overflow-x:auto;max-height:430px;overflow-y:auto;}
+#full-project .fp-table {border-collapse:collapse;width:100%;font-size:.81rem;}
+#full-project .fp-table th,#full-project .fp-table td {text-align:left;padding:10px 9px;border-bottom:1px solid var(--line,#ccd2dd);}
+#full-project .fp-table td:nth-child(3),#full-project .fp-table td:nth-child(4) {word-break:break-word;max-width:260px;}
+#full-project .fp-table tbody tr {cursor:pointer;}
+#full-project .fp-table tbody tr:focus {outline:2px solid currentColor;}
+#full-project .fp-details {margin:18px 0;white-space:normal;padding:16px;border-radius:12px;border:1px solid var(--line,#ccd2dd);}
+#full-project .fp-mono {overflow-wrap:anywhere;font-family:monospace;}
+#full-project .fp-path {max-height:160px;overflow:auto;}
+#full-project .fp-muted {opacity:.75;}
+#full-project .fp-exact {font-weight:600;}
+#full-project .fp-links {display:flex;gap:10px;flex-wrap:wrap;margin:10px 0;}
+#full-project .fp-link {text-decoration:underline;}
+#full-project #fp-error {color:#b54845;}

@@ -1,0 +1,16 @@
+#full-project-scan .fp6b-warning{padding:15px 18px;background:#f4f8f9;border:1px solid #cedfe4;border-radius:12px;margin:14px 0;line-height:1.7}
+#full-project-scan .fp6b-form{display:grid;gap:12px;margin:18px 0;max-width:680px}
+#full-project-scan .fp6b-form input[type=file]{padding:15px;width:100%;border:1px dashed #9eb6c3;border-radius:10px;background:#f8fafc}
+#full-project-scan .fp6b-buttons{display:flex;gap:10px;flex-wrap:wrap}
+#full-project-scan .fp6b-status{padding:16px;border:1px solid #d4e2e6;border-radius:12px;margin:14px 0;word-break:break-word}
+#full-project-scan .fp6b-stages{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:7px;font-size:.89em;margin:12px 0}
+#full-project-scan .fp6b-error{color:#a63b36;white-space:pre-wrap;word-break:break-word}
+#full-project-scan .fp6b-links{display:flex;gap:20px;flex-wrap:wrap;margin:14px 0}
+#full-project-scan .fp6b-links a{text-decoration:underline}
+#full-project-scan .fp6b-scroll{overflow:auto;max-height:480px;margin:12px 0}
+#full-project-scan .fp6b-table{border-collapse:collapse;width:100%;font-size:.83rem}
+#full-project-scan .fp6b-table td,#full-project-scan .fp6b-table th{padding:10px;text-align:left;border-bottom:1px solid #dbe5e9;overflow-wrap:anywhere}
+#full-project-scan .fp6b-table tr{cursor:pointer}
+#full-project-scan .fp6b-inspect{margin:12px 0;padding:15px;border:1px solid #dbe5e9;border-radius:10px;max-height:350px;overflow:auto;overflow-wrap:anywhere}
+#full-project-scan .fp6b-history{display:grid;gap:5px;margin-top:14px}
+#full-project-scan .fp6b-history-button{background:transparent;border:1px solid #d8e1e6;border-radius:7px;text-align:left;padding:9px;cursor:pointer;overflow-wrap:anywhere}
