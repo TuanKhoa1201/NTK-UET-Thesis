@@ -1,0 +1,17 @@
+# Python 3.10.22 environment requirements (verified on Ubuntu-IRIS WSL2)
+# For GPU CUDA 12.4 install PyTorch via: pip install torch==2.5.1 --index-url https://download.pytorch.org/whl/cu124
+torch==2.5.1
+transformers==5.12.1
+peft==0.21.2
+safetensors==0.8.0
+accelerate==1.14.0
+bitsandbytes==0.50.2
+tokenizers==0.22.2
+datasets==5.1.0
+huggingface_hub==1.0.2
+scikit-learn==1.7.2
+scipy==1.15.3
+numpy==2.2.6
+pydantic==2.14.1
+PyYAML==6.0.3
+requests==2.32.5

@@ -1,0 +1,25 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*.sqlite3
+*.sqlite3-wal
+*.sqlite3-shm
+
+# Local environment & secrets
+.env
+config/ntk_backend.env
+*.pem
+*.key
+
+# Private reproduction artifacts, checkpoints, and persisted scan stores
+persisted_api_store/
+ntk_private_repro/
+models/
+checkpoints/
+runs/
+dataset_vnext_3_1/
+eval_protocol/
+*.safetensors
+*.pt
+*.bin
+*.tar.gz

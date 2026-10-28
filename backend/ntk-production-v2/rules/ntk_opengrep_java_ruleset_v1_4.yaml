@@ -1,0 +1,92 @@
+rules:
+  - id: ntk.java.cwe089.statement-executequery
+    languages: [java]
+    message: "Potential SQL query execution sink (CWE-089)"
+    severity: ERROR
+    metadata:
+      cwe: 89
+    patterns:
+      - pattern-either:
+          - pattern: $STMT.executeQuery($SQL)
+          - pattern: $PS.executeQuery()
+          - pattern: $STMT.executeUpdate($SQL)
+          - pattern: $STMT.executeUpdate($SQL, ...)
+          - pattern: $PS.executeUpdate()
+          - pattern: $STMT.execute($SQL)
+          - pattern: $STMT.execute($SQL, ...)
+          - pattern: $PS.execute()
+          - pattern: $STMT.addBatch($SQL)
+          - pattern: $TPL.batchUpdate($SQL)
+          - pattern: $TPL.queryForObject($SQL, ...)
+          - pattern: $TPL.queryForList($SQL, ...)
+          - pattern: $TPL.queryForMap($SQL, ...)
+          - pattern: $TPL.queryForRowSet($SQL, ...)
+          - pattern: $TPL.queryForInt($SQL, ...)
+          - pattern: $TPL.queryForLong($SQL, ...)
+          - pattern: $TPL.query($SQL, ...)
+          - pattern: $TPL.update($SQL, ...)
+
+  - id: ntk.java.cwe078.runtime-exec
+    languages: [java]
+    message: "Potential OS command execution sink (CWE-078)"
+    severity: ERROR
+    metadata:
+      cwe: 78
+    patterns:
+      - pattern-either:
+          - pattern: Runtime.getRuntime().exec(...)
+          - pattern: (Runtime $RT).exec(...)
+          - pattern: (java.lang.Runtime $RT).exec(...)
+          - pattern: new ProcessBuilder(...).start()
+          - pattern: $PB.start()
+
+  - id: ntk.java.cwe022.files-readallbytes
+    languages: [java]
+    message: "Potential filesystem path read sink (CWE-022)"
+    severity: ERROR
+    metadata:
+      cwe: 22
+    patterns:
+      - pattern-either:
+          - pattern: Files.readAllBytes($PATH)
+          - pattern: Files.readString($PATH)
+          - pattern: Files.lines($PATH)
+          - pattern: Files.newInputStream($PATH, ...)
+          - pattern: new java.io.FileInputStream(...)
+          - pattern: new FileInputStream(...)
+          - pattern: new java.io.FileOutputStream(...)
+          - pattern: new FileOutputStream(...)
+          - pattern: new java.io.FileReader(...)
+          - pattern: new FileReader(...)
+          - pattern: new java.io.FileWriter(...)
+          - pattern: new FileWriter(...)
+
+  - id: ntk.java.cwe079.printwriter-println
+    languages: [java]
+    message: "Potential HTML output response sink (CWE-079)"
+    severity: ERROR
+    metadata:
+      cwe: 79
+    patterns:
+      - pattern-either:
+          - pattern: $OUT.println($HTML)
+          - pattern: $OUT.print($HTML)
+          - pattern: $OUT.write($HTML)
+          - pattern: $OUT.printf($FMT, ...)
+          - pattern: $OUT.format($FMT, ...)
+      - pattern-not: $OUT.println("...")
+      - pattern-not: $OUT.print("...")
+      - pattern-not: $OUT.write("...")
+      - pattern-not: $OUT.write($ARR, $OFF, $LEN)
+      - pattern-not: String.format(...)
+      - pattern-not: java.lang.String.format(...)
+      - pattern-not: System.out.println(...)
+      - pattern-not: System.out.print(...)
+      - pattern-not: System.out.write(...)
+      - pattern-not: System.out.printf(...)
+      - pattern-not: System.out.format(...)
+      - pattern-not: System.err.println(...)
+      - pattern-not: System.err.print(...)
+      - pattern-not: System.err.write(...)
+      - pattern-not: System.err.printf(...)
+      - pattern-not: System.err.format(...)
