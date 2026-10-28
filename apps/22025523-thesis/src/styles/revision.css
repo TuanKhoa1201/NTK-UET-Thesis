@@ -1,0 +1,244 @@
+:root {
+  --text: #f1f5f9;
+  --secondary: #d4dfeb;
+  --muted: #a7b8cb;
+}
+
+body {
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.sidebar {
+  width: 278px;
+}
+
+.main-area {
+  margin-left: 278px;
+}
+
+.sidebar-collapsed .main-area {
+  margin-left: 76px;
+}
+
+.brand b {
+  font-size: 19px;
+}
+
+.nav-item {
+  font-size: 16px;
+  padding: 13px 11px;
+}
+
+.nav-group-title,
+.sidebar-status,
+.collapse-button {
+  font-size: 12px;
+}
+
+.topbar {
+  height: 72px;
+}
+
+.breadcrumbs {
+  font-size: 14px;
+}
+
+.content-area {
+  max-width: 1720px;
+  padding: 38px 42px 26px;
+}
+
+.page-header h1 {
+  font-size: 38px;
+  line-height: 1.22;
+}
+
+.page-header p,
+.hero-copy > p {
+  font-size: 17px;
+  line-height: 1.8;
+}
+
+.section-title h2 {
+  font-size: 27px;
+}
+
+.section-title p,
+.card-heading h3 {
+  font-size: 18px;
+}
+
+.card {
+  padding: 24px;
+}
+
+.button-primary,
+.button-secondary {
+  font-size: 16px;
+  padding: 13px 18px;
+}
+
+.badge,
+.connection-pill {
+  font-size: 12px;
+}
+
+th {
+  font-size: 12px;
+}
+
+td {
+  font-size: 15px;
+}
+
+.muted-text,
+.academic-disclaimer,
+.phase-row p,
+.input-section p,
+.scanner-submit span {
+  font-size: 14px;
+}
+
+.formula {
+  font-size: 23px;
+  line-height: 1.55;
+}
+
+.hero h1 {
+  font-size: clamp(46px, 4vw, 62px);
+}
+
+.stat-label {
+  font-size: 14px;
+}
+
+.stat-card strong {
+  font-size: 32px;
+}
+
+.pillar-card h3,
+.model-card-grid strong,
+.thesis-grid strong {
+  font-size: 16px;
+}
+
+.pillar-card p,
+.journey-card > p,
+.detail-grid p,
+.clean-list,
+.evidence-source p,
+.triage-cards p {
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.flow-card {
+  overflow: hidden;
+}
+
+.flow-scroll {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  overflow: visible;
+}
+
+.flow-step {
+  flex: 1 1 190px;
+  min-width: 0;
+}
+
+.flow-step-box {
+  width: 100%;
+  min-height: 92px;
+  padding: 15px;
+}
+
+.flow-step-box strong {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.flow-connector {
+  display: none;
+}
+
+.topbar {
+  z-index: 4;
+  scroll-margin-top: 82px;
+}
+
+.content-area {
+  scroll-padding-top: 90px;
+}
+
+.sidebar-nav {
+  scrollbar-width: thin;
+  scrollbar-color: #344860 transparent;
+}
+
+.sidebar-nav::-webkit-scrollbar {
+  width: 5px;
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background: #344860;
+}
+
+@media (max-width: 1150px) {
+  .sidebar {
+    width: 228px;
+  }
+
+  .main-area {
+    margin-left: 228px;
+  }
+
+  .content-area {
+    padding: 30px 26px 22px;
+  }
+}
+
+@media (max-width: 800px) {
+  .sidebar {
+    width: 76px;
+  }
+
+  .main-area,
+  .sidebar-collapsed .main-area {
+    margin-left: 76px;
+  }
+
+  .content-area {
+    padding: 24px 18px;
+  }
+
+  .page-header h1 {
+    font-size: 32px;
+  }
+
+  .flow-step {
+    flex-basis: 100%;
+  }
+}
+
+@media (max-width: 560px) {
+  .content-area {
+    padding: 18px 13px;
+  }
+
+  .page-header h1 {
+    font-size: 28px;
+  }
+
+  .section-title h2 {
+    font-size: 22px;
+  }
+
+  .page-header p,
+  .hero-copy > p {
+    font-size: 15px;
+  }
+}

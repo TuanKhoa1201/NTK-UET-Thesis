@@ -1,0 +1,25 @@
+@import "@fontsource/roboto/latin-ext-400.css";
+@import "@fontsource/roboto/latin-ext-500.css";
+@import "@fontsource/roboto/latin-ext-700.css";
+
+:root {
+  font-family: "Roboto", Arial, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+body,
+button,
+input,
+select,
+textarea {
+  font-family: "Roboto", Arial, sans-serif;
+}
+
+code,
+pre,
+.mono,
+.formula,
+.math-display {
+  font-family: "JetBrains Mono", Consolas, monospace;
+}

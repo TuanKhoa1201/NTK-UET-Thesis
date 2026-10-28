@@ -1,0 +1,22 @@
+.uet-image-tile {display:grid;place-items:center;flex:none;overflow:hidden;background:#f8fafc;border:1px solid #dce4ec;border-radius:9px;}
+.uet-image-tile--sidebar {width:48px;height:48px;padding:4px;}
+.uet-image-tile--about {width:136px;height:136px;padding:12px;border-radius:14px;}
+.uet-image-tile img {display:block;width:100%;height:100%;object-fit:contain;}
+.uet-image-unavailable {color:#41566c;font-size:10px;text-align:center;line-height:1.2;}
+.scene-recovery {min-height:340px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:22px;text-align:center;background:radial-gradient(circle,#132e45,#08131f 72%);}
+.scene-recovery strong {font-size:15px;color:#dff5ff;}
+.scene-recovery p {max-width:390px;margin:0;color:#a8bfd1;font-size:12px;line-height:1.6;}
+.scene-recovery small {color:#78d5f4;}
+.scene-recovery-orbit {position:relative;width:86px;height:86px;border:1px solid #3286a9;border-radius:50%;box-shadow:0 0 30px #148ab544;}
+.scene-recovery-orbit::after {content:"";position:absolute;inset:18px;border:1px solid #9081e1;border-radius:50%;}
+.scene-recovery-orbit span {position:absolute;top:50%;left:50%;width:5px;height:5px;border-radius:50%;background:#7cdbfa;animation:scene-recovery-spin 3s linear infinite;transform-origin:0 0;}
+.scene-recovery-orbit span:nth-child(2) {animation-delay:-1s;background:#a78bfa;}
+.scene-recovery-orbit span:nth-child(3) {animation-delay:-2s;background:#56ddbc;}
+@keyframes scene-recovery-spin {from {transform:rotate(0) translateX(40px);}to {transform:rotate(360deg) translateX(40px);}}
+.simulation-anchor {scroll-margin-top:90px;}
+.live-scan-status {margin-top:30px;min-height:270px;}
+.live-scan-status h2 {margin:12px 0;}
+.live-scan-status p {color:#acc0d1;line-height:1.7;}
+.live-scan-status .button-secondary {margin-top:12px;}
+@media (max-width:560px) {.uet-image-tile--sidebar {width:38px;height:38px;padding:3px;}.uet-image-tile--about {width:120px;height:120px;}}
+@media (prefers-reduced-motion:reduce) {.scene-recovery-orbit span {animation:none;}}

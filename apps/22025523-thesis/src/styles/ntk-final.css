@@ -1,0 +1,44 @@
+.table-card,
+.table-card .table-wrap {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.table-card .table-wrap {
+  overflow-x: auto;
+}
+
+.table-wrap td.cell-trunc,
+.table-wrap .cell-trunc {
+  display: inline-block;
+  max-width: 260px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: bottom;
+}
+
+.table-wrap td.cell-trunc {
+  display: table-cell;
+}
+
+.stage-cat-FAILED { color: #fca5a5; }
+.stage-cat-SKIPPED { color: #fcd34d; }
+.stage-cat-NOT_RUN { opacity: 0.55; }
+
+.failure-details dl.kv-list {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 6px 16px;
+}
+
+.failure-details pre {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.panel-note {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
